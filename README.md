@@ -39,7 +39,7 @@ Sign up to [POEditor](https://poeditor.com/join/project/38wjkTyfyk) to help with
 - You need Windows 10 build 1809 or later.
 
 ### Microsoft Store
-- Search for PaZword in the Microsoft Store App or click // TODO [here](TODO)
+- Search for PaZword in the Microsoft Store App or click [here](https://www.microsoft.com/en-us/p/pazword/9p47mfg7rxhd)
 
 ### Manual
 
