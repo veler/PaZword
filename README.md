@@ -9,9 +9,6 @@
 
 A password manager made in UWP.
 
-![PaZword](https://medias.velersoftware.com/images/pazword/1.png)
-![PaZword](https://medias.velersoftware.com/images/pazword/4.png)
-
 ## Features
 
 - Encryption of the vault.
@@ -26,14 +23,15 @@ A password manager made in UWP.
 
 ## Screenshots
 
-// TODO
+![PaZword](https://medias.velersoftware.com/images/pazword/1.png)
+![PaZword](https://medias.velersoftware.com/images/pazword/4.png)
 
 ## Languages
 
 - English
 - French
 
-Sign up to [POEditor](https://poeditor.com/join/project/TfKNIt826z) to help with existing translations or add a new language
+Sign up to [POEditor](https://poeditor.com/join/project/38wjkTyfyk) to help with existing translations or add a new language
 
 ## How to install (as an end-user)
 
