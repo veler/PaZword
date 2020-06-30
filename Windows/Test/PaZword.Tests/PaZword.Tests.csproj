@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{6BE28834-9DB6-4886-9914-7E567DE9074C}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <RootNamespace>PaZword.Tests</RootNamespace>
+    <AssemblyName>PaZword.Tests</AssemblyName>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <UnitTestPlatformVersion Condition="'$(UnitTestPlatformVersion)' == ''">$(VisualStudioVersion)</UnitTestPlatformVersion>
+    <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
+  </PropertyGroup>
+  <ItemGroup>
+    <SDKReference Include="TestPlatform.Universal, Version=$(UnitTestPlatformVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collections\ConcurrentObservableCollectionTests.cs" />
+    <Compile Include="Data\DataManagerTests.cs" />
+    <Compile Include="Data\RemoteSynchronizationServiceTests.cs" />
+    <Compile Include="Data\SerializationProviderTests.cs" />
+    <Compile Include="Integration\CategoryAndAccountManagementTests.cs" />
+    <Compile Include="Integration\FirstStartExperienceTests.cs" />
+    <Compile Include="Json\ClassWithSecureString.cs" />
+    <Compile Include="Json\SecureStringJsonConverterTests.cs" />
+    <Compile Include="MefBaseTest.cs" />
+    <Compile Include="Mocks\MockIRemoteSynchronizationService.cs" />
+    <Compile Include="Mocks\MockIRemoteStorageProvider.cs" />
+    <Compile Include="Mocks\MockIWindowManager.cs" />
+    <Compile Include="Mocks\MockRecurrentTask.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecurrentTasks\PwnedRecurrentTaskTests.cs" />
+    <Compile Include="Security\EncryptionProviderTests.cs" />
+    <Compile Include="Services\RecurrentTaskServiceTests.cs" />
+    <Compile Include="StringExtensionsTests.cs" />
+    <Compile Include="Security\TwoFactorAuthProviderTests.cs" />
+    <Compile Include="Settings\SettingsProviderTests.cs" />
+    <Compile Include="UI\Controls\EditablePasswordTests.cs" />
+    <Compile Include="UI\Converters\ConvertersTests.cs" />
+    <Compile Include="UnitTestApp.xaml.cs">
+      <DependentUpon>UnitTestApp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoggerTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="UnitTestApp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\Impl\PaZword\Assets\SplashScreen.scale-200.png">
+      <Link>Assets\SplashScreen.scale-200.png</Link>
+    </Content>
+    <Content Include="..\..\Impl\PaZword\Assets\Square150x150Logo.scale-200.png">
+      <Link>Assets\Square150x150Logo.scale-200.png</Link>
+    </Content>
+    <Content Include="..\..\Impl\PaZword\Assets\Square44x44Logo.scale-200.png">
+      <Link>Assets\Square44x44Logo.scale-200.png</Link>
+    </Content>
+    <Content Include="..\..\Impl\PaZword\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <Link>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</Link>
+    </Content>
+    <Content Include="..\..\Impl\PaZword\Assets\Wide310x150Logo.scale-200.png">
+      <Link>Assets\Wide310x150Logo.scale-200.png</Link>
+    </Content>
+    <Content Include="Properties\UnitTestApp.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Def\PaZword.Api\PaZword.Api.csproj">
+      <Project>{21f96022-5f22-4ff2-ba82-5e7ca2cbc419}</Project>
+      <Name>PaZword.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Impl\PaZword.Core\PaZword.Core.csproj">
+      <Project>{4cfbe0d5-28df-485d-b9e0-5f5b72da5c68}</Project>
+      <Name>PaZword.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Impl\PaZword.Localization\PaZword.Localization.csproj">
+      <Project>{42435575-3544-469e-b695-adb60c08397e}</Project>
+      <Name>PaZword.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Impl\PaZword\PaZword.csproj">
+      <Project>{4c2f1c70-9f68-49bf-ba89-acfff9c1249b}</Project>
+      <Name>PaZword</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

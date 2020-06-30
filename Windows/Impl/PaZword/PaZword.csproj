@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{4C2F1C70-9F68-49BF-BA89-ACFFF9C1249B}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <RootNamespace>PaZword</RootNamespace>
+    <AssemblyName>PaZword</AssemblyName>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <PackageCertificateThumbprint>ED6BAA1639E641578BA7F61D9817564AD24A6F81</PackageCertificateThumbprint>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|x64|arm|arm64</AppxBundlePlatforms>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <EnableGatekeeperAnalysis>false</EnableGatekeeperAnalysis>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\NavigationEventArgs.cs" />
+    <Compile Include="Core\SelectAccountEventArgs.cs" />
+    <Compile Include="Core\SelectCategoryInMenuEventArgs.cs" />
+    <Compile Include="Core\UI\ActionCommand.cs" />
+    <Compile Include="Core\UI\AsyncActionCommand.cs" />
+    <Compile Include="Core\MefHost.cs" />
+    <Compile Include="Core\NavigationHelper.cs" />
+    <Compile Include="Core\UI\Controls\AccountDataControl.cs" />
+    <Compile Include="Core\UI\Controls\CustomNavigationView.cs" />
+    <Compile Include="Core\UI\Controls\EditableChoice.cs" />
+    <Compile Include="Core\UI\Controls\EditableControlBase.cs" />
+    <Compile Include="Core\UI\Controls\EditableDatePicker.cs" />
+    <Compile Include="Core\UI\Controls\EditableEmailAddress.cs" />
+    <Compile Include="Core\UI\Controls\EditableHyperlink.cs" />
+    <Compile Include="Core\UI\Controls\EditablePassword.cs" />
+    <Compile Include="Core\UI\Controls\EditableTextBlock.cs" />
+    <Compile Include="Core\UI\Controls\SynchronizationIndicator.cs" />
+    <Compile Include="Core\UI\Converters\EntityNameToAccountIconSourceConverter.cs" />
+    <Compile Include="Core\UI\Converters\Base64ImageToAccountIconSourceConverter.cs" />
+    <Compile Include="Core\UI\Converters\Base64ImageToDominantColorSourceConverter.cs" />
+    <Compile Include="Core\UI\Converters\EnumToBooleanConverter.cs" />
+    <Compile Include="Core\UI\Converters\EnumToIntConverter.cs" />
+    <Compile Include="Core\UI\Converters\EnumToVisibilityConverter.cs" />
+    <Compile Include="Core\UI\Converters\IntToVisibilityConverter.cs" />
+    <Compile Include="Core\UI\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Core\UI\Converters\CategoryIdToBooleanConverter.cs" />
+    <Compile Include="Core\UI\Converters\CategoryIdToIconConverter.cs" />
+    <Compile Include="Core\UI\Converters\InvertedBooleanConverter.cs" />
+    <Compile Include="Core\UI\Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Core\UI\Converters\NullToBooleanConverter.cs" />
+    <Compile Include="Core\UI\Converters\PageWidthToOpenPaneLengthConverter.cs" />
+    <Compile Include="Core\UI\Converters\SecureStringToStringConverter.cs" />
+    <Compile Include="Core\UI\Converters\TextWrappingToBooleanConverter.cs" />
+    <Compile Include="Core\UI\EventToCommandBehavior.cs" />
+    <Compile Include="Core\UI\WindowManager.cs" />
+    <Compile Include="Models\AccountGroup.cs" />
+    <Compile Include="Models\AccountPageNavigationParameters.cs" />
+    <Compile Include="Models\AuthenticationStep.cs" />
+    <Compile Include="Models\CategoryPageNavigationParameter.cs" />
+    <Compile Include="Models\Data\BankAccountData.cs" />
+    <Compile Include="Models\Data\CredentialData.cs" />
+    <Compile Include="Models\Data\FileData.cs" />
+    <Compile Include="Models\Data\LicenseKeyData.cs" />
+    <Compile Include="Models\Data\OtherData.cs" />
+    <Compile Include="Models\Data\PaymentCardData.cs" />
+    <Compile Include="Models\Data\PaymentCardType.cs" />
+    <Compile Include="Models\Data\WiFiCredentialData.cs" />
+    <Compile Include="Core\RecurrentTasks\PwnedRecurrentTask.cs" />
+    <Compile Include="Models\Pwned\Breach.cs" />
+    <Compile Include="ViewModels\AccountPageViewModel.cs" />
+    <Compile Include="ViewModels\CategoryPageViewModel.cs" />
+    <Compile Include="ViewModels\CommonViewModel.cs" />
+    <Compile Include="ViewModels\Data\AccountDataViewModelBase.cs" />
+    <Compile Include="ViewModels\Data\AccountPageToAccountDataViewModelBridge.cs" />
+    <Compile Include="ViewModels\Data\BankAccount\BankAccountDataProvider.cs" />
+    <Compile Include="ViewModels\Data\BankAccount\BankAccountDataViewModel.cs" />
+    <Compile Include="ViewModels\Data\Credential\CredentialDataViewModel.cs" />
+    <Compile Include="ViewModels\Data\Credential\CredentialDataProvider.cs" />
+    <Compile Include="ViewModels\Data\File\FileDataProvider.cs" />
+    <Compile Include="ViewModels\Data\File\FileDataViewModel.cs" />
+    <Compile Include="ViewModels\Data\LicenseKey\LicenseKeyDataProvider.cs" />
+    <Compile Include="ViewModels\Data\LicenseKey\LicenseKeyDataViewModel.cs" />
+    <Compile Include="ViewModels\Data\Other\OtherDataProvider.cs" />
+    <Compile Include="ViewModels\Data\Other\OtherDataViewModel.cs" />
+    <Compile Include="ViewModels\Data\PaymentCard\PaymentCardDataProvider.cs" />
+    <Compile Include="ViewModels\Data\PaymentCard\PaymentCardDataViewModel.cs" />
+    <Compile Include="ViewModels\Data\PaymentCard\PaymentCardTypeItem.cs" />
+    <Compile Include="ViewModels\Data\PaymentCard\PaymentCardTypeItems.cs" />
+    <Compile Include="ViewModels\Data\WiFiCredential\WiFiCredentialDataProvider.cs" />
+    <Compile Include="ViewModels\Data\WiFiCredential\WiFiCredentialDataViewModel.cs" />
+    <Compile Include="ViewModels\Dialog\BreachDiscoveredDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialog\PasswordGeneratorDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialog\SetupTwoFactorAuthenticationDialogViewModel.cs" />
+    <Compile Include="ViewModels\Other\AuthenticationPageViewModel.cs" />
+    <Compile Include="ViewModels\Other\FirstStartExperiencePageViewModel.cs" />
+    <Compile Include="ViewModels\SettingsPageViewModel.cs" />
+    <Compile Include="ViewModels\TitleBarViewModel.cs" />
+    <Compile Include="Core\ViewModelBase.cs" />
+    <Compile Include="Core\ViewModelLocator.cs" />
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="Views\AccountPage.xaml.cs">
+      <DependentUpon>AccountPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CategoryPage.xaml.cs">
+      <DependentUpon>CategoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Data\BankAccountDataUserControl.xaml.cs">
+      <DependentUpon>BankAccountDataUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Data\CredentialDataUserControl.xaml.cs">
+      <DependentUpon>CredentialDataUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Data\FileDataUserControl.xaml.cs">
+      <DependentUpon>FileDataUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Data\LicenseKeyDataUserControl.xaml.cs">
+      <DependentUpon>LicenseKeyDataUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Data\OtherDataUserControl.xaml.cs">
+      <DependentUpon>OtherDataUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Data\PaymentCardDataUserControl.xaml.cs">
+      <DependentUpon>PaymentCardDataUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Data\WiFiCredentialDataUserControl.xaml.cs">
+      <DependentUpon>WiFiCredentialDataUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialog\BreachDiscoveredDialog.xaml.cs">
+      <DependentUpon>BreachDiscoveredDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialog\InputDialog.xaml.cs">
+      <DependentUpon>InputDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialog\PasswordGeneratorDialog.xaml.cs">
+      <DependentUpon>PasswordGeneratorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialog\SetupTwoFactorAuthenticationDialog.xaml.cs">
+      <DependentUpon>SetupTwoFactorAuthenticationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyInfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Other\AuthenticationPage.xaml.cs">
+      <DependentUpon>AuthenticationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Other\FirstStartExperiencePage.xaml.cs">
+      <DependentUpon>FirstStartExperiencePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <None Include="Properties\AssemblyInfo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfo.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\DefaultAccountIcon.png" />
+    <Content Include="Assets\DefaultProfilePicture.png" />
+    <Content Include="Assets\Dinosaur.png" />
+    <Content Include="Assets\LargeTile.scale-100.png" />
+    <Content Include="Assets\LargeTile.scale-125.png" />
+    <Content Include="Assets\LargeTile.scale-150.png" />
+    <Content Include="Assets\LargeTile.scale-200.png" />
+    <Content Include="Assets\LargeTile.scale-400.png" />
+    <Content Include="Assets\PaymentsCards\amex.png" />
+    <Content Include="Assets\PaymentsCards\discover.png" />
+    <Content Include="Assets\PaymentsCards\mastercard.png" />
+    <Content Include="Assets\PaymentsCards\visa.png" />
+    <Content Include="Assets\RemoteStorageProviders\Dropbox.png" />
+    <Content Include="Assets\RemoteStorageProviders\OneDrive.png" />
+    <Content Include="Assets\SmallTile.scale-100.png" />
+    <Content Include="Assets\SmallTile.scale-125.png" />
+    <Content Include="Assets\SmallTile.scale-150.png" />
+    <Content Include="Assets\SmallTile.scale-200.png" />
+    <Content Include="Assets\SmallTile.scale-400.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-125.png" />
+    <Content Include="Assets\SplashScreen.scale-150.png" />
+    <Content Include="Assets\SplashScreen.scale-400.png" />
+    <Content Include="Assets\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Square150x150Logo.scale-125.png" />
+    <Content Include="Assets\Square150x150Logo.scale-150.png" />
+    <Content Include="Assets\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-24.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-32.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-48.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-32.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-48.png" />
+    <Content Include="Assets\Square44x44Logo.scale-100.png" />
+    <Content Include="Assets\Square44x44Logo.scale-125.png" />
+    <Content Include="Assets\Square44x44Logo.scale-150.png" />
+    <Content Include="Assets\Square44x44Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-32.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-48.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-125.png" />
+    <Content Include="Assets\StoreLogo.scale-150.png" />
+    <Content Include="Assets\StoreLogo.scale-200.png" />
+    <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-125.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-150.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Properties\Default.rd.xml" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Themes\ColorTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Custom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AccountPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CategoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Data\BankAccountDataUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Data\CredentialDataUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Data\FileDataUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Data\LicenseKeyDataUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Data\OtherDataUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Data\PaymentCardDataUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Data\WiFiCredentialDataUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialog\BreachDiscoveredDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialog\InputDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialog\PasswordGeneratorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialog\SetupTwoFactorAuthenticationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Other\AuthenticationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Other\FirstStartExperiencePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Def\PaZword.Api\PaZword.Api.csproj">
+      <Project>{21f96022-5f22-4ff2-ba82-5e7ca2cbc419}</Project>
+      <Name>PaZword.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PaZword.Core\PaZword.Core.csproj">
+      <Project>{4cfbe0d5-28df-485d-b9e0-5f5b72da5c68}</Project>
+      <Name>PaZword.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PaZword.Localization\PaZword.Localization.csproj">
+      <Project>{42435575-3544-469e-b695-adb60c08397e}</Project>
+      <Name>PaZword.Localization</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

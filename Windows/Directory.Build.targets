@@ -1,0 +1,10 @@
+<Project>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.10"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0"/>
+        <PackageReference Include="NewtonSoft.Json" Version="10.0.3"/>
+        <PackageReference Include="System.Composition" Version="1.4.1"/>
+    </ItemGroup>
+
+    <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v16.0\TextTemplating\Microsoft.TextTemplating.targets" />
+</Project>

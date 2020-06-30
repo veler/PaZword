@@ -1,0 +1,1549 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:PaZword.Core.UI.Controls"
+    xmlns:converters="using:PaZword.Core.UI.Converters"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions">
+
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <converters:BooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" IsInverted="True"/>
+    <converters:TextWrappingToBooleanConverter x:Key="TextWrappingToBooleanConverter"/>
+    <converters:SecureStringToStringConverter x:Key="SecureStringToStringConverter"/>
+    <converters:InvertedBooleanConverter x:Key="InvertedBooleanConverter"/>
+
+    <Style x:Key="CopyButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundTransparentBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+        <Setter Property="UseSystemFocusVisuals" Value="True"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                   Storyboard.TargetProperty="BorderBrush">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumLowBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                   Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
+                                                   Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                   Storyboard.TargetProperty="BorderBrush">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                   Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter x:Name="ContentPresenter"
+                          BorderBrush="{TemplateBinding BorderBrush}"
+                          BorderThickness="{TemplateBinding BorderThickness}"
+                          Content="{TemplateBinding Content}"
+                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                          Padding="{TemplateBinding Padding}"
+                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                          AutomationProperties.AccessibilityView="Raw"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="RevealButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundTransparentBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+        <Setter Property="UseSystemFocusVisuals" Value="True"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid x:Name="RootGrid" Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SymbolIcon"
+                                                   Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
+                                                   Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SymbolIcon"
+                                                   Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <SymbolIcon x:Name="SymbolIcon" Symbol="View" AutomationProperties.AccessibilityView="Raw" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ReadOnlyDatePickerStyle" TargetType="DatePicker">
+        <Setter Property="Orientation" Value="Horizontal"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="MinWidth" Value="296"/>
+        <Setter Property="MaxWidth" Value="456"/>
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+        <Setter Property="Foreground" Value="{ThemeResource DatePickerButtonForeground}"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DatePicker">
+                    <StackPanel x:Name="LayoutRoot" Margin="{TemplateBinding Padding}">
+                        <StackPanel.Resources>
+                            <Style x:Key="DatePickerFlyoutButtonStyle" TargetType="Button">
+                                <Setter Property="UseSystemFocusVisuals" Value="False"/>
+                                <Setter Property="ElementSoundMode" Value="FocusOnly"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid Background="{TemplateBinding Background}">
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroup x:Name="CommonStates">
+                                                        <VisualState x:Name="Normal"/>
+                                                        <VisualState x:Name="PointerOver"/>
+                                                        <VisualState x:Name="Pressed"/>
+                                                        <VisualState x:Name="Disabled"/>
+                                                    </VisualStateGroup>
+                                                    <VisualStateGroup x:Name="FocusStates">
+                                                        <VisualState x:Name="Focused"/>
+                                                        <VisualState x:Name="Unfocused"/>
+                                                        <VisualState x:Name="PointerFocused"/>
+                                                    </VisualStateGroup>
+                                                </VisualStateManager.VisualStateGroups>
+                                                <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" Background="Transparent" BorderThickness="0" BorderBrush="{ThemeResource DatePickerButtonBorderBrush}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </StackPanel.Resources>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter x:Name="HeaderContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Foreground="{ThemeResource DatePickerHeaderForeground}" Margin="0,0,0,8" Visibility="Collapsed" x:DeferLoadStrategy="Lazy"/>
+                        <Button x:Name="FlyoutButton" Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" IsEnabled="{TemplateBinding IsEnabled}" BorderThickness="{TemplateBinding BorderThickness}" Style="{StaticResource DatePickerFlyoutButtonStyle}">
+                            <Grid x:Name="FlyoutButtonContentGrid">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition x:Name="DayColumn" Width="78*"/>
+                                    <ColumnDefinition x:Name="FirstSpacerColumn" Width="Auto"/>
+                                    <ColumnDefinition x:Name="MonthColumn" Width="132*"/>
+                                    <ColumnDefinition x:Name="SecondSpacerColumn" Width="Auto"/>
+                                    <ColumnDefinition x:Name="YearColumn" Width="78*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="DayTextBlock" AutomationProperties.AccessibilityView="Raw" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" Padding="0,3,0,5" Text="Day" TextAlignment="Center"/>
+                                <TextBlock x:Name="MonthTextBlock" AutomationProperties.AccessibilityView="Raw" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" Padding="10,3,0,5" Text="Month" TextAlignment="Left"/>
+                                <TextBlock x:Name="YearTextBlock" AutomationProperties.AccessibilityView="Raw" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" Padding="0,3,0,5" Text="Year" TextAlignment="Center"/>
+                                <Rectangle x:Name="FirstPickerSpacing" Grid.Column="1" Fill="{ThemeResource DatePickerSpacerFill}" HorizontalAlignment="Center" Width="2"/>
+                                <Rectangle x:Name="SecondPickerSpacing" Grid.Column="3" Fill="{ThemeResource DatePickerSpacerFill}" HorizontalAlignment="Center" Width="2"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:EditableTextBlock">
+        <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}"/>
+        <Setter Property="MinHeight" Value="42"/>
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+        <Setter Property="Padding" Value="8,4,8,4"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+        <Setter Property="UseSystemFocusVisuals" Value="False"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:EditableTextBlock">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="BorderRectangle.Stroke" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid Visibility="{Binding IsEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}" Margin="{TemplateBinding BorderThickness}">
+                            <Grid Visibility="{Binding IsEmpty, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}">
+                                <Button x:Name="CopyButton" AutomationProperties.Name="{TemplateBinding PlaceholderText}" AutomationProperties.HelpText="{Binding Strings.Copy, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" AutomationProperties.LabeledBy="{Binding ElementName=TextTextBlock}" IsEnabled="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Foreground="{TemplateBinding Foreground}" Padding="{TemplateBinding Padding}" Style="{StaticResource CopyButtonStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Name="TextTextBlock" Grid.Column="0" Text="{Binding Text, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource SecureStringToStringConverter}, Mode=OneWay}" TextTrimming="{TemplateBinding TextTrimming}" TextWrapping="{TemplateBinding TextWrapping}" MaxLines="{TemplateBinding MaxLines}" LineHeight="{TemplateBinding LineHeight}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" LineStackingStrategy="{TemplateBinding LineStackingStrategy}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <SymbolIcon Grid.Column="1" Symbol="Copy" Visibility="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                </Button>
+                                <Rectangle x:Name="BorderRectangle" Stroke="Transparent" StrokeThickness="1" StrokeDashArray="4 4" Visibility="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Visibility="{Binding IsEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <TextBox AcceptsReturn="{Binding TextWrapping, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource TextWrappingToBooleanConverter}, Mode=OneWay}" TextWrapping="{TemplateBinding TextWrapping}" PlaceholderText="{TemplateBinding PlaceholderText}" Text="{Binding TextEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource SecureStringToStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" extensions:TextBoxMask.Mask="{TemplateBinding Mask}" extensions:TextBoxMask.PlaceHolder="{TemplateBinding MaskPlaceholder}"/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:EditableHyperlink">
+        <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}"/>
+        <Setter Property="MinHeight" Value="42"/>
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+        <Setter Property="Padding" Value="8,4,8,4"/>
+        <Setter Property="UseSystemFocusVisuals" Value="False"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:EditableHyperlink">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="BorderRectangle.Stroke" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid Visibility="{Binding IsEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}" Margin="{TemplateBinding BorderThickness}">
+                            <Grid Visibility="{Binding IsEmpty, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}">
+                                <Button x:Name="CopyButton" AutomationProperties.Name="{TemplateBinding PlaceholderText}" AutomationProperties.HelpText="{Binding Strings.Copy, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" AutomationProperties.LabeledBy="{Binding ElementName=HyperlinkButton}" IsEnabled="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Foreground="{TemplateBinding Foreground}" Padding="{TemplateBinding Padding}" Style="{StaticResource CopyButtonStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <HyperlinkButton x:Name="HyperlinkButton" Grid.Column="0" Content="{Binding Text, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource SecureStringToStringConverter}, Mode=OneWay}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" Foreground="{TemplateBinding Foreground}" Height="{TemplateBinding Height}" VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="True"/>
+                                        <SymbolIcon Grid.Column="1" Symbol="Copy" Visibility="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                </Button>
+                                <Rectangle x:Name="BorderRectangle" Stroke="Transparent" StrokeThickness="1" StrokeDashArray="4 4" Visibility="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Visibility="{Binding IsEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <TextBox PlaceholderText="{TemplateBinding PlaceholderText}" Text="{Binding TextEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource SecureStringToStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:EditableEmailAddress">
+        <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}"/>
+        <Setter Property="MinHeight" Value="42"/>
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+        <Setter Property="Padding" Value="8,4,8,4"/>
+        <Setter Property="UseSystemFocusVisuals" Value="False"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:EditableEmailAddress">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="BorderRectangle.Stroke" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid Visibility="{Binding IsEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}" Margin="{TemplateBinding BorderThickness}">
+                            <Grid Visibility="{Binding IsEmpty, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}">
+                                <Button x:Name="CopyButton" AutomationProperties.Name="{TemplateBinding PlaceholderText}" AutomationProperties.HelpText="{Binding Strings.Copy, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" AutomationProperties.LabeledBy="{Binding ElementName=HyperlinkButton}" IsEnabled="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Foreground="{TemplateBinding Foreground}" Padding="{TemplateBinding Padding}" Style="{StaticResource CopyButtonStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <HyperlinkButton x:Name="HyperlinkButton" Grid.Column="0" Content="{Binding Text, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource SecureStringToStringConverter}, Mode=OneWay}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" Foreground="{TemplateBinding Foreground}" Height="{TemplateBinding Height}" VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="True"/>
+                                        <SymbolIcon Grid.Column="1" Symbol="Copy" Visibility="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                </Button>
+                                <Rectangle x:Name="BorderRectangle" Stroke="Transparent" StrokeThickness="1" StrokeDashArray="4 4" Visibility="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Visibility="{Binding IsEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <TextBox PlaceholderText="{TemplateBinding PlaceholderText}" Text="{Binding TextEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource SecureStringToStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:EditablePassword">
+        <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}"/>
+        <Setter Property="MinHeight" Value="42"/>
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+        <Setter Property="Padding" Value="8,4,8,4"/>
+        <Setter Property="UseSystemFocusVisuals" Value="False"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:EditablePassword">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="BorderRectangle.Stroke" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid Grid.Row="0">
+                            <Grid Visibility="{Binding IsEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}" Margin="{TemplateBinding BorderThickness}">
+                                <Grid Visibility="{Binding IsEmpty, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}">
+                                    <Button x:Name="CopyButton" AutomationProperties.Name="{TemplateBinding PlaceholderText}" AutomationProperties.HelpText="{Binding Strings.Copy, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" AutomationProperties.LabeledBy="{Binding ElementName=TextTextBlock}" IsEnabled="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Foreground="{TemplateBinding Foreground}" Padding="{TemplateBinding Padding}" Style="{StaticResource CopyButtonStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock x:Name="TextTextBlock" Grid.Column="0" Text="{Binding DisplayedText, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource SecureStringToStringConverter}, Mode=OneWay}" TextTrimming="CharacterEllipsis" MaxLines="1" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                            <Button x:Name="RevealButton" Grid.Column="1" Margin="10,0,0,0" AutomationProperties.Name="{TemplateBinding Text}" Foreground="{TemplateBinding Foreground}" Height="32" Width="32" Style="{StaticResource RevealButtonStyle}"/>
+                                            <SymbolIcon Grid.Column="2" Symbol="Copy" Visibility="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        </Grid>
+                                    </Button>
+                                    <Rectangle x:Name="BorderRectangle" Stroke="Transparent" StrokeThickness="1" StrokeDashArray="4 4" Visibility="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                </Grid>
+                            </Grid>
+
+                            <Grid Visibility="{Binding IsEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                                <PasswordBox x:Name="PasswordBox" PlaceholderText="{TemplateBinding PlaceholderText}" Password="{Binding TextEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource SecureStringToStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Margin="{TemplateBinding BorderThickness}" Padding="8,2,8,4" Visibility="{Binding DisplayStrength, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                            <Grid Visibility="{Binding IsEmpty, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}">
+                                <ProgressBar Height="2" AllowFocusOnInteraction="False" AllowFocusWhenDisabled="False" Foreground="{Binding StrengthBrush, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Value="{Binding Strength, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:EditableChoice">
+        <Setter Property="MinHeight" Value="42"/>
+        <Setter Property="MinWidth" Value="{ThemeResource ComboBoxThemeMinWidth}"/>
+        <Setter Property="TabNavigation" Value="Once"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+        <Setter Property="Padding" Value="8,4,8,4"/>
+        <Setter Property="UseSystemFocusVisuals" Value="False"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:EditableChoice">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="BorderRectangle.Stroke" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid Visibility="{Binding IsEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}" Margin="{TemplateBinding BorderThickness}">
+                            <Button x:Name="CopyButton" AutomationProperties.Name="{TemplateBinding PlaceholderText}" AutomationProperties.HelpText="{Binding Strings.Copy, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" AutomationProperties.LabeledBy="{Binding ElementName=TextContentControl}" IsEnabled="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Foreground="{TemplateBinding Foreground}" Padding="{TemplateBinding Padding}" Style="{StaticResource CopyButtonStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ContentControl x:Name="TextContentControl" Grid.Column="0" Content="{Binding SelectedItem, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" ContentTemplate="{TemplateBinding ItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" ContentTransitions="{TemplateBinding ItemContainerTransitions}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Left" AutomationProperties.AccessibilityView="Raw"/>
+                                    <SymbolIcon Grid.Column="1" Symbol="Copy" Visibility="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                </Grid>
+                            </Button>
+                            <Rectangle x:Name="BorderRectangle" Stroke="Transparent" StrokeThickness="1" StrokeDashArray="4 4" Visibility="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        </Grid>
+
+                        <Grid Visibility="{Binding IsEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <ComboBox PlaceholderText="{TemplateBinding PlaceholderText}" Foreground="{TemplateBinding Foreground}" ItemsSource="{TemplateBinding ItemsSource}" ItemTemplate="{TemplateBinding ItemTemplate}" SelectedIndex="{Binding SelectedIndexEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="{TemplateBinding SelectedValuePath}" DisplayMemberPath="{TemplateBinding DisplayMemberPath}" IsSynchronizedWithCurrentItem="{TemplateBinding IsSynchronizedWithCurrentItem}" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Stretch"/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:EditableDatePicker">
+        <Setter Property="MinHeight" Value="42"/>
+        <Setter Property="TabNavigation" Value="Once"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+        <Setter Property="Padding" Value="8,4,8,4"/>
+        <Setter Property="UseSystemFocusVisuals" Value="False"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:EditableDatePicker">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="BorderRectangle.Stroke" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid Visibility="{Binding IsEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}" Margin="{TemplateBinding BorderThickness}">
+                            <Button x:Name="CopyButton" AutomationProperties.Name="{Binding Strings.Copy, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" IsEnabled="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Foreground="{TemplateBinding Foreground}" Padding="{TemplateBinding Padding}" Style="{StaticResource CopyButtonStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <DatePicker Grid.Column="0" Style="{StaticResource ReadOnlyDatePickerStyle}" Foreground="{TemplateBinding Foreground}" CalendarIdentifier="{TemplateBinding CalendarIdentifier}" DayFormat="{TemplateBinding DayFormat}" DayVisible="{TemplateBinding DayVisible}" MonthFormat="{TemplateBinding MonthFormat}" MonthVisible="{TemplateBinding MonthVisible}" YearFormat="{TemplateBinding YearFormat}" YearVisible="{TemplateBinding YearVisible}" MaxYear="{TemplateBinding MaxYear}" MinYear="{TemplateBinding MinYear}" Date="{TemplateBinding Date}" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" IsEnabled="False" BorderThickness="0" Background="Transparent"/>
+                                    <SymbolIcon Grid.Column="1" Symbol="Copy" Visibility="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                </Grid>
+                            </Button>
+                            <Rectangle x:Name="BorderRectangle" Stroke="Transparent" StrokeThickness="1" StrokeDashArray="4 4" Visibility="{Binding IsCopiable, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        </Grid>
+
+                        <Grid Visibility="{Binding IsEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <DatePicker Foreground="{TemplateBinding Foreground}" CalendarIdentifier="{TemplateBinding CalendarIdentifier}" DayFormat="{TemplateBinding DayFormat}" DayVisible="{TemplateBinding DayVisible}" MonthFormat="{TemplateBinding MonthFormat}" MonthVisible="{TemplateBinding MonthVisible}" YearFormat="{TemplateBinding YearFormat}" YearVisible="{TemplateBinding YearVisible}" MaxYear="{TemplateBinding MaxYear}" MinYear="{TemplateBinding MinYear}" Date="{Binding DateEditing, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Stretch"/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:AccountDataControl">
+        <Setter Property="IsTabStop" Value="True"/>
+        <Setter Property="TabFocusNavigation" Value="Local"/>
+        <Setter Property="UseSystemFocusVisuals" Value="True"/>
+        <Setter Property="AutomationProperties.Name" Value="{Binding DataContext.Title}"/>
+        <Setter Property="AutomationProperties.ItemType" Value="{Binding DataContext.Title}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate x:Name="Root" TargetType="controls:AccountDataControl">
+                    <Border
+                        BorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                        BorderThickness="0,0,0,1"
+                        AutomationProperties.Name="{Binding Title}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="48"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <CommandBar
+                                    ClosedDisplayMode="Compact"
+                                    Background="Transparent"
+                                    Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <CommandBar.SecondaryCommands>
+                                        <AppBarButton Label="{Binding AccountPageStrings.MoveUp}" Command="{TemplateBinding MoveUpCommand}"/>
+                                        <AppBarButton Label="{Binding AccountPageStrings.MoveDown}" Command="{TemplateBinding MoveDownCommand}"/>
+                                        <AppBarSeparator/>
+                                        <AppBarButton Icon="Delete" Label="{Binding AccountPageStrings.Delete}" Command="{TemplateBinding DeleteCommand}"/>
+                                    </CommandBar.SecondaryCommands>
+                                </CommandBar>
+                                <TextBlock
+                                    Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                                    Text="{Binding Title}"
+                                    Margin="24,0,72,0"
+                                    TextTrimming="CharacterEllipsis"
+                                    MaxLines="1"
+                                    FontSize="20"
+                                    VerticalAlignment="Center"
+                                    FontFamily="Segoe UI Light"/>
+                            </Grid>
+                            <ContentPresenter
+                                Grid.Row="1"
+                                Margin="24,0,24,24"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:SynchronizationIndicator">
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:SynchronizationIndicator">
+                    <Grid
+                        Background="{TemplateBinding Background}"
+                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup>
+                                <VisualState x:Name="Synchronizing">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ProgressTextBlock"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0"
+                                            To="1"
+                                            BeginTime="0:0:0"
+                                            Duration="0:0:1"
+                                            AutoReverse="True"
+                                            RepeatBehavior="Forever"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="SynchronizationSucceeded">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="SucceededTextBlock"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0"
+                                            To="1"
+                                            BeginTime="0:0:0"
+                                            Duration="0:0:3"
+                                            AutoReverse="True"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="SynchronizationFailed">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FailedTextBlock"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0"
+                                            To="1"
+                                            BeginTime="0:0:0"
+                                            Duration="0:0:1"
+                                            AutoReverse="False"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ProgressBar
+                            IsIndeterminate="{Binding IsSynchronizing, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
+                            Visibility="{Binding IsSynchronizing, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                            HorizontalAlignment="Stretch"/>
+                        <TextBlock
+                            x:Name="ProgressTextBlock"
+                            Style="{ThemeResource CaptionTextBlockStyle}"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Center"
+                            Margin="0,5,0,0"
+                            Opacity="0"
+                            Visibility="{Binding IsSynchronizing, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Text="{Binding Strings.Synchronizing, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"/>
+                        <TextBlock
+                            x:Name="SucceededTextBlock"
+                            Style="{ThemeResource CaptionTextBlockStyle}"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Center"
+                            Margin="0,5,0,0"
+                            Opacity="0"
+                            Visibility="{Binding SynchronizationSucceeded, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Text="{Binding Strings.SynchronizingSucceeded, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"/>
+                        <TextBlock
+                            x:Name="FailedTextBlock"
+                            Style="{ThemeResource CaptionTextBlockStyle}"
+                            FontWeight="Bold"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Center"
+                            Margin="0,5,0,0"
+                            Opacity="0"
+                            Visibility="{Binding SynchronizationSucceeded, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
+                            Text="{Binding Strings.SynchronizingFailed, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="NavigationViewItemPresenter" x:Key="NavigationViewItemPresenterStyleWhenOnLeftPane">
+        <Setter Property="Foreground" Value="{ThemeResource NavigationViewItemForeground}"/>
+        <Setter Property="Background" Value="{ThemeResource NavigationViewItemBackground}"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="{StaticResource NavigationViewItemBorderThickness}"/>
+        <Setter Property="UseSystemFocusVisuals" Value="True"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="NavigationViewItemPresenter">
+                    <Grid
+                        x:Name="LayoutRoot"
+                        Height="48"
+                        Background="{TemplateBinding Background}"
+                        Control.IsTemplateFocusTarget="True">
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="PointerStates">
+                                <VisualState x:Name="Normal"/>
+
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="LayoutRoot.(RevealBrush.State)" Value="PointerOver"/>
+                                        <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundPointerOver}"/>
+                                        <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushPointerOver}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundPointerOver}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="LayoutRoot.(RevealBrush.State)" Value="Pressed"/>
+                                        <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundPressed}"/>
+                                        <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushPressed}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundPressed}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundSelected}"/>
+                                        <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushSelected}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundSelected}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="PointerOverSelected">
+                                    <VisualState.Setters>
+                                        <Setter Target="LayoutRoot.(RevealBrush.State)" Value="PointerOver"/>
+                                        <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundSelectedPointerOver}"/>
+                                        <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushSelectedPointerOver}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundSelectedPointerOver}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="PressedSelected">
+                                    <VisualState.Setters>
+                                        <Setter Target="LayoutRoot.(RevealBrush.State)" Value="Pressed"/>
+                                        <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundSelectedPressed}"/>
+                                        <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushSelectedPressed}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundSelectedPressed}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="DisabledStates">
+                                <VisualState x:Name="Enabled"/>
+
+                                <VisualState x:Name="Disabled">
+                                    <VisualState.Setters>
+                                        <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushCheckedDisabled}"/>
+                                        <Setter Target="LayoutRoot.Opacity" Value="{ThemeResource ListViewItemDisabledThemeOpacity}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="IconStates">
+                                <VisualState x:Name="IconVisible"/>
+                                <VisualState x:Name="IconCollapsed">
+                                    <VisualState.Setters>
+                                        <Setter Target="IconBox.Visibility" Value="Collapsed"/>
+                                        <Setter Target="IconColumn.Width" Value="16"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                        </VisualStateManager.VisualStateGroups>
+
+                        <!-- Wrap SelectionIndicator in a grid so that its offset is 0,0 - this enables the offset animation. -->
+                        <Grid
+                            Margin="4,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+
+                            <Rectangle
+                                x:Name="SelectionIndicator"
+                                Width="{ThemeResource NavigationViewSelectionIndicatorWidth}"
+                                Height="24"
+                                Fill="{ThemeResource NavigationViewSelectionIndicatorForeground}"
+                                Opacity="0.0"/>
+
+                        </Grid>
+
+                        <Border
+                            x:Name="RevealBorder"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"/>
+
+                        <Grid Height="48" HorizontalAlignment="Left" x:Name="ContentGrid">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="IconColumn" Width="48"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Viewbox x:Name="IconBox"
+                                Margin="16">
+                                <ContentPresenter 
+                                    x:Name="Icon" 
+                                    Content="{TemplateBinding Icon}"/>
+                            </Viewbox>
+
+                            <ContentPresenter x:Name="ContentPresenter"
+                                Grid.Column="1"
+                                ContentTransitions="{TemplateBinding ContentTransitions}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Content="{TemplateBinding Content}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                Margin="{TemplateBinding Padding}"
+                                AutomationProperties.AccessibilityView="Raw"/>
+
+                        </Grid>
+
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="NavigationViewPaneSearchButtonStyle" TargetType="Button">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}"/>
+        <Setter Property="MinHeight" Value="48"/>
+        <Setter Property="MinWidth" Value="48"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="{ThemeResource NavigationViewItemBackground}"/>
+        <Setter Property="Foreground" Value="{ThemeResource NavigationViewItemForeground}"/>
+        <Setter Property="BorderThickness" Value="{ThemeResource NavigationViewToggleBorderThickness}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid
+                                    x:Name="LayoutRoot"
+                                    MinWidth="{TemplateBinding MinWidth}"
+                                    MinHeight="{TemplateBinding MinHeight}"
+                                    Margin="{TemplateBinding Padding}"
+                                    Background="{TemplateBinding Background}"
+                                    HorizontalAlignment="Stretch">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{ThemeResource PaneToggleButtonWidth}"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="PointerStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="LayoutRoot.(RevealBrush.State)" Value="PointerOver"/>
+                                        <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundPointerOver}"/>
+                                        <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushPointerOver}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundPointerOver}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="LayoutRoot.(RevealBrush.State)" Value="Pressed"/>
+                                        <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundPressed}"/>
+                                        <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushPressed}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundPressed}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundSelected}"/>
+                                        <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushSelected}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundSelected}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="PointerOverSelected">
+                                    <VisualState.Setters>
+                                        <Setter Target="LayoutRoot.(RevealBrush.State)" Value="PointerOver"/>
+                                        <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundSelectedPointerOver}"/>
+                                        <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushSelectedPointerOver}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundSelectedPointerOver}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="PressedSelected">
+                                    <VisualState.Setters>
+                                        <Setter Target="LayoutRoot.(RevealBrush.State)" Value="Pressed"/>
+                                        <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundSelectedPressed}"/>
+                                        <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushSelectedPressed}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundSelectedPressed}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="DisabledStates">
+                                <VisualState x:Name="Enabled"/>
+                                <VisualState x:Name="Disabled">
+                                    <VisualState.Setters>
+                                        <Setter Target="LayoutRoot.Opacity" Value="{ThemeResource ListViewItemDisabledThemeOpacity}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="PaneStates">
+                                <VisualState x:Name="NotClosedCompact"/>
+                                <VisualState x:Name="ClosedCompact">
+                                    <VisualState.Setters>
+                                        <Setter Target="RevealBorder.HorizontalAlignment" Value="Left"/>
+                                        <Setter Target="RevealBorder.Width" Value="{Binding CompactPaneLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="IconStates">
+                                <VisualState x:Name="IconVisible"/>
+                                <VisualState x:Name="IconCollapsed">
+                                    <VisualState.Setters>
+                                        <Setter Target="IconBox.Visibility" Value="Collapsed"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Viewbox
+                                        x:Name="IconBox"
+                                        Width="16"
+                                        Height="16"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Margin="8,0,0,0"
+                                        AutomationProperties.AccessibilityView="Raw">
+
+                            <TextBlock
+                                            x:Name="Icon"
+                                            Text="&#xE11A;"
+                                            FontSize="{TemplateBinding FontSize}"
+                                            AutomationProperties.AccessibilityView="Raw"/>
+
+                        </Viewbox>
+
+                        <ContentPresenter
+                                        x:Name="ContentPresenter"
+                                        VerticalContentAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        FontSize="{TemplateBinding FontSize}"
+                                        Grid.Column="1"
+                                        AutomationProperties.AccessibilityView="Raw"/>
+
+                        <Border
+                                        x:Name="RevealBorder"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Grid.ColumnSpan="2"/>
+
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="controls:CustomNavigationView">
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="IsBackButtonVisible" Value="Collapsed"/>
+        <Setter Property="IsSettingsVisible" Value="True"/>
+        <Setter Property="AlwaysShowHeader" Value="False"/>
+        <Setter Property="CompactPaneLength" Value="48"/>
+        <Setter Property="CompactModeThresholdWidth" Value="450"/>
+        <Setter Property="Foreground" Value="{ThemeResource NavigationViewItemForeground}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="NavigationView">
+                    <Grid x:Name="RootGrid">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="DisplayModeGroup">
+                                <VisualState x:Name="Compact"/>
+
+                                <VisualState x:Name="Expanded">
+                                    <VisualState.Setters>
+                                        <Setter Target="RootSplitView.PaneBackground" Value="{ThemeResource NavigationViewExpandedPaneBackground}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Minimal">
+                                    <VisualState.Setters>
+                                        <Setter Target="HeaderContent.Margin" Value="48,5,0,0"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="TopNavigationMinimal"/>
+                                <VisualState x:Name="MinimalWithBackButton">
+                                    <VisualState.Setters>
+                                        <Setter Target="HeaderContent.Margin" Value="104,5,0,0"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="TogglePaneGroup">
+                                <VisualState x:Name="TogglePaneButtonVisible"/>
+                                <VisualState x:Name="TogglePaneButtonCollapsed">
+                                    <VisualState.Setters>
+                                        <Setter Target="PaneContentGridToggleButtonRow.Height" Value="4"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="HeaderGroup">
+                                <VisualState x:Name="HeaderVisible"/>
+                                <VisualState x:Name="HeaderCollapsed">
+                                    <VisualState.Setters>
+                                        <Setter Target="HeaderContent.Visibility" Value="Collapsed"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="SettingsGroup">
+                                <VisualState x:Name="SettingsVisible"/>
+                                <VisualState x:Name="SettingsCollapsed">
+                                    <VisualState.Setters>
+                                        <Setter Target="SettingsNavPaneItem.Visibility" Value="Collapsed"/>
+                                        <Setter Target="SettingsTopNavPaneItem.Visibility" Value="Collapsed"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="AutoSuggestGroup">
+                                <VisualState x:Name="AutoSuggestBoxVisible"/>
+                                <VisualState x:Name="AutoSuggestBoxCollapsed">
+                                    <VisualState.Setters>
+                                        <Setter Target="AutoSuggestArea.Visibility" Value="Collapsed"/>
+                                        <Setter Target="TopPaneAutoSuggestArea.Visibility" Value="Collapsed"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="PaneStateGroup">
+                                <VisualState x:Name="NotClosedCompact"/>
+                                <VisualState x:Name="ClosedCompact">
+                                    <VisualState.Setters>
+                                        <Setter Target="PaneAutoSuggestBoxPresenter.Visibility" Value="Collapsed"/>
+                                        <Setter Target="PaneAutoSuggestButton.Visibility" Value="Visible"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="PaneStateListSizeGroup">
+                                <VisualState x:Name="ListSizeFull"/>
+                                <VisualState x:Name="ListSizeCompact">
+                                    <VisualState.Setters>
+                                        <Setter Target="MenuItemsHost.HorizontalAlignment" Value="Left"/>
+                                        <!-- This is essentially a TemplateBinding: -->
+                                        <Setter Target="MenuItemsHost.Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CompactPaneLength}"/>
+                                        <Setter Target="SettingsNavPaneItem.HorizontalAlignment" Value="Left"/>
+                                        <Setter Target="SettingsNavPaneItem.Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CompactPaneLength}"/>
+                                        <Setter Target="PaneTitleTextBlock.Visibility" Value="Collapsed"/>
+                                        <Setter Target="PaneHeaderContentBorder.Visibility" Value="Collapsed"/>
+                                        <Setter Target="PaneCustomContentBorder.HorizontalAlignment" Value="Left"/>
+                                        <Setter Target="PaneCustomContentBorder.Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CompactPaneLength}"/>
+                                        <Setter Target="FooterContentBorder.HorizontalAlignment" Value="Left"/>
+                                        <Setter Target="FooterContentBorder.Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CompactPaneLength}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="TitleBarVisibilityGroup">
+                                <VisualState x:Name="TitleBarVisible"/>
+                                <VisualState x:Name="TitleBarCollapsed">
+                                    <VisualState.Setters>
+                                        <Setter Target="PaneContentGrid.Margin" Value="0,32,0,0"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="OverflowLabelGroup">
+                                <VisualState x:Name="OverflowButtonWithLabel"/>
+                                <VisualState x:Name="OverflowButtonNoLabel">
+                                    <VisualState.Setters>
+                                        <Setter Target="TopNavOverflowButton.Style" Value="{ThemeResource NavigationViewOverflowButtonNoLabelStyleWhenPaneOnTop}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="BackButtonGroup">
+                                <VisualState x:Name="BackButtonVisible"/>
+                                <VisualState x:Name="BackButtonCollapsed">
+                                    <VisualState.Setters>
+                                        <Setter Target="BackButtonPlaceholderOnTopNav.Width" Value="0"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid
+                            x:Name="PaneToggleButtonGrid"
+                            Margin="0,0,0,8"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Canvas.ZIndex="100">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid x:Name="TogglePaneTopPadding"
+                                  Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.TopPadding}"/>
+
+                            <Grid x:Name="ButtonHolderGrid" Grid.Row="1">
+                                <Button 
+                                    x:Name="NavigationViewBackButton"
+                                    Style="{StaticResource NavigationBackButtonNormalStyle}"
+                                    VerticalAlignment="Top"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.BackButtonVisibility}"
+                                    IsEnabled="{TemplateBinding IsBackEnabled}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip x:Name="NavigationViewBackButtonToolTip"/>
+                                    </ToolTipService.ToolTip>
+                                </Button>
+                                <Button
+                                    x:Name="TogglePaneButton"
+                                    Style="{TemplateBinding PaneToggleButtonStyle}"
+                                    AutomationProperties.LandmarkType="Navigation"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.PaneToggleButtonVisibility}"
+                                    VerticalAlignment="Top">
+                                    <TextBlock
+                                        x:Name="PaneTitleTextBlock" 
+                                        Grid.Column="0"
+                                        Text="{TemplateBinding PaneTitle}"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource NavigationViewItemHeaderTextStyle}"/>
+                                </Button>
+                            </Grid>
+
+                        </Grid>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel x:Name="TopNavArea" Background="{ThemeResource NavigationViewTopPaneBackground}" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Canvas.ZIndex="1" XYFocusKeyboardNavigation="Enabled">
+
+                                <Grid x:Name="TopNavTopPadding"
+                                      Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.TopPadding}"
+                                      Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.TopPaneVisibility}"/>
+
+                                <Grid x:Name="TopNavGrid" 
+                                      Height="{ThemeResource NavigationViewTopPaneHeight}"
+                                      Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.TopPaneVisibility}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition x:Name="BackButtonPlaceholderOnTopNav" Width="{ThemeResource NavigationBackButtonWidth}"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*" MinWidth="48"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid 
+                                        x:Name="TopNavLeftPadding" 
+                                        Grid.Column="1"
+                                        Width="0"/>
+
+                                    <ContentControl
+                                        x:Name="PaneHeaderOnTopPane"
+                                        IsTabStop="False"
+                                        VerticalContentAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        Grid.Column="2"/>
+
+                                    <!-- Top nav list -->
+                                    <NavigationViewList AutomationProperties.LandmarkType="Navigation" x:Name="TopNavMenuItemsHost" Grid.Column="3" SelectionMode="Single" IsItemClickEnabled="True" ItemTemplate="{TemplateBinding MenuItemTemplate}" ItemTemplateSelector="{TemplateBinding MenuItemTemplateSelector}" ItemContainerStyle="{TemplateBinding MenuItemContainerStyle}" ItemContainerStyleSelector="{TemplateBinding MenuItemContainerStyleSelector}" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SingleSelectionFollowsFocus="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.SingleSelectionFollowsFocus}">
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <ItemsStackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                        <ListView.ItemContainerTransitions>
+                                            <TransitionCollection>
+                                                <EntranceThemeTransition/>
+                                                <RepositionThemeTransition/>
+                                            </TransitionCollection>
+                                        </ListView.ItemContainerTransitions>
+                                    </NavigationViewList>
+
+                                    <Button 
+                                        x:Name="TopNavOverflowButton"
+                                        Grid.Column="4"
+
+                                        Content="More"
+                                        Style="{StaticResource NavigationViewOverflowButtonStyleWhenPaneOnTop}"
+                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.OverflowButtonVisibility}">
+
+                                        <Button.Flyout>
+                                            <Flyout Placement="Bottom">
+                                                <Flyout.FlyoutPresenterStyle>
+                                                    <Style TargetType="FlyoutPresenter">
+                                                        <Setter Property="Padding" Value="0,8"/>
+                                                        <!-- Set negative top margin to make the flyout align exactly with the button -->
+                                                        <Setter Property="Margin" Value="0,-4,0,0"/>
+                                                    </Style>
+                                                </Flyout.FlyoutPresenterStyle>
+                                                <NavigationViewList x:Name="TopNavMenuItemsOverflowHost" ItemTemplate="{TemplateBinding MenuItemTemplate}" ItemTemplateSelector="{TemplateBinding MenuItemTemplateSelector}" ItemContainerStyle="{TemplateBinding MenuItemContainerStyle}" ItemContainerStyleSelector="{TemplateBinding MenuItemContainerStyleSelector}" SingleSelectionFollowsFocus="False" IsItemClickEnabled="True">
+                                                    <ListView.ItemContainerTransitions>
+                                                        <TransitionCollection/>
+                                                    </ListView.ItemContainerTransitions>
+                                                </NavigationViewList>
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+
+                                    <ContentControl
+                                        x:Name="PaneCustomContentOnTopPane"
+                                        IsTabStop="False"
+                                        VerticalContentAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        Grid.Column="5"/>
+
+                                    <Grid
+                                        x:Name="TopPaneAutoSuggestArea"
+                                        Height="{ThemeResource NavigationViewTopPaneHeight}"
+                                        Grid.Column="6">
+
+                                        <ContentControl
+                                            x:Name="TopPaneAutoSuggestBoxPresenter"
+                                            Margin="12,0,12,0"
+                                            MinWidth="{TemplateBinding CompactPaneLength}"
+                                            IsTabStop="False"
+                                            HorizontalContentAlignment="Stretch"
+                                            VerticalContentAlignment="Center"/>
+                                    </Grid>
+
+                                    <ContentControl
+                                        x:Name="PaneFooterOnTopPane"
+                                        IsTabStop="False"
+                                        VerticalContentAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        Grid.Column="7"/>
+                                    <NavigationViewItem x:Name="SettingsTopNavPaneItem" Style="{ThemeResource NavigationViewSettingsItemStyleWhenOnTopPane}" Grid.Column="8" Icon="Setting"/>
+
+                                </Grid>
+                                <Border
+                                    x:Name="TopNavContentOverlayAreaGrid"
+                                    Child="{TemplateBinding ContentOverlay}"/>
+                            </StackPanel>
+
+                            <SplitView
+                                x:Name="RootSplitView"
+                                Background="{TemplateBinding Background}"
+                                CompactPaneLength="{TemplateBinding CompactPaneLength}"
+                                DisplayMode="Inline"
+                                IsPaneOpen="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPaneOpen, Mode=TwoWay}"
+                                IsTabStop="False"
+                                OpenPaneLength="{TemplateBinding OpenPaneLength}"
+                                PaneBackground="{ThemeResource NavigationViewDefaultPaneBackground}"
+                                Grid.Row="1">
+
+                                <SplitView.Pane>
+                                    <Grid 
+                                        x:Name="PaneContentGrid"
+                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.LeftPaneVisibility}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="0"/>
+                                            <!-- above button margin + back button space -->
+                                            <RowDefinition x:Name="PaneContentGridToggleButtonRow" Height="Auto"/>
+                                            <RowDefinition Height="8"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="0"/>
+                                            <!-- above list margin -->
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="8"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid x:Name="ContentPaneTopPadding"
+                                              Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.TopPadding}"/>
+
+                                        <Grid Grid.Row="2" Height="{StaticResource PaneToggleButtonHeight}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{ThemeResource PaneToggleButtonWidth}"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <ContentControl
+                                                x:Name="PaneHeaderContentBorder"
+                                                IsTabStop="False"
+                                                VerticalContentAlignment="Stretch"
+                                                HorizontalContentAlignment="Stretch"
+                                                IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OverlayVisible, Converter={StaticResource InvertedBooleanConverter}}"
+                                                Grid.Column="1"/>
+                                        </Grid>
+
+                                        <Grid
+                                            x:Name="AutoSuggestArea"
+                                            Grid.Row="4"
+                                            Height="{TemplateBinding CompactPaneLength}"
+                                            VerticalAlignment="Center">
+
+                                            <ContentControl
+                                                x:Name="PaneAutoSuggestBoxPresenter"
+                                                Margin="{ThemeResource NavigationViewAutoSuggestBoxMargin}"
+                                                IsTabStop="False"
+                                                HorizontalContentAlignment="Stretch"
+                                                VerticalContentAlignment="Center"
+                                                IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OverlayVisible, Converter={StaticResource InvertedBooleanConverter}}"/>
+
+                                            <Button
+                                                x:Name="PaneAutoSuggestButton"
+                                                Visibility="Collapsed"
+                                                Style="{ThemeResource NavigationViewPaneSearchButtonStyle}"
+                                                Width="{TemplateBinding CompactPaneLength}"
+                                                IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OverlayVisible, Converter={StaticResource InvertedBooleanConverter}}"/>
+                                        </Grid>
+
+                                        <ContentControl
+                                            x:Name="PaneCustomContentBorder"
+                                            IsTabStop="False"
+                                            VerticalContentAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch"
+                                            Grid.Row="5"
+                                                IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OverlayVisible, Converter={StaticResource InvertedBooleanConverter}}"/>
+
+                                        <!-- Left nav list -->
+                                        <NavigationViewList
+                                            x:Name="MenuItemsHost"
+                                            Grid.Row="7"
+                                            Margin="0,0,0,20"
+                                            SelectionMode="Single"
+                                            IsItemClickEnabled="True"
+                                            HorizontalAlignment="Stretch"
+                                            SelectedItem="{TemplateBinding SelectedItem}"
+                                            ItemTemplate="{TemplateBinding MenuItemTemplate}"
+                                            ItemTemplateSelector="{TemplateBinding MenuItemTemplateSelector}"
+                                            ItemContainerStyle="{TemplateBinding MenuItemContainerStyle}"
+                                            ItemContainerStyleSelector="{TemplateBinding MenuItemContainerStyleSelector}"
+                                            SingleSelectionFollowsFocus="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.SingleSelectionFollowsFocus}"
+                                            IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OverlayVisible, Converter={StaticResource InvertedBooleanConverter}}"/>
+
+                                        <ContentControl
+                                            x:Name="FooterContentBorder"
+                                            IsTabStop="False"
+                                            VerticalContentAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch"
+                                            IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OverlayVisible, Converter={StaticResource InvertedBooleanConverter}}"
+                                            Grid.Row="8"/>
+                                        <NavigationViewItem
+                                            x:Name="SettingsNavPaneItem"
+                                            Grid.Row="9"
+                                            Icon="Setting"
+                                            Style="{ThemeResource NavigationViewItemStyle}"
+                                            IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OverlayVisible, Converter={StaticResource InvertedBooleanConverter}}"
+                                            AutomationProperties.ItemType="Button"/>
+
+                                        <Grid
+                                            x:Name="OverlayGrid"
+                                            Grid.RowSpan="11"
+                                            Background="{ThemeResource OverlayBackgroundColorBrush}"
+                                            Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OverlayVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    </Grid>
+                                </SplitView.Pane>
+
+                                <SplitView.Content>
+                                    <Grid x:Name="ContentGrid">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid x:Name="ContentTopPadding"
+                                              Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.TopPadding}"
+                                              Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.LeftPaneVisibility}"/>
+
+                                        <ContentControl
+                                            x:Name="HeaderContent"
+                                            Grid.Row="1"
+                                            MinHeight="{StaticResource PaneToggleButtonHeight}"
+                                            IsTabStop="False"
+                                            Content="{TemplateBinding Header}"
+                                            ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                            VerticalContentAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch"
+                                            Style="{StaticResource NavigationViewTitleHeaderContentControlTextStyle}"
+                                            IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OverlayVisible, Converter={StaticResource InvertedBooleanConverter}}"/>
+
+                                        <ContentPresenter
+                                            AutomationProperties.LandmarkType="Main"
+                                            Grid.RowSpan="3"
+                                            Content="{TemplateBinding Content}"/>
+                                    </Grid>
+                                </SplitView.Content>
+                            </SplitView>
+
+                        </Grid>
+
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="PaneToggleButtonStyle">
+            <Setter.Value>
+                <Style TargetType="Button">
+                    <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}"/>
+                    <Setter Property="MinHeight" Value="48"/>
+                    <Setter Property="MinWidth" Value="48"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="VerticalAlignment" Value="Top"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Background" Value="{ThemeResource NavigationViewItemBackground}"/>
+                    <Setter Property="Foreground" Value="{ThemeResource NavigationViewItemForeground}"/>
+                    <Setter Property="BorderThickness" Value="{ThemeResource NavigationViewToggleBorderThickness}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid
+                                    x:Name="LayoutRoot"
+                                    MinWidth="{TemplateBinding MinWidth}"
+                                    MinHeight="{TemplateBinding MinHeight}"
+                                    Margin="{TemplateBinding Padding}"
+                                    Background="{TemplateBinding Background}"
+                                    HorizontalAlignment="Stretch">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{ThemeResource PaneToggleButtonWidth}"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="PointerStates">
+                                            <VisualState x:Name="Normal"/>
+                                            <VisualState x:Name="PointerOver">
+                                                <VisualState.Setters>
+                                                    <Setter Target="LayoutRoot.(RevealBrush.State)" Value="PointerOver"/>
+                                                    <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundPointerOver}"/>
+                                                    <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushPointerOver}"/>
+                                                    <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundPointerOver}"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="Pressed">
+                                                <VisualState.Setters>
+                                                    <Setter Target="LayoutRoot.(RevealBrush.State)" Value="Pressed"/>
+                                                    <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundPressed}"/>
+                                                    <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushPressed}"/>
+                                                    <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundPressed}"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="Selected">
+                                                <VisualState.Setters>
+                                                    <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundSelected}"/>
+                                                    <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushSelected}"/>
+                                                    <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundSelected}"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="PointerOverSelected">
+                                                <VisualState.Setters>
+                                                    <Setter Target="LayoutRoot.(RevealBrush.State)" Value="PointerOver"/>
+                                                    <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundSelectedPointerOver}"/>
+                                                    <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushSelectedPointerOver}"/>
+                                                    <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundSelectedPointerOver}"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="PressedSelected">
+                                                <VisualState.Setters>
+                                                    <Setter Target="LayoutRoot.(RevealBrush.State)" Value="Pressed"/>
+                                                    <Setter Target="LayoutRoot.Background" Value="{ThemeResource NavigationViewItemBackgroundSelectedPressed}"/>
+                                                    <Setter Target="RevealBorder.BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrushSelectedPressed}"/>
+                                                    <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource NavigationViewItemForegroundSelectedPressed}"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                        <VisualStateGroup x:Name="DisabledStates">
+                                            <VisualState x:Name="Enabled"/>
+                                            <VisualState x:Name="Disabled">
+                                                <VisualState.Setters>
+                                                    <Setter Target="LayoutRoot.Opacity" Value="{ThemeResource ListViewItemDisabledThemeOpacity}"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                        <VisualStateGroup x:Name="PaneStates">
+                                            <VisualState x:Name="NotClosedCompact"/>
+                                            <VisualState x:Name="ClosedCompact">
+                                                <VisualState.Setters>
+                                                    <Setter Target="RevealBorder.HorizontalAlignment" Value="Left"/>
+                                                    <Setter Target="RevealBorder.Width" Value="{Binding CompactPaneLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                        <VisualStateGroup x:Name="IconStates">
+                                            <VisualState x:Name="IconVisible"/>
+                                            <VisualState x:Name="IconCollapsed">
+                                                <VisualState.Setters>
+                                                    <Setter Target="IconBox.Visibility" Value="Collapsed"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+
+                                    <Viewbox
+                                        x:Name="IconBox"
+                                        Width="16"
+                                        Height="16"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Margin="8,0,0,0"
+                                        AutomationProperties.AccessibilityView="Raw">
+
+                                        <TextBlock
+                                            x:Name="Icon"
+                                            Text="&#xE700;"
+                                            FontSize="{TemplateBinding FontSize}"
+                                            AutomationProperties.AccessibilityView="Raw"/>
+
+                                    </Viewbox>
+
+                                    <ContentPresenter
+                                        x:Name="ContentPresenter"
+                                        VerticalContentAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        FontSize="{TemplateBinding FontSize}"
+                                        Grid.Column="1"
+                                        AutomationProperties.AccessibilityView="Raw"/>
+
+                                    <Border
+                                        x:Name="RevealBorder"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Grid.ColumnSpan="2"/>
+
+                                </Grid>
+
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

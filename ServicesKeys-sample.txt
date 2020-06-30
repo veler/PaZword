@@ -1,0 +1,59 @@
+# -----------------------------------------------------------------------------------------
+# THIS FILE CONTAINS DEVELOPER'S INFORMATION TO ENABLE SOME FEATURE OF THE PROJECT
+# THAT REQUIRE THIRD-PARTY SERVICES.
+# TO USE IT, RENAME THIS FILE TO "ServicesKeys.txt". THIS NEW FILE WILL BE IGNORED BY GIT.
+#
+# WHEN YOU WILL BUILD THIS SOLUTION, THE DATA STORED AS CONSTANTS IN THE APPLICATION.
+#
+# THE FORMAT OF THE FILE IS THE FOLLOWING :
+# 1. USE A # AT THE BEGINNING OF A LINE TO MAKE A COMMENT.
+# 2. TO DEFINE AN UNCRYPTED DATA, TYPE A LINE LIKE "Constant_Name:data".
+#    ONE LINE = ONE DATA. DO NOT PUT WHITESPACE IN THE CONSTANT NAME.
+# -----------------------------------------------------------------------------------------
+
+
+
+# -----------------------------------------------------------------------------------------
+# DropBox application identifiers used to synchronize data with the cloud.
+# The application should have access to the user's application folder.
+# -----------------------------------------------------------------------------------------
+
+DropBoxAppKey:my app key
+
+DropBoxRedirectUri:https://localhost/authorize
+
+
+
+# -----------------------------------------------------------------------------------------
+# OneDrive application identifiers used to synchronize data with the cloud.
+# Create your own here: https://aka.ms/appregistrations
+# The application should support the scopes "User.Read", "User.ReadBasic.All" and "Files.ReadWrite.AppFolder".
+# -----------------------------------------------------------------------------------------
+
+OneDriveClientId:my client id
+
+OneDriveRedirectUri:https://login.microsoftonline.com/common/oauth2/nativeclient
+
+
+
+# -----------------------------------------------------------------------------------------
+# RiteKit.com Client Id
+# -----------------------------------------------------------------------------------------
+
+RiteKitClientId:my client id
+
+
+
+# -----------------------------------------------------------------------------------------
+# Email address used for sending logs
+# -----------------------------------------------------------------------------------------
+
+SupportEmailAddress:support@contoso.com
+
+
+
+# -----------------------------------------------------------------------------------------
+# Url of the service that sends the Two Factor Authentication pin to the user by email
+# -----------------------------------------------------------------------------------------
+
+TwoFactorAuthenticationServiceUrl:https://contoso.com/service

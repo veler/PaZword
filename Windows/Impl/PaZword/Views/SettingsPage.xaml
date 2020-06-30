@@ -1,0 +1,555 @@
+﻿<Page
+    x:Name="RootPage"
+    x:Class="PaZword.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PaZword.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:appmodel="using:Windows.ApplicationModel"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ui="using:PaZword.Core.UI"
+    xmlns:converters="using:PaZword.Core.UI.Converters"
+    mc:Ignorable="d"
+    DataContext="{Binding Path=SettingsPage, Source={StaticResource ViewModelLocator}}">
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" IsInverted="True"/>
+        <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
+        <converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
+    </Page.Resources>
+
+    <Grid>
+        <Border Background="{ThemeResource AccountDetailsBackground}" Margin="0,-228,0,0"/>
+        <controls:TabView
+            Margin="24,30,0,0"
+            TabWidthBehavior="Actual"
+            CanCloseTabs="False"
+            CanDragItems="False"
+            CanReorderItems="False"
+            Background="Transparent">
+            <controls:TabViewItem
+                Header="{x:Bind ViewModel.Strings.General}"
+                Icon="Setting"
+                AutomationProperties.ItemType="TabItem"
+                AutomationProperties.Name="{x:Bind ViewModel.Strings.General}">
+
+                <ScrollViewer
+                    Margin="0,24,0,0">
+                    <ScrollViewer.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition IsStaggeringEnabled="False" FromHorizontalOffset="30" FromVerticalOffset="0"/>
+                        </TransitionCollection>
+                    </ScrollViewer.Transitions>
+                    <StackPanel>
+                        <!-- Theme -->
+                        <TextBlock
+                            Margin="0,24,0,0"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.ThemeTitle}"/>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.ThemeDescription}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <StackPanel
+                            Margin="0,10,0,0">
+                            <RadioButton
+                                HorizontalAlignment="Left"
+                                MaxWidth="500"
+                                Content="{x:Bind ViewModel.Strings.ThemeLight}"
+                                AutomationProperties.FullDescription="{x:Bind ViewModel.Strings.ThemeDescription}"
+                                IsChecked="{x:Bind ViewModel.Theme, Mode=TwoWay, ConverterParameter='Light', Converter={StaticResource EnumToBooleanConverter}}"/>
+                            <RadioButton
+                                HorizontalAlignment="Left"
+                                MaxWidth="500"
+                                Content="{x:Bind ViewModel.Strings.ThemeDark}"
+                                AutomationProperties.FullDescription="{x:Bind ViewModel.Strings.ThemeDescription}"
+                                IsChecked="{x:Bind ViewModel.Theme, Mode=TwoWay, ConverterParameter='Dark', Converter={StaticResource EnumToBooleanConverter}}"/>
+                            <RadioButton
+                                HorizontalAlignment="Left"
+                                MaxWidth="500"
+                                Content="{x:Bind ViewModel.Strings.ThemeDefault}"
+                                AutomationProperties.FullDescription="{x:Bind ViewModel.Strings.ThemeDescription}"
+                                IsChecked="{x:Bind ViewModel.Theme, Mode=TwoWay, ConverterParameter='Default', Converter={StaticResource EnumToBooleanConverter}}"/>
+                        </StackPanel>
+                        <TextBlock HorizontalAlignment="Left">
+                            <Hyperlink NavigateUri="ms-settings:personalization-colors">
+                                <Run Text="{x:Bind ViewModel.Strings.ThemeConfigure}" />
+                            </Hyperlink>
+                        </TextBlock>
+                        <Border Margin="0,24,0,0"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:TabViewItem>
+
+            <controls:TabViewItem
+                Header="{x:Bind ViewModel.Strings.Synchronization}"
+                Icon="Sync"
+                AutomationProperties.ItemType="TabItem"
+                AutomationProperties.Name="{x:Bind ViewModel.Strings.Synchronization}">
+                <ScrollViewer
+                    Margin="0,24,0,0">
+                    <ScrollViewer.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition IsStaggeringEnabled="False" FromHorizontalOffset="30" FromVerticalOffset="0"/>
+                        </TransitionCollection>
+                    </ScrollViewer.Transitions>
+                    <StackPanel>
+                        <!-- Manage cloud storage service account -->
+                        <TextBlock
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.CloudStorageServiceTitle}"/>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.CloudStorageServiceDescription}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <ItemsControl
+                            ItemsSource="{x:Bind ViewModel.RemoteStorageProviders}"
+                            Visibility="{x:Bind ViewModel.IsAuthenticatedToRemoteStorageProvider, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}"
+                            Margin="0,24,0,0"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button
+                                        Padding="8"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Margin="0,0,0,8"
+                                        Command="{Binding Path=DataContext.SignInToRemoteStorageServiceCommand, ElementName=RootPage}"
+                                        CommandParameter="{Binding}"
+                                        AutomationProperties.Name="{Binding Value.DisplayName}"
+                                        AutomationProperties.FullDescription="{Binding Path=DataContext.FaqRemoteStorageProvider, ElementName=RootPage}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image
+                                                Source="{Binding Value.ProviderIcon}"
+                                                Height="24"
+                                                Width="24"/>
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Margin="8,0,0,0"
+                                                TextAlignment="Center"
+                                                TextWrapping="WrapWholeWords"
+                                                Text="{Binding Value.DisplayName}"/>
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <StackPanel
+                            Margin="0,24,0,0"
+                            Orientation="Horizontal"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"
+                            Visibility="{x:Bind ViewModel.IsAuthenticatedToRemoteStorageProvider, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                            <Ellipse
+                                Height="48"
+                                Width="48"
+                                VerticalAlignment="Stretch" 
+                                HorizontalAlignment="Stretch"
+                                DataContext="{x:Bind ViewModel.CurrentAccountProfilePicture, Mode=OneWay}">
+                                <Ellipse.Fill>
+                                    <ImageBrush
+                                        ImageSource="{Binding Result}"
+                                        Stretch="UniformToFill"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <StackPanel
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center">
+                                <TextBlock
+                                    Style="{ThemeResource BodyTextBlockStyle}"
+                                    DataContext="{x:Bind ViewModel.CurrentAccountUserName, Mode=OneWay}"
+                                    Text="{Binding Result}"/>
+                                <TextBlock
+                                    Style="{ThemeResource CaptionTextBlockStyle}"
+                                    DataContext="{x:Bind ViewModel.CurrentAccountEmailAddress, Mode=OneWay}"
+                                    Text="{Binding Result}"/>
+                                <TextBlock
+                                    Style="{ThemeResource CaptionTextBlockStyle}"
+                                    Text="{x:Bind ViewModel.CurrentAccountProviderName, Mode=OneWay}"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <HyperlinkButton
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Left"
+                            Content="{x:Bind ViewModel.Strings.SignOut}"
+                            Visibility="{x:Bind ViewModel.IsAuthenticatedToRemoteStorageProvider, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+                            Command="{x:Bind ViewModel.SignOutCommand, Mode=OneWay}">
+                        </HyperlinkButton>
+
+                        <!-- Synchronize -->
+                        <TextBlock
+                            Margin="0,24,0,0"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.SyncCloudTitle}"/>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.SyncCloudDescription}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <ToggleSwitch
+                            Margin="0,10,0,0"
+                            Header="{x:Bind ViewModel.Strings.SyncCloudSetting}"
+                            IsOn="{x:Bind ViewModel.SynchronizeCloud, Mode=TwoWay}"
+                            IsEnabled="{x:Bind ViewModel.IsAuthenticatedToRemoteStorageProvider, Mode=OneWay}"
+                            AutomationProperties.FullDescription="{x:Bind ViewModel.Strings.SyncCloudDescription}"/>
+                        <Button
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Left"
+                            MaxWidth="500"
+                            Content="{x:Bind ViewModel.Strings.SyncNow}"
+                            IsEnabled="{x:Bind ViewModel.IsAuthenticatedToRemoteStorageProvider, Mode=OneWay}"
+                            Command="{x:Bind ViewModel.SyncNowCommand}"/>
+
+                        <!-- Frequently Asked Questions -->
+                        <controls:MarkdownTextBlock
+                            Margin="0,48,0,0"
+                            DataContext="{x:Bind ViewModel.FaqRemoteStorageProvider, Mode=OneWay}"
+                            Text="{Binding Result}"
+                            MaxWidth="500"
+                            Background="Transparent"
+                            IsTextSelectionEnabled="True"
+                            HorizontalAlignment="Left">
+                            <i:Interaction.Behaviors>
+                                <ui:EventToCommandBehavior 
+                                        Event="LinkClicked"
+                                        Command="{x:Bind ViewModel.MarkdownLinkClickedCommand}" 
+                                        PassArguments="True"/>
+                            </i:Interaction.Behaviors>
+                        </controls:MarkdownTextBlock>
+                        <Border Margin="0,24,0,0"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:TabViewItem>
+
+            <controls:TabViewItem
+                Header="{x:Bind ViewModel.Strings.Security}"
+                Icon="Permissions"
+                AutomationProperties.ItemType="TabItem"
+                AutomationProperties.Name="{x:Bind ViewModel.Strings.Security}">
+                <ScrollViewer
+                    Margin="0,24,0,0">
+                    <ScrollViewer.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition IsStaggeringEnabled="False" FromHorizontalOffset="30" FromVerticalOffset="0"/>
+                        </TransitionCollection>
+                    </ScrollViewer.Transitions>
+                    <StackPanel>
+                        <!-- Warning to user -->
+                        <Border
+                            BorderThickness="2"
+                            BorderBrush="{ThemeResource WarningBorderColorBrush}"
+                            Background="{ThemeResource WarningBackgroundColorBrush}"
+                            Padding="10"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,24"
+                            Visibility="{x:Bind ViewModel.ShowSecurityWarning, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <TextBlock
+                                Style="{ThemeResource BodyTextBlockStyle}"
+                                Text="{x:Bind ViewModel.Strings.WarningNoSecurity}"
+                                TextWrapping="WrapWholeWords"
+                                HorizontalAlignment="Left"/>
+                        </Border>
+
+                        <!-- Windows Hello -->
+                        <TextBlock
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.WindowsHelloTitle}"/>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.WindowsHelloDescription}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <ToggleSwitch
+                            Margin="0,10,0,0"
+                            Header="{x:Bind ViewModel.Strings.WindowsHelloSetting, Mode=OneWay}"
+                            IsOn="{x:Bind ViewModel.UseWindowsHello, Mode=TwoWay}"
+                            IsEnabled="{x:Bind ViewModel.WindowsHelloIsEnabled, Mode=OneWay}"
+                            AutomationProperties.FullDescription="{x:Bind ViewModel.Strings.WindowsHelloDescription}"/>
+                        <TextBlock HorizontalAlignment="Left">
+                            <Hyperlink NavigateUri="ms-settings:signinoptions">
+                                <Run Text="{x:Bind ViewModel.Strings.WindowsHelloConfigure}" />
+                            </Hyperlink>
+                        </TextBlock>
+
+                        <!-- Two factor authentication -->
+                        <TextBlock
+                            Margin="0,24,0,0"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.TwoFactorTitle}"/>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.TwoFactorDescription}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <ToggleSwitch
+                            Margin="0,10,0,0"
+                            Header="{x:Bind ViewModel.Strings.TwoFactorSetting}"
+                            IsOn="{x:Bind ViewModel.UseTwoFactorAuthentication, Mode=TwoWay}"
+                            AutomationProperties.FullDescription="{x:Bind ViewModel.Strings.TwoFactorDescription}"/>
+
+                        <!-- Ask secret key occasionally -->
+                        <TextBlock
+                            Margin="0,24,0,0"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.AskSecretKeyOccasionallyTitle}"/>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.AskSecretKeyOccasionallyDescription}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <ToggleSwitch
+                            Margin="0,10,0,0"
+                            Header="{x:Bind ViewModel.Strings.AskSecretKeyOccasionallySetting}"
+                            IsOn="{x:Bind ViewModel.AskSecretKeyOccasionally, Mode=TwoWay}"
+                            AutomationProperties.FullDescription="{x:Bind ViewModel.Strings.AskSecretKeyOccasionallyDescription}"/>
+
+                        <!-- Lock after a certain time of inactivity -->
+                        <TextBlock
+                            Margin="0,24,0,0"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.LockAfterInactivityTitle}"/>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.LockAfterInactivityDescription}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <ComboBox
+                            Margin="0,10,0,0"
+                            Header="{x:Bind ViewModel.Strings.LockAfterInactivitySetting}"
+                            AutomationProperties.FullDescription="{x:Bind ViewModel.Strings.LockAfterInactivityDescription}"
+                            SelectedIndex="{x:Bind ViewModel.LockAfterInactivity, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}, UpdateSourceTrigger=PropertyChanged}">
+                            <ComboBoxItem Content="{x:Bind ViewModel.Strings.LockAfterInactivity_FiveMinutes}"/>
+                            <ComboBoxItem Content="{x:Bind ViewModel.Strings.LockAfterInactivity_TenMinutes}"/>
+                            <ComboBoxItem Content="{x:Bind ViewModel.Strings.LockAfterInactivity_FifteenMinutes}"/>
+                            <ComboBoxItem Content="{x:Bind ViewModel.Strings.LockAfterInactivity_ThirtyMinutes}"/>
+                            <ComboBoxItem Content="{x:Bind ViewModel.Strings.LockAfterInactivity_OneHour}"/>
+                            <ComboBoxItem Content="{x:Bind ViewModel.Strings.LockAfterInactivity_Never}"/>
+                        </ComboBox>
+                        <Border Margin="0,24,0,0"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:TabViewItem>
+
+            <controls:TabViewItem
+                Header="{x:Bind ViewModel.Strings.PrivacyStatement}"
+                Icon="Globe"
+                AutomationProperties.ItemType="TabItem"
+                AutomationProperties.Name="{x:Bind ViewModel.Strings.PrivacyStatement}">
+                <ScrollViewer
+                    Margin="0,24,0,0">
+                    <ScrollViewer.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition IsStaggeringEnabled="False" FromHorizontalOffset="30" FromVerticalOffset="0"/>
+                        </TransitionCollection>
+                    </ScrollViewer.Transitions>
+                    <StackPanel>
+                        <!-- Privacy policy -->
+                        <controls:MarkdownTextBlock
+                            Margin="0,24,0,0"
+                            DataContext="{x:Bind ViewModel.PrivacyStatement, Mode=OneWay}"
+                            Text="{Binding Result}"
+                            MaxWidth="500"
+                            Background="Transparent"
+                            IsTextSelectionEnabled="True"
+                            HorizontalAlignment="Left">
+                            <i:Interaction.Behaviors>
+                                <ui:EventToCommandBehavior 
+                                        Event="LinkClicked"
+                                        Command="{x:Bind ViewModel.MarkdownLinkClickedCommand}" 
+                                        PassArguments="True"/>
+                            </i:Interaction.Behaviors>
+                        </controls:MarkdownTextBlock>
+                        <Border Margin="0,24,0,0"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:TabViewItem>
+
+            <controls:TabViewItem
+                Header="{x:Bind ViewModel.Strings.About}"
+                Icon="Account"
+                AutomationProperties.ItemType="TabItem"
+                AutomationProperties.Name="{x:Bind ViewModel.Strings.About}">
+                <ScrollViewer
+                    Margin="0,24,0,0">
+                    <ScrollViewer.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition IsStaggeringEnabled="False" FromHorizontalOffset="30" FromVerticalOffset="0"/>
+                        </TransitionCollection>
+                    </ScrollViewer.Transitions>
+                    <StackPanel>
+                        <TextBlock
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind appmodel:Package.Current.DisplayName}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Version}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Copyright}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.MadeWithLove}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <StackPanel
+                            Margin="0,10,0,0"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                Style="{ThemeResource BodyTextBlockStyle}"
+                                Text="{x:Bind ViewModel.Strings.DiscoverOtherApps}"/>
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                Style="{ThemeResource BodyTextBlockStyle}"
+                                Text=":"/>
+                            <TextBlock
+                                Margin="5,0,0,0">
+                                <Hyperlink NavigateUri="https://www.velersoftware.com">
+                                    <Run Text="www.velersoftware.com" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <TextBlock
+                            Margin="0,24,0,0"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.OpenSource}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Left">
+                            <Hyperlink NavigateUri="https://github.com/veler/pazword">
+                                <Run Text="github.com/veler/pazword" />
+                            </Hyperlink>
+                        </TextBlock>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Left">
+                            <Hyperlink NavigateUri="https://github.com/veler/pazword/issues/new/choose">
+                                <Run Text="{x:Bind ViewModel.Strings.SubmitFeedback}" />
+                            </Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock
+                            Margin="0,24,0,0"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.Contributors}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.ContributorList}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"
+                            TextWrapping="WrapWholeWords"/>
+
+                        <TextBlock
+                            Margin="0,24,0,0"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.ThirdPartyServices}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Left">
+                            <Hyperlink NavigateUri="https://ritekit.com/api-demo/company-logo">
+                                <Run Text="RiteKit" />
+                            </Hyperlink>
+                        </TextBlock>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Left">
+                            <Hyperlink NavigateUri="https://clearbit.com">
+                                <Run Text="Clearbit" />
+                            </Hyperlink>
+                        </TextBlock>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Left">
+                            <Hyperlink NavigateUri="https://monitor.firefox.com/">
+                                <Run Text="Firefox Monitor" />
+                            </Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock
+                            Margin="0,24,0,0"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.ThirdPartySoftware}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <TextBox
+                            Margin="0,10,0,0"
+                            IsReadOnly="True"
+                            Height="300"
+                            Width="500"
+                            TextWrapping="Wrap"
+                            HorizontalAlignment="Left"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            DataContext="{x:Bind ViewModel.ThirdPartyNotices, Mode=OneWay}"
+                            Text="{Binding Result}"
+                            AutomationProperties.Name="{Binding Result}"/>
+
+                        <TextBlock
+                            Margin="0,24,0,0"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.License}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <TextBox
+                            Margin="0,10,0,0"
+                            IsReadOnly="True"
+                            Height="300"
+                            Width="500"
+                            TextWrapping="Wrap"
+                            HorizontalAlignment="Left"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            DataContext="{x:Bind ViewModel.License, Mode=OneWay}"
+                            Text="{Binding Result}"
+                            AutomationProperties.Name="{Binding Result}"/>
+
+                        <TextBlock
+                            Margin="0,24,0,0"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Strings.Logs}"
+                            MaxWidth="500"
+                            HorizontalAlignment="Left"/>
+                        <TextBox
+                            Margin="0,10,0,0"
+                            IsReadOnly="True"
+                            Height="300"
+                            Width="500"
+                            TextWrapping="Wrap"
+                            HorizontalAlignment="Left"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            Text="{x:Bind ViewModel.Logs, Mode=OneWay}"
+                            AutomationProperties.Name="{x:Bind ViewModel.Strings.Logs}"/>
+                        <Border Margin="0,24,0,0"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:TabViewItem>
+        </controls:TabView>
+    </Grid>
+</Page>

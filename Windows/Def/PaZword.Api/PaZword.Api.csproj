@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{21F96022-5F22-4FF2-BA82-5E7CA2CBC419}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>PaZword.Api</RootNamespace>
+    <AssemblyName>PaZword.Api</AssemblyName>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Collections\ConcurrentObservableCollection.cs" />
+    <Compile Include="Collections\PendingChange.cs" />
+    <Compile Include="Collections\PendingChangeType.cs" />
+    <Compile Include="Data\IDataManager.cs" />
+    <Compile Include="Data\IRemoteSynchronizationService.cs" />
+    <Compile Include="Data\ISerializationProvider.cs" />
+    <Compile Include="Data\SynchronizationResultEventArgs.cs" />
+    <Compile Include="IApp.cs" />
+    <Compile Include="IExactEquatable.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AccountData.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Services\IIconService.cs" />
+    <Compile Include="Services\IRecurrentTask.cs" />
+    <Compile Include="Services\IRecurrentTaskService.cs" />
+    <Compile Include="Services\RecurrentTaskEventArgs.cs" />
+    <Compile Include="Services\RecurrentTaskMetadata.cs" />
+    <Compile Include="Services\TaskRecurrency.cs" />
+    <Compile Include="Settings\InactivityTime.cs" />
+    <Compile Include="UI\IWindowManager.cs" />
+    <Compile Include="ViewModels\Data\AccountDataProviderMetadata.cs" />
+    <Compile Include="ViewModels\Data\IAccountDataViewModel.cs" />
+    <Compile Include="Models\IconMode.cs" />
+    <Compile Include="Models\UserDataBundle.cs" />
+    <Compile Include="Security\IEncryptionProvider.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="Security\ITwoFactorAuthProvider.cs" />
+    <Compile Include="Security\IWindowsHelloAuthProvider.cs" />
+    <Compile Include="Services\RemoteStorageProviderMetadata.cs" />
+    <Compile Include="Services\RemoteFileInfo.cs" />
+    <Compile Include="Settings\ISettingsProvider.cs" />
+    <Compile Include="Services\IRemoteStorageProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyInfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\SettingDefinition.cs" />
+    <Compile Include="Settings\SettingsDefinitions.cs" />
+    <Compile Include="UI\Controls\IEditableControl.cs" />
+    <Compile Include="UI\Controls\ValueCopiedEventArgs.cs" />
+    <Compile Include="ViewModels\Data\IAccountDataProvider.cs" />
+    <None Include="Properties\AssemblyInfo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfo.cs</LastGenOutput>
+    </None>
+    <EmbeddedResource Include="Properties\PaZword.Api.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

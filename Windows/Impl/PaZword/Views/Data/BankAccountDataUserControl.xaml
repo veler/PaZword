@@ -1,0 +1,198 @@
+﻿<UserControl
+    x:Class="PaZword.Views.Data.BankAccountDataUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PaZword.Views.Data"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:controls="using:PaZword.Core.UI.Controls"
+    xmlns:data="using:PaZword.Models.Data">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <RichTextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="0,10,5,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="{x:Bind ViewModel.BankNameFieldVisibility}">
+            <Paragraph>
+                <Run Text="{x:Bind ViewModel.Strings.BankName}"/>
+                <Run Text=":"/>
+            </Paragraph>
+        </RichTextBlock>
+        <controls:EditableTextBlock
+            Grid.Row="0"
+            Grid.Column="1"
+            IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+            Text="{x:Bind ((data:BankAccountData)ViewModel.Data).BankName, Mode=OneWay}"
+            TextEditing="{x:Bind ((data:BankAccountData)ViewModel.DataEditMode).BankName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PlaceholderText="{x:Bind ViewModel.Strings.BankName}"
+            Visibility="{x:Bind ViewModel.BankNameFieldVisibility}"/>
+
+        <RichTextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0,10,5,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="{x:Bind ViewModel.AccountHolderNameFieldVisibility}">
+            <Paragraph>
+                <Run Text="{x:Bind ViewModel.Strings.AccountHolderName}"/>
+                <Run Text=":"/>
+            </Paragraph>
+        </RichTextBlock>
+        <controls:EditableTextBlock
+            Grid.Row="1"
+            Grid.Column="1"
+            IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+            Text="{x:Bind ((data:BankAccountData)ViewModel.Data).AccountHolderName, Mode=OneWay}"
+            TextEditing="{x:Bind ((data:BankAccountData)ViewModel.DataEditMode).AccountHolderName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PlaceholderText="{x:Bind ViewModel.Strings.AccountHolderName}"
+            Visibility="{x:Bind ViewModel.AccountHolderNameFieldVisibility}"/>
+
+        <RichTextBlock
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="0,10,5,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="{x:Bind ViewModel.RoutingNumberFieldVisibility}">
+            <Paragraph>
+                <Run Text="{x:Bind ViewModel.Strings.RoutingNumber}"/>
+                <Run Text=":"/>
+            </Paragraph>
+        </RichTextBlock>
+        <controls:EditableTextBlock
+            Grid.Row="2"
+            Grid.Column="1"
+            IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+            Text="{x:Bind ((data:BankAccountData)ViewModel.Data).RoutingNumber, Mode=OneWay}"
+            TextEditing="{x:Bind ((data:BankAccountData)ViewModel.DataEditMode).RoutingNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PlaceholderText="{x:Bind ViewModel.Strings.RoutingNumber}"
+            Visibility="{x:Bind ViewModel.RoutingNumberFieldVisibility}"/>
+
+        <RichTextBlock
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="0,10,5,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="{x:Bind ViewModel.AccountNumberFieldVisibility}">
+            <Paragraph>
+                <Run Text="{x:Bind ViewModel.Strings.AccountNumber}"/>
+                <Run Text=":"/>
+            </Paragraph>
+        </RichTextBlock>
+        <controls:EditableTextBlock
+            Grid.Row="3"
+            Grid.Column="1"
+            IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+            Text="{x:Bind ((data:BankAccountData)ViewModel.Data).AccountNumber, Mode=OneWay}"
+            TextEditing="{x:Bind ((data:BankAccountData)ViewModel.DataEditMode).AccountNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PlaceholderText="{x:Bind ViewModel.Strings.AccountNumber}"
+            Visibility="{x:Bind ViewModel.AccountNumberFieldVisibility}"/>
+
+        <RichTextBlock
+            Grid.Row="4"
+            Grid.Column="0"
+            Margin="0,10,5,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="{x:Bind ViewModel.IbanNumberFieldVisibility}">
+            <Paragraph>
+                <Run Text="{x:Bind ViewModel.Strings.IbanNumber}"/>
+                <Run Text=":"/>
+            </Paragraph>
+        </RichTextBlock>
+        <controls:EditableTextBlock
+            Grid.Row="4"
+            Grid.Column="1"
+            IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+            Text="{x:Bind ((data:BankAccountData)ViewModel.Data).IbanNumber, Mode=OneWay}"
+            TextEditing="{x:Bind ((data:BankAccountData)ViewModel.DataEditMode).IbanNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PlaceholderText="{x:Bind ViewModel.Strings.IbanNumber}"
+            Visibility="{x:Bind ViewModel.IbanNumberFieldVisibility}"/>
+
+        <RichTextBlock
+            Grid.Row="5"
+            Grid.Column="0"
+            Margin="0,10,5,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="{x:Bind ViewModel.SwiftCodeFieldVisibility}">
+            <Paragraph>
+                <Run Text="{x:Bind ViewModel.Strings.SwiftCode}"/>
+                <Run Text=":"/>
+            </Paragraph>
+        </RichTextBlock>
+        <controls:EditableTextBlock
+            Grid.Row="5"
+            Grid.Column="1"
+            IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+            Text="{x:Bind ((data:BankAccountData)ViewModel.Data).SwiftCode, Mode=OneWay}"
+            TextEditing="{x:Bind ((data:BankAccountData)ViewModel.DataEditMode).SwiftCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PlaceholderText="{x:Bind ViewModel.Strings.SwiftCode}"
+            Visibility="{x:Bind ViewModel.SwiftCodeFieldVisibility}"/>
+
+        <RichTextBlock
+            Grid.Row="6"
+            Grid.Column="0"
+            Margin="0,10,5,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="{x:Bind ViewModel.PinFieldVisibility}">
+            <Paragraph>
+                <Run Text="{x:Bind ViewModel.Strings.Pin}"/>
+                <Run Text=":"/>
+            </Paragraph>
+        </RichTextBlock>
+        <Grid
+            Grid.Row="6"
+            Grid.Column="1"
+            VerticalAlignment="Top"
+            Visibility="{x:Bind ViewModel.PinFieldVisibility}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <controls:EditablePassword
+                x:Name="PinEditablePassword"
+                Grid.Column="0"
+                IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+                Text="{x:Bind ((data:BankAccountData)ViewModel.Data).Pin, Mode=OneWay}"
+                TextEditing="{x:Bind ((data:BankAccountData)ViewModel.DataEditMode).Pin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                PlaceholderText="{x:Bind ViewModel.Strings.Pin}"/>
+            <Button
+                Grid.Column="1"
+                VerticalAlignment="Top"
+                Margin="-8,4,8,0"
+                Height="32"
+                Visibility="{x:Bind ViewModel.IsEditing, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                ToolTipService.ToolTip="{x:Bind ViewModel.AccountPageStrings.GeneratePassword}"
+                AutomationProperties.Name="{x:Bind ViewModel.AccountPageStrings.GeneratePassword}"
+                Command="{x:Bind ViewModel.GeneratePasswordCommand}"
+                CommandParameter="{x:Bind PinEditablePassword}">
+                <SymbolIcon
+                    Symbol="Shuffle"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"/>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

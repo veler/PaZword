@@ -1,0 +1,29 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="SystemControlBackgroundAccentBrush" Color="{StaticResource SystemAccentColor}"/>
+    <SolidColorBrush x:Key="SystemControlDisabledAccentBrush" Color="{StaticResource SystemAccentColor}"/>
+    <SolidColorBrush x:Key="SystemControlForegroundAccentBrush" Color="{StaticResource SystemAccentColor}"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="{StaticResource SystemAccentColor}"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAltAccentBrush" Color="{StaticResource SystemAccentColor}"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentHighBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.9"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentLowBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.6"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentMediumBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.8"/>
+    <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.9"/>
+    <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.6"/>
+    <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.8"/>
+    <SolidColorBrush x:Key="SystemControlHyperlinkTextBrush" Color="{StaticResource SystemAccentColor}"/>
+    <SolidColorBrush x:Key="ContentDialogBorderThemeBrush" Color="{StaticResource SystemAccentColor}"/>
+    <SolidColorBrush x:Key="JumpListDefaultEnabledBackground" Color="{StaticResource SystemAccentColor}"/>
+
+    <AcrylicBrush x:Key="NavigationViewExpandedPaneBackground" BackgroundSource="HostBackdrop" TintColor="{StaticResource BackgroundAccentColor}" TintOpacity="0.6" FallbackColor="{StaticResource BackgroundAccentColor}"/>
+    <AcrylicBrush x:Key="NavigationViewDefaultPaneBackground" BackgroundSource="Backdrop" TintColor="{StaticResource BackgroundAccentColor}" TintOpacity="0.6" FallbackColor="{StaticResource BackgroundAccentColor}"/>
+
+    <SolidColorBrush x:Key="SignInBlurBackground" Color="{StaticResource BackgroundAccentColor}"/>
+
+    <Color x:Key="WarningBorderColor">#FFDBC11C</Color>
+    <SolidColorBrush x:Key="WarningBorderColorBrush" Color="{StaticResource WarningBorderColor}"/>
+
+    <Color x:Key="WarningBackgroundColor">#FFAA9716</Color>
+    <SolidColorBrush x:Key="WarningBackgroundColorBrush" Color="{StaticResource WarningBackgroundColor}"/>
+</ResourceDictionary>

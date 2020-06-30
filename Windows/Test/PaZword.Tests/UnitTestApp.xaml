@@ -1,0 +1,16 @@
+﻿<Application
+    x:Class="PaZword.Tests.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PaZword.Tests" 
+    xmlns:core="using:PaZword.Core">
+
+    <Application.Resources>
+        <!-- OK it's silly. Without this line, the Unit Test project crash, claiming
+        it fails to parse the XAML. The suspected reason is that App.xaml (in PaZword) is
+        somehow loaded by the unit test project, and that some magic makes that UnitTestApp.xaml 
+        expect to find the same resources than in App.xaml 
+        That said it's not verified, and no similar issue has been found on internet -->
+        <core:ViewModelLocator x:Key="ViewModelLocator" />
+    </Application.Resources>
+</Application>

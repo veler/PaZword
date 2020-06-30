@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{4CFBE0D5-28DF-485D-B9E0-5F5B72DA5C68}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>PaZword.Core</RootNamespace>
+    <AssemblyName>PaZword.Core</AssemblyName>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Arguments.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="CoreHelper.cs" />
+    <Compile Include="Data\DataManager.cs" />
+    <Compile Include="Data\RemoteSynchronizationService.cs" />
+    <Compile Include="Data\SerializationProvider.cs" />
+    <Compile Include="Json\SecureStringJsonConverter.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyInfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Security\EncryptionProvider.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\AdjacentGrouping.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\DefaultMatcherFactory.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\LinqExtensions.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Match.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\DateMatch.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\DateMatcher.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\DictionaryMatch.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\DictionaryMatcher.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\IMatcher.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\L33tDictionaryMatch.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\L33tMatcher.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\RegexMatcher.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\RepeatMatch.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\RepeatMatcher.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\SequenceMatch.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\SequenceMatcher.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\SpatialMatch.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Matcher\SpatialMatcher.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\PasswordScoring.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Utility.cs" />
+    <Compile Include="Security\PasswordStrengthEvaluator\Zxcvbn.cs" />
+    <Compile Include="Services\Dropbox\DropboxStorageProvider.cs" />
+    <Compile Include="Services\IconService.cs" />
+    <Compile Include="Services\RecurrentTaskService.cs" />
+    <Compile Include="Services\RecurrentTasks\InactivityDetectionRecurrentTask.cs" />
+    <Compile Include="StringExtensions.cs" />
+    <Compile Include="Security\TwoFactorAuthProvider.cs" />
+    <Compile Include="Security\WindowsHelloAuthProvider.cs" />
+    <Compile Include="ServicesKeys.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServicesKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Services\OneDrive\OneDriveStorageProvider.cs" />
+    <Compile Include="Settings\SettingsProvider.cs" />
+    <Compile Include="Threading\DisposableSempahore.cs" />
+    <Compile Include="Threading\TaskCompletionNotifier.cs" />
+    <Compile Include="Threading\TaskHelper.cs" />
+    <None Include="Properties\AssemblyInfo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfo.cs</LastGenOutput>
+    </None>
+    <EmbeddedResource Include="Properties\PaZword.Core.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Def\PaZword.Api\PaZword.Api.csproj">
+      <Project>{21f96022-5f22-4ff2-ba82-5e7ca2cbc419}</Project>
+      <Name>PaZword.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PaZword.Localization\PaZword.Localization.csproj">
+      <Project>{42435575-3544-469e-b695-adb60c08397e}</Project>
+      <Name>PaZword.Localization</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Dropbox.Api">
+      <Version>4.10.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Graph" Version="3.5.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.13.0" />
+    <PackageReference Include="ZXing.Net" Version="0.16.5" />
+    <PackageReference Include="ksemenenko.ColorThief" Version="1.1.1.4" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Security\PasswordStrengthEvaluator\Dictionaries\english.lst" />
+    <EmbeddedResource Include="Security\PasswordStrengthEvaluator\Dictionaries\female_names.lst" />
+    <EmbeddedResource Include="Security\PasswordStrengthEvaluator\Dictionaries\male_names.lst" />
+    <EmbeddedResource Include="Security\PasswordStrengthEvaluator\Dictionaries\passwords.lst" />
+    <EmbeddedResource Include="Security\PasswordStrengthEvaluator\Dictionaries\surnames.lst" />
+    <Content Include="ServicesKeys.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ServicesKeys.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

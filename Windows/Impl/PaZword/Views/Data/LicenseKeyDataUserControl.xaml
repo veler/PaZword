@@ -1,0 +1,108 @@
+﻿<UserControl
+    x:Class="PaZword.Views.Data.LicenseKeyDataUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:controls="using:PaZword.Core.UI.Controls"
+    xmlns:data="using:PaZword.Models.Data">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <RichTextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="0,10,5,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="{x:Bind ViewModel.LicenseToFieldVisibility}">
+            <Paragraph>
+                <Run Text="{x:Bind ViewModel.Strings.LicenseTo}"/>
+                <Run Text=":"/>
+            </Paragraph>
+        </RichTextBlock>
+        <controls:EditableTextBlock
+            Grid.Row="0"
+            Grid.Column="1"
+            IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+            Text="{x:Bind ((data:LicenseKeyData)ViewModel.Data).LicenseTo, Mode=OneWay}"
+            TextEditing="{x:Bind ((data:LicenseKeyData)ViewModel.DataEditMode).LicenseTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PlaceholderText="{x:Bind ViewModel.Strings.LicenseTo}"
+            Visibility="{x:Bind ViewModel.LicenseToFieldVisibility}"/>
+
+        <RichTextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0,10,5,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="{x:Bind ViewModel.LinkedEmailAddressFieldVisibility}">
+            <Paragraph>
+                <Run Text="{x:Bind ViewModel.Strings.LinkedEmailAddress}"/>
+                <Run Text=":"/>
+            </Paragraph>
+        </RichTextBlock>
+        <controls:EditableEmailAddress
+            Grid.Row="1"
+            Grid.Column="1"
+            IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+            Text="{x:Bind ((data:LicenseKeyData)ViewModel.Data).LinkedEmailAddress, Mode=OneWay}"
+            TextEditing="{x:Bind ((data:LicenseKeyData)ViewModel.DataEditMode).LinkedEmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PlaceholderText="{x:Bind ViewModel.Strings.LinkedEmailAddress}"
+            Visibility="{x:Bind ViewModel.LinkedEmailAddressFieldVisibility}"/>
+
+        <RichTextBlock
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="0,10,5,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="{x:Bind ViewModel.CompanyFieldVisibility}">
+            <Paragraph>
+                <Run Text="{x:Bind ViewModel.Strings.Company}"/>
+                <Run Text=":"/>
+            </Paragraph>
+        </RichTextBlock>
+        <controls:EditableTextBlock
+            Grid.Row="2"
+            Grid.Column="1"
+            IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+            Text="{x:Bind ((data:LicenseKeyData)ViewModel.Data).Company, Mode=OneWay}"
+            TextEditing="{x:Bind ((data:LicenseKeyData)ViewModel.DataEditMode).Company, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PlaceholderText="{x:Bind ViewModel.Strings.Company}"
+            Visibility="{x:Bind ViewModel.CompanyFieldVisibility}"/>
+
+        <RichTextBlock
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="0,10,5,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="{x:Bind ViewModel.LicenseKeyFieldVisibility}">
+            <Paragraph>
+                <Run Text="{x:Bind ViewModel.Strings.LicenseKey}"/>
+                <Run Text=":"/>
+            </Paragraph>
+        </RichTextBlock>
+        <controls:EditableTextBlock
+            Grid.Row="3"
+            Grid.Column="1"
+            IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+            Text="{x:Bind ((data:LicenseKeyData)ViewModel.Data).LicenseKey, Mode=OneWay}"
+            TextEditing="{x:Bind ((data:LicenseKeyData)ViewModel.DataEditMode).LicenseKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PlaceholderText="{x:Bind ViewModel.Strings.LicenseKey}"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind ViewModel.LicenseKeyFieldVisibility}"/>
+    </Grid>
+</UserControl>

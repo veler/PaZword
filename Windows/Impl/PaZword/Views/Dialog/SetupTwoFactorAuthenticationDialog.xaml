@@ -1,0 +1,119 @@
+﻿<ContentDialog
+    x:Class="PaZword.Views.Dialog.SetupTwoFactorAuthenticationDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PaZword.Views.Dialog"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ui="using:PaZword.Core.UI"
+    xmlns:converters="using:PaZword.Core.UI.Converters"
+    mc:Ignorable="d"
+    BorderBrush="{StaticResource ContentDialogBorderThemeBrush}"
+    DataContext="{Binding Path=SetupTwoFactorAuthenticationDialog, Source={StaticResource ViewModelLocator}}"
+    Title="{x:Bind ViewModel.Strings.Title}"
+    PrimaryButtonText="{x:Bind ViewModel.Strings.PrimaryButton}"
+    SecondaryButtonText="{x:Bind ViewModel.Strings.SecondaryButton}"
+    IsPrimaryButtonEnabled="{x:Bind ViewModel.DataValidated, Mode=OneWay}">
+    <i:Interaction.Behaviors>
+        <ui:EventToCommandBehavior 
+            Event="PrimaryButtonClick"
+            Command="{x:Bind ViewModel.PrimaryButtonClickCommand}" 
+            PassArguments="false"/>
+    </i:Interaction.Behaviors>
+
+    <ContentDialog.Resources>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+    </ContentDialog.Resources>
+
+    <ScrollViewer
+        HorizontalScrollMode="Disabled"
+        VerticalScrollMode="Auto">
+        <StackPanel
+            MaxWidth="548">
+            <TextBlock
+                Text="{x:Bind ViewModel.Strings.Instruction1}"
+                TextWrapping="WrapWholeWords"
+                HorizontalAlignment="Left"/>
+            <TextBox
+                Margin="0,10,0,0"
+                Header="{x:Bind ViewModel.Strings.EmailAddress}"
+                PlaceholderText="{x:Bind ViewModel.Strings.EmailAddress}"
+                Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Width="300"
+                HorizontalAlignment="Left">
+                <i:Interaction.Behaviors>
+                    <ui:EventToCommandBehavior 
+                        Event="Paste"
+                        Command="{x:Bind ViewModel.EmailAddressBoxPasteCommand}" 
+                        PassArguments="true"/>
+                    <ui:EventToCommandBehavior 
+                        Event="KeyDown"
+                        Command="{x:Bind ViewModel.TextBoxKeyDownCommand}" 
+                        PassArguments="true"/>
+                </i:Interaction.Behaviors>
+            </TextBox>
+            <TextBox
+                Margin="0,10,0,0"
+                Header="{x:Bind ViewModel.Strings.ConfirmEmailAddress}"
+                PlaceholderText="{x:Bind ViewModel.Strings.ConfirmEmailAddress}"
+                Text="{x:Bind ViewModel.ConfirmEmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Width="300"
+                HorizontalAlignment="Left">
+                <i:Interaction.Behaviors>
+                    <ui:EventToCommandBehavior 
+                        Event="Paste"
+                        Command="{x:Bind ViewModel.EmailAddressBoxPasteCommand}" 
+                        PassArguments="true"/>
+                    <ui:EventToCommandBehavior 
+                        Event="KeyDown"
+                        Command="{x:Bind ViewModel.TextBoxKeyDownCommand}" 
+                        PassArguments="true"/>
+                </i:Interaction.Behaviors>
+            </TextBox>
+
+            <TextBlock
+                Margin="0,24,0,0"
+                Text="{x:Bind ViewModel.Strings.Instruction2}"
+                TextWrapping="WrapWholeWords"
+                HorizontalAlignment="Left"/>
+            <Grid
+                Margin="0,10,0,0">
+                <TextBlock
+                    Text="{x:Bind ViewModel.Strings.QrCodeGeneratedAfterEmail}"
+                    Visibility="{x:Bind ViewModel.QRCode, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                    FontStyle="Italic"
+                    TextAlignment="Center"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="200"
+                    TextWrapping="WrapWholeWords"/>
+                <Image
+                    Height="{x:Bind ViewModel.QRCodeSize}"
+                    Width="{x:Bind ViewModel.QRCodeSize}"
+                    HorizontalAlignment="Center"
+                    Source="{x:Bind ViewModel.QRCode, Mode=OneWay}"/>
+            </Grid>
+
+            <TextBlock
+                Margin="0,24,0,0"
+                Text="{x:Bind ViewModel.Strings.Instruction3}"
+                TextWrapping="WrapWholeWords"
+                HorizontalAlignment="Left"/>
+            <TextBox
+                Margin="0,10,0,0"
+                Header="{x:Bind ViewModel.Strings.CodeGenerated}"
+                PlaceholderText="{x:Bind ViewModel.Strings.CodeGenerated}"
+                Text="{x:Bind ViewModel.VerificationCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Width="300"
+                HorizontalAlignment="Left">
+                <i:Interaction.Behaviors>
+                    <ui:EventToCommandBehavior 
+                        Event="KeyDown"
+                        Command="{x:Bind ViewModel.TextBoxKeyDownCommand}" 
+                        PassArguments="true"/>
+                </i:Interaction.Behaviors>
+            </TextBox>
+        </StackPanel>
+    </ScrollViewer>
+</ContentDialog>

@@ -1,0 +1,243 @@
+﻿<UserControl
+    x:Class="PaZword.Views.Data.FileDataUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PaZword.Views.Data"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:PaZword.Core.UI.Converters"
+    xmlns:controls="using:PaZword.Core.UI.Controls"
+    xmlns:ui="using:PaZword.Core.UI"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:data="using:PaZword.Models.Data"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" IsInverted="True"/>
+        <converters:Base64ImageToAccountIconSourceConverter x:Key="Base64ImageToAccountIconSourceConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid Visibility="{x:Bind ViewModel.IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}">
+            <Grid Visibility="{x:Bind ViewModel.FileIsPresent, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}">
+                <TextBlock
+                    Text="{x:Bind ViewModel.Strings.NoFile}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="WrapWholeWords"
+                    HorizontalAlignment="Center"/>
+            </Grid>
+
+            <Grid Visibility="{x:Bind ViewModel.FileIsPresent, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Grid.Column="0"
+                    VerticalAlignment="Top">
+                    <Image
+                        Height="96"
+                        Width="96"
+                        HorizontalAlignment="Center"
+                        DataContext="{x:Bind ((data:FileData)ViewModel.Data).Base64Thumbnail, Mode=OneWay, Converter={StaticResource Base64ImageToAccountIconSourceConverter}}"
+                        Source="{Binding Result, Mode=OneWay}"/>
+                    <Button
+                        HorizontalAlignment="Center"
+                        Margin="0,10,0,0"
+                        AutomationProperties.Name="{x:Bind ViewModel.Strings.ViewFile}"
+                        Command="{x:Bind ViewModel.ViewFileCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon
+                                Symbol="OpenFile"
+                                Margin="0,0,10,0"/>
+                            <TextBlock Text="{x:Bind ViewModel.Strings.ViewFile}"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <Grid
+                    Grid.Column="1"
+                    Margin="24,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <RichTextBlock
+                        x:Name="DescriptionLabel"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0,10,5,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Visibility="{x:Bind ViewModel.DescriptionFieldVisibility}">
+                        <Paragraph>
+                            <Run Text="{x:Bind ViewModel.Strings.Description}"/>
+                            <Run Text=":"/>
+                        </Paragraph>
+                    </RichTextBlock>
+                    <controls:EditableTextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        IsEditing="False"
+                        Text="{x:Bind ((data:FileData)ViewModel.Data).FileName, Mode=OneWay}"
+                        TextEditing="{x:Bind ((data:FileData)ViewModel.DataEditMode).FileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        PlaceholderText="{x:Bind ViewModel.Strings.Description}"
+                        TextWrapping="Wrap"
+                        AutomationProperties.LabeledBy="{x:Bind DescriptionLabel}"
+                        HorizontalAlignment="Stretch"
+                        Visibility="{x:Bind ViewModel.DescriptionFieldVisibility}"/>
+
+                    <RichTextBlock
+                        x:Name="TypeLabel"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="0,10,5,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top">
+                        <Paragraph>
+                            <Run Text="{x:Bind ViewModel.Strings.Type}"/>
+                            <Run Text=":"/>
+                        </Paragraph>
+                    </RichTextBlock>
+                    <controls:EditableTextBlock
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        IsEditing="False"
+                        Text="{x:Bind ((data:FileData)ViewModel.Data).FileExtension, Mode=OneWay}"
+                        PlaceholderText="{x:Bind ViewModel.Strings.Type}"
+                        TextWrapping="Wrap"
+                        AutomationProperties.LabeledBy="{x:Bind TypeLabel}"
+                        HorizontalAlignment="Stretch"/>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Visibility="{x:Bind ViewModel.IsEditing, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+            <Grid Visibility="{x:Bind ViewModel.FileIsPresentEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}">
+                <Rectangle
+                    Stroke="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                    StrokeThickness="2"
+                    StrokeDashArray="4 4"
+                    Fill="Transparent"
+                    AllowDrop="True">
+                    <i:Interaction.Behaviors>
+                        <ui:EventToCommandBehavior 
+                            Event="DragOver"
+                            Command="{x:Bind ViewModel.SelectFileGridDragOverCommand}"
+                            PassArguments="true"/>
+                        <ui:EventToCommandBehavior 
+                            Event="Drop"
+                            Command="{x:Bind ViewModel.SelectFileGridDropCommand}"
+                            PassArguments="true"/>
+                    </i:Interaction.Behaviors>
+                </Rectangle>
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="24"
+                    Background="{x:Null}">
+                    <TextBlock
+                        Text="{x:Bind ViewModel.Strings.DropFile}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="WrapWholeWords"
+                        HorizontalAlignment="Center"/>
+                    <TextBlock
+                        Text="{x:Bind ViewModel.Strings.Or}"
+                        HorizontalAlignment="Center"
+                        Margin="0,10,0,0"/>
+                    <Button
+                        Content="{x:Bind ViewModel.Strings.BrowseFiles}"
+                        HorizontalAlignment="Center"
+                        Margin="0,10,0,0"
+                        Command="{x:Bind ViewModel.SelectFileButtonCommand}"/>
+                    <TextBlock
+                        Text="{x:Bind ViewModel.Strings.FileSizeTooBig}"
+                        HorizontalAlignment="Center"
+                        Margin="0,10,0,0"
+                        FontSize="11"
+                        Foreground="Red"
+                        Visibility="{x:Bind ViewModel.LastSelectedFileIsTooLarge, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
+                    <TextBlock
+                        Text="{x:Bind ViewModel.FileSizeLimit}"
+                        HorizontalAlignment="Center"
+                        Margin="0,10,0,0"
+                        FontSize="11"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Visibility="{x:Bind ViewModel.FileIsPresentEditing, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Image
+                    Grid.Column="0"
+                    Height="96"
+                    Width="96"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    DataContext="{x:Bind ((data:FileData)ViewModel.DataEditMode).Base64Thumbnail, Mode=OneWay, Converter={StaticResource Base64ImageToAccountIconSourceConverter}}"
+                    Source="{Binding Result, Mode=OneWay}"/>
+                <Grid
+                    Grid.Column="1"
+                    Margin="24,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <RichTextBlock
+                        x:Name="DescriptionLabelEditing"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0,10,5,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top">
+                        <Paragraph>
+                            <Run Text="{x:Bind ViewModel.Strings.Description}"/>
+                            <Run Text=":"/>
+                        </Paragraph>
+                    </RichTextBlock>
+                    <controls:EditableTextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+                        Text="{x:Bind ((data:FileData)ViewModel.DataEditMode).FileName, Mode=OneWay}"
+                        TextEditing="{x:Bind ((data:FileData)ViewModel.DataEditMode).FileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        PlaceholderText="{x:Bind ViewModel.Strings.Description}"
+                        TextWrapping="Wrap"
+                        AutomationProperties.LabeledBy="{x:Bind DescriptionLabelEditing}"
+                        HorizontalAlignment="Stretch"/>
+
+                    <RichTextBlock
+                        x:Name="TypeLabelEditing"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="0,10,5,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top">
+                        <Paragraph>
+                            <Run Text="{x:Bind ViewModel.Strings.Type}"/>
+                            <Run Text=":"/>
+                        </Paragraph>
+                    </RichTextBlock>
+                    <controls:EditableTextBlock
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        IsEditing="False"
+                        Text="{x:Bind ((data:FileData)ViewModel.DataEditMode).FileExtension, Mode=OneWay}"
+                        PlaceholderText="{x:Bind ViewModel.Strings.Type}"
+                        TextWrapping="Wrap"
+                        AutomationProperties.LabeledBy="{x:Bind TypeLabelEditing}"
+                        HorizontalAlignment="Stretch"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,274 @@
+﻿<Page
+    x:Name="PageRoot"
+    x:Class="PaZword.Views.AccountPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:PaZword.Core.UI.Converters"
+    xmlns:controls="using:PaZword.Core.UI.Controls"
+    xmlns:models="using:PaZword.Api.Models" xmlns:i="using:Microsoft.Xaml.Interactivity" xmlns:ui="using:PaZword.Core.UI"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded"
+    DataContext="{Binding Path=AccountPage, Source={StaticResource ViewModelLocator}, Mode=OneTime}">
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" IsInverted="True"/>
+        <converters:Base64ImageToAccountIconSourceConverter x:Key="Base64ImageToAccountIconSourceConverter"/>
+        <converters:Base64ImageToDominantColorSourceConverter x:Key="Base64ImageToDominantColorSourceConverter"/>
+        <converters:SecureStringToStringConverter x:Key="InvertedSecureStringToStringConverter" IsInverted="True"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource AccountDetailsBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer x:Name="AccountScrollViewer" Grid.Row="0">
+            <Grid>
+                <!-- Empty account. -->
+                <Grid 
+                    Margin="0,176,0,0" 
+                    Visibility="{x:Bind ViewModel.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                    <TextBlock
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        TextWrapping="Wrap"
+                        Text="{x:Bind ViewModel.Strings.Tutorial}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="25,0,25,0"/>
+                </Grid>
+
+                <!-- List of account's data. -->
+                <ItemsControl
+                    Margin="0,176,0,0"
+                    ScrollViewer.VerticalScrollMode="Disabled"
+                    ScrollViewer.HorizontalScrollMode="Disabled"
+                    IsTabStop="False"
+                    ItemsSource="{x:Bind ViewModel.AccountEditMode.Data, Mode=OneWay}"
+                    Visibility="{x:Bind ViewModel.IsEmpty, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}">
+                    <ItemsControl.ItemContainerTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition/>
+                            <RepositionThemeTransition/>
+                        </TransitionCollection>
+                    </ItemsControl.ItemContainerTransitions>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:AccountData">
+                            <controls:AccountDataControl AccountPageToAccountDataViewModelBridge="{Binding DataContext.AccountPageToAccountDataViewModelBridge, ElementName=PageRoot, Mode=OneTime}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!-- Header. See InitializeExpressionAnimations in code-behind for animation on scrolling. -->
+                <Grid
+                    x:Name="Header"
+                    Height="176"
+                    VerticalAlignment="Top"
+                    DataContext="{x:Bind ViewModel.Base64Icon, Mode=OneWay, Converter={StaticResource Base64ImageToDominantColorSourceConverter}}">
+                    <Grid.Background>
+                        <AcrylicBrush
+                            BackgroundSource="Backdrop"
+                            TintColor="{Binding DataContext.Result, ElementName=Header, Mode=OneWay}"
+                            TintOpacity="0.4"
+                            FallbackColor="{Binding DataContext.Result, ElementName=Header, Mode=OneWay}" TintTransitionDuration="0"/>
+                    </Grid.Background>
+                    <Grid
+                        x:Name="HeaderContent"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top"
+                        Padding="24">
+                        <Image
+                            x:Name="HeaderAccountLogo"
+                            Height="128"
+                            Width="128"
+                            HorizontalAlignment="Left"
+                            DataContext="{x:Bind ViewModel.Base64Icon, Mode=OneWay, Converter={StaticResource Base64ImageToAccountIconSourceConverter}}"
+                            Source="{Binding Result, Mode=OneWay}"/>
+                        <Grid Padding="152,0,0,0">
+                            <StackPanel>
+                                <controls:EditableTextBlock
+                                    x:Name="HeaderTitle"
+                                    IsCopiable="False"
+                                    IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+                                    PlaceholderText="{x:Bind ViewModel.Strings.Title}"
+                                    Text="{x:Bind ViewModel.Account.Title, Mode=OneWay, Converter={StaticResource InvertedSecureStringToStringConverter}}"
+                                    TextEditing="{x:Bind ViewModel.AccountEditMode.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InvertedSecureStringToStringConverter}}"
+                                    TextTrimming="CharacterEllipsis"
+                                    MaxLines="1"
+                                    LineHeight="40"
+                                    FontSize="40"
+                                    LineStackingStrategy="BlockLineHeight"
+                                    VerticalAlignment="Top"
+                                    FontFamily="Segoe UI Light"
+                                    Padding="0"
+                                    TabIndex="0">
+                                    <i:Interaction.Behaviors>
+                                        <ui:EventToCommandBehavior 
+                                            Event="LostFocus"
+                                            Command="{x:Bind ViewModel.HeaderTitleUpdatedCommand}"
+                                            PassArguments="false"/>
+                                    </i:Interaction.Behaviors>
+                                </controls:EditableTextBlock>
+                                <StackPanel
+                                    x:Name="HeaderSubtitle"
+                                    Orientation="Vertical"
+                                    Visibility="{x:Bind ViewModel.IsEditing, Mode=OneWay, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+                                    <controls:EditableHyperlink
+                                        IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+                                        PlaceholderText="{x:Bind ViewModel.Strings.Url}"
+                                        Text="{x:Bind ViewModel.Account.Url, Mode=OneWay, Converter={StaticResource InvertedSecureStringToStringConverter}}"
+                                        TextEditing="{x:Bind ViewModel.AccountEditMode.Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InvertedSecureStringToStringConverter}}"
+                                        Height="40"
+                                        Margin="-8,0,-8,0"
+                                        TabIndex="0"/>
+                                    <TextBlock
+                                        Text="{x:Bind ViewModel.FormattedLastModificationString}"
+                                        Visibility="{x:Bind ViewModel.IsEditing, Mode=OneWay, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"/>
+                                </StackPanel>
+                                <Grid
+                                    x:Name="HeaderEditableSubtitle"
+                                    Visibility="{x:Bind ViewModel.IsEditing, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <controls:EditableHyperlink
+                                        Grid.Column="0"
+                                        IsEditing="{x:Bind ViewModel.IsEditing, Mode=OneWay}"
+                                        PlaceholderText="{x:Bind ViewModel.Strings.Url}"
+                                        Text="{x:Bind ViewModel.Account.Url, Mode=OneWay, Converter={StaticResource InvertedSecureStringToStringConverter}}"
+                                        TextEditing="{x:Bind ViewModel.AccountEditMode.Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InvertedSecureStringToStringConverter}}"
+                                        Height="40"
+                                        Margin="-8,0,0,0"
+                                        TabIndex="0">
+                                        <i:Interaction.Behaviors>
+                                            <ui:EventToCommandBehavior 
+                                            Event="LostFocus"
+                                            Command="{x:Bind ViewModel.HeaderTitleUpdatedCommand}"
+                                            PassArguments="false"/>
+                                        </i:Interaction.Behaviors>
+                                    </controls:EditableHyperlink>
+                                    <ComboBox
+                                        Grid.Column="1"
+                                        Margin="0,5,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        SelectedValuePath="Id"
+                                        TabIndex="0"
+                                        ItemsSource="{x:Bind ViewModel.Categories, Mode=OneWay}"
+                                        SelectedIndex="{x:Bind ViewModel.CategoryIndex, Mode=TwoWay}"
+                                        AutomationProperties.Name="AutomationAccountCategory">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate x:DataType="models:Category">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{x:Bind Name}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </Grid>
+                            </StackPanel>
+                            <Grid VerticalAlignment="Bottom">
+                                <StackPanel
+                                    x:Name="HeaderButtonsBar"
+                                    Orientation="Horizontal">
+                                    <ToggleButton
+                                        Padding="0"
+                                        Style="{StaticResource FavoriteToggleButton}"
+                                        Visibility="{x:Bind ViewModel.IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}"
+                                        IsChecked="{x:Bind ViewModel.IsFavorite, Mode=TwoWay}"
+                                        AutomationProperties.Name="{x:Bind ViewModel.Strings.Favorite}"
+                                        TabIndex="0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <SymbolIcon
+                                                Symbol="Favorite"
+                                                Margin="0,0,10,0"/>
+                                            <TextBlock Text="{x:Bind ViewModel.Strings.Favorite}"/>
+                                        </StackPanel>
+                                    </ToggleButton>
+                                    <Button
+                                        Padding="0"
+                                        Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                                        Style="{ThemeResource TextBlockButtonStyle}"
+                                        Margin="24,0,0,0"
+                                        Visibility="{x:Bind ViewModel.IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}"
+                                        Command="{x:Bind ViewModel.EditAccountCommand}"
+                                        AutomationProperties.Name="{x:Bind ViewModel.Strings.Edit}"
+                                        TabIndex="0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <SymbolIcon
+                                                Symbol="Edit"
+                                                Margin="0,0,10,0"/>
+                                            <TextBlock Text="{x:Bind ViewModel.Strings.Edit}"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button
+                                        Padding="0"
+                                        Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                                        Style="{ThemeResource TextBlockButtonStyle}"
+                                        Margin="24,0,0,0"
+                                        Visibility="{x:Bind ViewModel.IsEditing, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}"
+                                        Command="{x:Bind ViewModel.DeleteAccountCommand}"
+                                        AutomationProperties.Name="{x:Bind ViewModel.Strings.Delete}"
+                                        TabIndex="0">
+                                        <Button.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="Delete"/>
+                                        </Button.KeyboardAccelerators>
+                                        <StackPanel Orientation="Horizontal">
+                                            <SymbolIcon
+                                                Symbol="Delete"
+                                                Margin="0,0,10,0"/>
+                                            <TextBlock Text="{x:Bind ViewModel.Strings.Delete}"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button
+                                        Padding="0"
+                                        Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                                        Style="{ThemeResource TextBlockButtonStyle}"
+                                        Visibility="{x:Bind ViewModel.IsEditing, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+                                        AutomationProperties.Name="{x:Bind ViewModel.Strings.AddData}"
+                                        TabIndex="0"
+                                        Flyout="{x:Bind ViewModel.AddAccountDataContextMenu}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <SymbolIcon
+                                                Symbol="Add"
+                                                Margin="0,0,10,0"/>
+                                            <TextBlock Text="{x:Bind ViewModel.Strings.AddData}"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- Command bar at the bottom for the editing mode -->
+        <CommandBar
+            Grid.Row="1"
+            ClosedDisplayMode="Compact"
+            DefaultLabelPosition="Right"
+            Background="{StaticResource BackgroundAccentColorBrush}"
+            Visibility="{x:Bind ViewModel.IsEditing, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+            VerticalAlignment="Bottom"
+            RequestedTheme="Dark">
+            <CommandBar.PrimaryCommands>
+                <AppBarButton 
+                    Icon="Save"
+                    Label="{x:Bind ViewModel.Strings.Save}"
+                    Command="{x:Bind ViewModel.SaveChangesCommand}">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="S" Modifiers="Control"/>
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <AppBarButton
+                    Icon="Cancel"
+                    Label="{x:Bind ViewModel.Strings.Cancel}"
+                    Command="{x:Bind ViewModel.DiscardChangesCommand}"/>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Grid>
+</Page>

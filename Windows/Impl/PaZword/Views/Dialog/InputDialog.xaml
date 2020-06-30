@@ -1,0 +1,29 @@
+﻿<ContentDialog
+    x:Class="PaZword.Views.Dialog.InputDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:PaZword.Core.UI.Converters"
+    mc:Ignorable="d"
+    BorderBrush="{StaticResource ContentDialogBorderThemeBrush}"
+    Title="TITLE"
+    SecondaryButtonText="{x:Bind Strings.SecondaryButton}"
+    IsPrimaryButtonEnabled="{x:Bind InputTextBox.Text, Converter={StaticResource NullToBooleanConverter}, Mode=OneWay}"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
+    Loaded="ContentDialog_Loaded">
+    <ContentDialog.Resources>
+        <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" IsInverted="True"/>
+    </ContentDialog.Resources>
+
+    <Grid>
+        <TextBox 
+            x:Name="InputTextBox" 
+            Header="{x:Bind Placeholder}"
+            PlaceholderText="{x:Bind Placeholder}"
+            Text="{x:Bind InputValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            VerticalAlignment="Top"
+            KeyDown="InputTextBox_KeyDown"/>
+    </Grid>
+</ContentDialog>

@@ -1,0 +1,181 @@
+﻿<Page
+    x:Class="PaZword.Views.Other.AuthenticationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PaZword.Views.Other"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:PaZword.Core.UI.Converters"
+    xmlns:appmodel="using:Windows.ApplicationModel"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ui="using:PaZword.Core.UI"
+    xmlns:controls="using:PaZword.Core.UI.Controls"
+    mc:Ignorable="d"
+    DataContext="{Binding Path=AuthenticationPage, Source={StaticResource ViewModelLocator}, Mode=OneTime}">
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" IsInverted="True"/>
+        <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
+        <converters:SecureStringToStringConverter x:Key="SecureStringToStringConverter"/>
+    </Page.Resources>
+
+    <Grid
+        Background="{StaticResource SignInBlurBackground}"
+        RequestedTheme="Dark">
+        <Grid
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Padding="24"
+            MaxWidth="550">
+
+            <!-- Windows Hello -->
+            <Grid
+                Visibility="{x:Bind ViewModel.AuthenticationStep, ConverterParameter='WindowsHello', Converter={StaticResource EnumToVisibilityConverter}, Mode=OneWay}">
+                <StackPanel
+                    TabFocusNavigation="Cycle"
+                    Visibility="{x:Bind ViewModel.IsWindowsHelloAuthenticationInProgress, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                    <FontIcon
+                        FontFamily="Segoe MDL2 Assets"
+                        Glyph="&#xEB67;"
+                        FontSize="48"/>
+                    <TextBlock
+                        Style="{ThemeResource TitleTextBlockStyle}"
+                        Text="{x:Bind ViewModel.Strings.WindowsHelloTitle}"
+                        HorizontalAlignment="Center"
+                        TextTrimming="CharacterEllipsis"/>
+                    <ProgressRing
+                        Margin="0,10,0,0"
+                        Height="24"
+                        Width="24"
+                        IsActive="True"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Center"
+                        Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+                </StackPanel>
+                <StackPanel
+                    TabFocusNavigation="Cycle"
+                    Visibility="{x:Bind ViewModel.IsWindowsHelloAuthenticationInProgress, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}">
+                    <TextBlock
+                        AutomationProperties.LiveSetting="Assertive"
+                        HorizontalAlignment="Center"
+                        Text="{x:Bind ViewModel.AuthenticationFailReason, Mode=OneWay}"
+                        TextAlignment="Center"
+                        TextWrapping="WrapWholeWords"
+                        TextTrimming="CharacterEllipsis"
+                        VerticalAlignment="Center"/>
+                    <Button
+                        x:Name="RetryWindowsHelloAuthenticationButton"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Content="{x:Bind ViewModel.Strings.RetryAuthentication}"
+                        AutomationProperties.Name="{x:Bind ViewModel.Strings.RetryAuthentication}"
+                        Command="{x:Bind ViewModel.RetryWindowsHelloCommand}"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Two Factor Authentication -->
+            <Grid
+                Visibility="{x:Bind ViewModel.AuthenticationStep, ConverterParameter='TwoFactorAuthentication', Converter={StaticResource EnumToVisibilityConverter}, Mode=OneWay}">
+                <StackPanel
+                    TabFocusNavigation="Cycle"
+                    Visibility="{x:Bind ViewModel.IsTwoFactorAuthenticationByEmailInProgress, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}">
+                    <FontIcon
+                        FontFamily="Segoe MDL2 Assets"
+                        Glyph="&#xE8EA;"
+                        FontSize="48"/>
+                    <TextBlock
+                        Style="{ThemeResource TitleTextBlockStyle}"
+                        Text="{x:Bind ViewModel.Strings.TwoFactorTitle}"
+                        HorizontalAlignment="Center"
+                        TextTrimming="CharacterEllipsis"/>
+                    <TextBox
+                        Margin="0,10,0,0"
+                        PlaceholderText="{x:Bind ViewModel.Strings.CodeGenerated}"
+                        Text="{x:Bind ViewModel.TwoFactorVerificationCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <HyperlinkButton
+                        Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                        Content="{x:Bind ViewModel.Strings.TwoFactorUseEmail}"
+                        IsEnabled="{x:Bind ViewModel.IsInternetAccess}"
+                        HorizontalAlignment="Center"
+                        Command="{x:Bind ViewModel.SendRecoveryKeyByEmailCommand}"/>
+                </StackPanel>
+                <StackPanel
+                    TabFocusNavigation="Cycle"
+                    Visibility="{x:Bind ViewModel.IsTwoFactorAuthenticationByEmailInProgress, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                    <FontIcon
+                        FontFamily="Segoe MDL2 Assets"
+                        Glyph="&#xE168;"
+                        FontSize="48"/>
+                    <TextBlock
+                        Style="{ThemeResource TitleTextBlockStyle}"
+                        Text="{x:Bind ViewModel.Strings.TwoFactorTitle}"
+                        HorizontalAlignment="Center"
+                        TextTrimming="CharacterEllipsis"/>
+                    <TextBlock
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                        Text="{x:Bind ViewModel.TwoFactorEmailInstruction}"
+                        HorizontalAlignment="Center"
+                        TextAlignment="Center"
+                        TextWrapping="WrapWholeWords"
+                        TextTrimming="CharacterEllipsis"/>
+                    <TextBox
+                        Margin="0,10,0,0"
+                        PlaceholderText="{x:Bind ViewModel.Strings.CodeGeneratedEmail}"
+                        Text="{x:Bind ViewModel.TwoFactorVerificationCodeEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Recovery Key -->
+            <StackPanel
+                TabFocusNavigation="Cycle"
+                Visibility="{x:Bind ViewModel.AuthenticationStep, ConverterParameter='RecoveryKey', Converter={StaticResource EnumToVisibilityConverter}, Mode=OneWay}">
+                <FontIcon
+                    FontFamily="Segoe MDL2 Assets"
+                    Glyph="&#xE192;"
+                    FontSize="48"/>
+                <TextBlock
+                    Style="{ThemeResource TitleTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Strings.SecretKeyTitle}"
+                    HorizontalAlignment="Center"
+                    TextTrimming="CharacterEllipsis"/>
+                <TextBlock
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Strings.SecretKeyInstruction}"
+                    HorizontalAlignment="Center"
+                    TextAlignment="Center"
+                    TextWrapping="WrapWholeWords"
+                    TextTrimming="CharacterEllipsis"/>
+                <TextBox
+                    Margin="0,10,0,0"
+                    PlaceholderText="{x:Bind ViewModel.Strings.EnterSecretKeyTextBox}"
+                    Text="{x:Bind ViewModel.RecoveryKey, Converter={StaticResource SecureStringToStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Behaviors>
+                        <ui:EventToCommandBehavior 
+                            Event="TextChanged"
+                            Command="{x:Bind ViewModel.RecoveryKeyChangedCommand}"
+                            PassArguments="False"/>
+                    </i:Interaction.Behaviors>
+                </TextBox>
+                <TextBlock
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    FontStyle="Italic"
+                    HorizontalAlignment="Left"
+                    TextWrapping="WrapWholeWords"
+                    Margin="0,0,0,24"
+                    Visibility="{x:Bind ViewModel.InvalidRecoveryKey, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Text="{x:Bind ViewModel.Strings.SecretKeyInvalid}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Title bar's title -->
+        <TextBlock
+            RequestedTheme="Dark"
+            Style="{ThemeResource CaptionTextBlockStyle}"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Margin="{Binding TitleBar.TitlePosition, Mode=OneWay, Source={StaticResource ViewModelLocator}}"
+            Text="{x:Bind appmodel:Package.Current.DisplayName}"/>
+        <controls:SynchronizationIndicator RequestedTheme="Dark"/>
+    </Grid>
+</Page>
