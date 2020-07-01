@@ -31,7 +31,7 @@ A password manager made in UWP.
 - English
 - French
 
-Sign up to [POEditor](https://poeditor.com/join/project/38wjkTyfyk) to help with existing translations or add a new language
+See below to help with existing translations or add a new language.
 
 ## How to install (as an end-user)
 

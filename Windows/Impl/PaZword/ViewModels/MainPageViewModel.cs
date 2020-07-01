@@ -1,4 +1,5 @@
-﻿using Microsoft.Graph;
+﻿using Dropbox.Api.CloudDocs;
+using Microsoft.Graph;
 using PaZword.Api;
 using PaZword.Api.Collections;
 using PaZword.Api.Data;
@@ -22,7 +23,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Constants = PaZword.Core.Constants;
 
 namespace PaZword.ViewModels
@@ -300,6 +303,17 @@ namespace PaZword.ViewModels
                         && isInactive
                         && Window.Current.Content is Frame frame)
                     {
+                        // Hide all the content dialog.
+                        IReadOnlyList<Popup> popups = VisualTreeHelper.GetOpenPopups(Window.Current);
+                        for (int i = 0; i < popups.Count; i++)
+                        {
+                            Popup popup = popups[i];
+                            if (popup.Child is ContentDialog contentDialog)
+                            {
+                                contentDialog.Hide();
+                            }
+                        }
+
                         frame.Navigate(typeof(AuthenticationPage), null);
                     }
                     break;

@@ -1,10 +1,14 @@
-﻿using PaZword.Api;
+﻿using Microsoft.Graph;
+using PaZword.Api;
 using PaZword.Api.Security;
+using PaZword.Core.Threading;
 using System;
 using System.Composition;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Security.Credentials;
 using Windows.Security.Cryptography;
+using Windows.UI.Core;
 
 namespace PaZword.Core.Security
 {
@@ -18,11 +22,18 @@ namespace PaZword.Core.Security
 
         private readonly ILogger _logger;
 
+        private TaskCompletionSource<bool> _windowFocusAwaiter = new TaskCompletionSource<bool>();
+
         [ImportingConstructor]
         public WindowsHelloAuthProvider(
             ILogger logger)
         {
             _logger = Arguments.NotNull(logger, nameof(logger));
+
+            TaskHelper.RunOnUIThreadAsync(() =>
+            {
+                CoreApplication.MainView.CoreWindow.Activated += CoreWindow_Activated;
+            }).Forget();
         }
 
         public async Task<bool> IsWindowsHelloEnabledAsync()
@@ -30,6 +41,10 @@ namespace PaZword.Core.Security
 
         public async Task<bool> AuthenticateAsync()
         {
+            // Waits that the app's window gets the focus. This allows to avoid having the icon in the task bar
+            // blinking orange when windows hello starts. It might distracts the user.
+            await _windowFocusAwaiter.Task.ConfigureAwait(false);
+
             if (!await IsWindowsHelloEnabledAsync()
                 .ConfigureAwait(true)) // run on the current context.
             {
@@ -58,6 +73,15 @@ namespace PaZword.Core.Security
 
             _logger.LogEvent(AuthenticateEvent, $"Success == {creationResult.Status == KeyCredentialStatus.Success}");
             return creationResult.Status == KeyCredentialStatus.Success;
+        }
+
+        private void CoreWindow_Activated(CoreWindow sender, WindowActivatedEventArgs args)
+        {
+            _windowFocusAwaiter.TrySetResult(true);
+            if (args.WindowActivationState == CoreWindowActivationState.Deactivated)
+            {
+                _windowFocusAwaiter = new TaskCompletionSource<bool>();
+            }
         }
     }
 }
