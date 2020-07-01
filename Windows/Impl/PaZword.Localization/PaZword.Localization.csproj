@@ -29,6 +29,32 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Properties\PaZword.Localization.rd.xml" />
+    <PRIResource Include="Strings\fr\AccountPage.resw" />
+    <PRIResource Include="Strings\fr\AuthenticationPage.resw" />
+    <PRIResource Include="Strings\fr\BankAccountData.resw" />
+    <PRIResource Include="Strings\fr\BreachDiscoveredDialog.resw" />
+    <PRIResource Include="Strings\fr\CategoryPage.resw" />
+    <PRIResource Include="Strings\fr\Core.resw" />
+    <PRIResource Include="Strings\fr\CredentialData.resw" />
+    <PRIResource Include="Strings\fr\Dropbox.resw" />
+    <None Include="Strings\fr\FAQ-RemoteStorageProvider.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <PRIResource Include="Strings\fr\FileData.resw" />
+    <PRIResource Include="Strings\fr\FirstStartExperiencePage.resw" />
+    <PRIResource Include="Strings\fr\InputDialog.resw" />
+    <PRIResource Include="Strings\fr\LicenseKeyData.resw" />
+    <PRIResource Include="Strings\fr\MainPage.resw" />
+    <PRIResource Include="Strings\fr\OneDrive.resw" />
+    <PRIResource Include="Strings\fr\OtherData.resw" />
+    <PRIResource Include="Strings\fr\PasswordGeneratorDialog.resw" />
+    <PRIResource Include="Strings\fr\PaymentCardData.resw" />
+    <None Include="Strings\fr\PrivacyStatement.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <PRIResource Include="Strings\fr\SettingsPage.resw" />
+    <PRIResource Include="Strings\fr\SetupTwoFactorAuthentication.resw" />
+    <PRIResource Include="Strings\fr\WiFiCredentialData.resw" />
     <None Include="Strings\en\PrivacyStatement.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -118,47 +118,47 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>About this app</value>
+    <value>À propos de</value>
   </data>
   <data name="AskSecretKeyOccasionallyDescription" xml:space="preserve">
-    <value>Every 14 days, the recovery key will be asked to authenticate.</value>
+    <value>Tous les 14 jours, la clé de récupération vous sera demandée lors de l'authentification.</value>
   </data>
   <data name="AskSecretKeyOccasionallySetting" xml:space="preserve">
-    <value>Authenticate with the recovery key occasionally</value>
+    <value>S'authentifier occasionnellement avec la clé de récupération</value>
   </data>
   <data name="AskSecretKeyOccasionallyTitle" xml:space="preserve">
-    <value>Authenticate with the recovery key every 14 days</value>
+    <value>Authentification avec la clé de récupération tous les 14 jours</value>
   </data>
   <data name="CloudStorageServiceDescription" xml:space="preserve">
-    <value>Register or sign in to a cloud storage service to synchronize your vault.</value>
+    <value>Inscrivez-vous ou connectez-vous à un service de stockage dans le cloud pour synchroniser votre coffre-fort.</value>
   </data>
   <data name="CloudStorageServiceTitle" xml:space="preserve">
-    <value>Cloud storage service account</value>
+    <value>Compte du service de stockage dans le nuage</value>
   </data>
   <data name="ContributorList" xml:space="preserve">
     <value>Christophe Chichmanian
 Jean Blanc</value>
   </data>
   <data name="Contributors" xml:space="preserve">
-    <value>Thanks to the contributors!</value>
+    <value>Merci aux contributeurs !</value>
   </data>
   <data name="DiscoverOtherApps" xml:space="preserve">
-    <value>Discover my other apps</value>
+    <value>Découvrez mes autres applications</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>General</value>
+    <value>Général</value>
   </data>
   <data name="License" xml:space="preserve">
-    <value>License</value>
+    <value>Licence</value>
   </data>
   <data name="LockAfterInactivityDescription" xml:space="preserve">
-    <value>Lock PaZword automatically after a certain period of inactivity in the app.</value>
+    <value>Verrouiller PaZword automatiquement après une certaine période d'inactivité dans l'application.</value>
   </data>
   <data name="LockAfterInactivitySetting" xml:space="preserve">
-    <value>Lock when inactive</value>
+    <value>Verrouillage après inactivité</value>
   </data>
   <data name="LockAfterInactivityTitle" xml:space="preserve">
-    <value>Auto-lock</value>
+    <value>Auto-verrouillage</value>
   </data>
   <data name="LockAfterInactivity_FifteenMinutes" xml:space="preserve">
     <value>15 minutes</value>
@@ -167,10 +167,10 @@ Jean Blanc</value>
     <value>5 minutes</value>
   </data>
   <data name="LockAfterInactivity_Never" xml:space="preserve">
-    <value>Never</value>
+    <value>Jamais</value>
   </data>
   <data name="LockAfterInactivity_OneHour" xml:space="preserve">
-    <value>1 hour</value>
+    <value>1 heure</value>
   </data>
   <data name="LockAfterInactivity_TenMinutes" xml:space="preserve">
     <value>10 minutes</value>
@@ -179,87 +179,87 @@ Jean Blanc</value>
     <value>30 minutes</value>
   </data>
   <data name="Logs" xml:space="preserve">
-    <value>Logs</value>
+    <value>Journal d'événements</value>
   </data>
   <data name="MadeWithLove" xml:space="preserve">
-    <value>Made with ♥ from British Columbia.</value>
+    <value>Fait avec ♥ en Colombie-Britannique (Canada).</value>
   </data>
   <data name="OpenSource" xml:space="preserve">
-    <value>This software is Open Source</value>
+    <value>Ce logiciel est Open Source</value>
   </data>
   <data name="PrivacyStatement" xml:space="preserve">
-    <value>Privacy statement</value>
+    <value>Déclaration de confidentialité</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>Security</value>
+    <value>Sécurité</value>
   </data>
   <data name="SignOut" xml:space="preserve">
-    <value>Sign out</value>
+    <value>Déconnexion</value>
   </data>
   <data name="SubmitFeedback" xml:space="preserve">
-    <value>Submit Feedback to the developer</value>
+    <value>Soumettre des commentaires au développeur</value>
   </data>
   <data name="SyncCloudDescription" xml:space="preserve">
-    <value>This option will synchronize your vault through your personal cloud storage service account to let you backup and retrieve them on another device. Please refer to the Frequently Asked Questions for more information.</value>
+    <value>Cette option activera la synchronisation votre coffre-fort via votre compte personnel de service de stockage cloud pour vous permettre de le sauvegarder et de le récupérer sur un autre appareil. Veuillez consulter les questions fréquemment posées pour plus d’informations.</value>
   </data>
   <data name="SyncCloudSetting" xml:space="preserve">
-    <value>Synchronize data</value>
+    <value>Synchroniser des données</value>
   </data>
   <data name="SyncCloudTitle" xml:space="preserve">
-    <value>Synchronization with the Cloud</value>
+    <value>Synchronisation avec le Cloud</value>
   </data>
   <data name="Synchronization" xml:space="preserve">
-    <value>Synchronization</value>
+    <value>Synchronisation</value>
   </data>
   <data name="SyncNow" xml:space="preserve">
-    <value>Sync now</value>
+    <value>Synchroniser maintenant</value>
   </data>
   <data name="ThemeConfigure" xml:space="preserve">
-    <value>Windows color settings</value>
+    <value>Paramètres de couleurs Windows</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Sombre</value>
   </data>
   <data name="ThemeDefault" xml:space="preserve">
-    <value>Windows default</value>
+    <value>Windows par défaut</value>
   </data>
   <data name="ThemeDescription" xml:space="preserve">
-    <value>Choose the color theme</value>
+    <value>Choisir le thème de couleurs</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Clair</value>
   </data>
   <data name="ThemeTitle" xml:space="preserve">
-    <value>Theme</value>
+    <value>Thème</value>
   </data>
   <data name="ThirdPartyServices" xml:space="preserve">
-    <value>Third-party services</value>
+    <value>Services tiers</value>
   </data>
   <data name="ThirdPartySoftware" xml:space="preserve">
-    <value>Third-party software notice</value>
+    <value>Avis de logiciels tiers</value>
   </data>
   <data name="TwoFactorDescription" xml:space="preserve">
-    <value>Use your trusted devices and email address to verify your identify when authenticating.</value>
+    <value>Utiliser vos appareils de confiance et adresse e-mail pour vérifier votre identité lors de l'authentification.</value>
   </data>
   <data name="TwoFactorSetting" xml:space="preserve">
-    <value>Two-step verification</value>
+    <value>Vérification en deux étapes</value>
   </data>
   <data name="TwoFactorTitle" xml:space="preserve">
-    <value>Two-step verification</value>
+    <value>Vérification en deux étapes</value>
   </data>
   <data name="WarningNoSecurity" xml:space="preserve">
-    <value>Because all the authentication features are disabled, you will be asked to enter your recovery key the next time to authenticate in the app.</value>
+    <value>Étant donné que toutes les fonctionnalités d’authentification sont désactivées, il vous sera demandé d’entrer votre clé de récupération la prochaine fois pour vous authentifier dans l’application.</value>
   </data>
   <data name="WindowsHelloConfigure" xml:space="preserve">
-    <value>Configure Windows Hello</value>
+    <value>Configurer Windows Hello</value>
   </data>
   <data name="WindowsHelloDescription" xml:space="preserve">
-    <value>Use Windows Hello to authenticates in PaZword with a PIN code or biometric sensor (fingerprint, face recognition...).</value>
+    <value>Utiliser Windows Hello pour s'authentifier dans PaZword avec un code PIN ou un capteur biométrique (empreinte digitale, reconnaissance de visage, ...).</value>
   </data>
   <data name="WindowsHelloSetting" xml:space="preserve">
-    <value>Use Windows Hello (recommended)</value>
+    <value>Utiliser Windows Hello (recommandé)</value>
   </data>
   <data name="WindowsHelloTitle" xml:space="preserve">
-    <value>Sign in with Windows Hello</value>
+    <value>S'authentifier avec Windows Hello</value>
   </data>
 </root>

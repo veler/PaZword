@@ -13,6 +13,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using Windows.ApplicationModel.Resources;
+using Windows.Globalization;
 using Windows.UI.Xaml;
 
 namespace PaZword.Localization
@@ -169,6 +170,8 @@ namespace PaZword.Localization
         {
             CultureInfo.DefaultThreadCurrentCulture = culture;
             CultureInfo.DefaultThreadCurrentUICulture = culture;
+            ApplicationLanguages.PrimaryLanguageOverride = culture.TwoLetterISOLanguageName;
+
             if (culture.TextInfo.IsRightToLeft)
             {
                 FlowDirection = FlowDirection.RightToLeft;

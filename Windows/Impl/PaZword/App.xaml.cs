@@ -1,10 +1,12 @@
 ﻿using PaZword.Api;
 using PaZword.Api.Settings;
 using PaZword.Core;
+using PaZword.Localization;
 using PaZword.ViewModels;
 using PaZword.Views.Other;
 using System;
 using System.Composition.Hosting;
+using System.Globalization;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI;
@@ -33,6 +35,7 @@ namespace PaZword
         /// </summary>
         public App()
         {
+            LanguageManager.Instance.SetCurrentCulture(CultureInfo.InstalledUICulture);
             _mefHost.InitializeMef(); // Initialize MEF.
 
             InitializeComponent();

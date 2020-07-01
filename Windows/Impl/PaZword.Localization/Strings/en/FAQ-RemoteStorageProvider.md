@@ -19,12 +19,12 @@ PaZword encrypts all your data through your recovery key on the local machine an
 #### Where is my recovery key stored?
 
 Your recovery key is stored in the [Windows Credential Manager](https://support.microsoft.com/en-us/help/4026814/windows-accessing-credential-manager) as long as your settings allow it (you can change them later).
-While PaZword may keep the recovery key in the Windows Credential Manager, it is important that you keep a copy of it in case it gets deleted. The recovery key won't be store on the personal cloud storage service and the PassowrdZanager developer doesn't keep it.
+While PaZword may keep the recovery key in the Windows Credential Manager, it is important that you keep a copy of it in case it gets deleted. The recovery key won't be store on the personal cloud storage service and the PaZword developer doesn't keep it.
 
 #### How to remove my vault from the personal cloud storage service?
 
 You can remove your data from the cloud storage service at any time by disabling the synchronization in the settings of PaZword, and then by deleting the files from the application folder on your personal cloud storage service.
-For example, on Microsoft OneDrive and DropBox, you will find your vault data in the folder _/Applications/PaZword_.
+For example, on Microsoft OneDrive and Dropbox, you will find your vault data in the folder _/Applications/PaZword_.
 
 #### I have more questions
 
