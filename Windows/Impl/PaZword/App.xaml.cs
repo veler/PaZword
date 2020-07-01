@@ -45,7 +45,7 @@ namespace PaZword
             Suspending += OnSuspending;
 
             UpdateColorTheme();
-        }
+        } 
 
         public void Dispose()
         {
@@ -149,6 +149,9 @@ namespace PaZword
                     }
                     else
                     {
+                        int numberOfTimeTheAppStarted = ExportProvider.GetExport<ISettingsProvider>().GetSetting(SettingsDefinitions.NumberOfTimeTheAppStarted);
+                        ExportProvider.GetExport<ISettingsProvider>().SetSetting(SettingsDefinitions.NumberOfTimeTheAppStarted, numberOfTimeTheAppStarted + 1);
+
                         rootFrame.Navigate(typeof(AuthenticationPage), e.Arguments);
                         //rootFrame.Navigate(typeof(MainPage), e.Arguments);
                     }
@@ -178,13 +181,16 @@ namespace PaZword
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
+
+            ExportProvider.GetExport<ISettingsProvider>().SetSetting(SettingsDefinitions.LastAppShutdownWasCrash, false);
+
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
 
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
-            // TODO
+            ExportProvider.GetExport<ISettingsProvider>().SetSetting(SettingsDefinitions.LastAppShutdownWasCrash, true);
         }
 
         private void DebugSettings_BindingFailed(object sender, BindingFailedEventArgs e)

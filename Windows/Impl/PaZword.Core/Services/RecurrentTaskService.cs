@@ -154,9 +154,9 @@ namespace PaZword.Core.Services
                 else if (_dataManager.HasUserDataBundleLoaded)
                 {
                     string lastRunDataString = await _dataManager.GetBrownBagDataAsync(BrownBagRecurrentTaskNamePrefix + recurrentTask.Metadata.Name, _cancellationTokenSource.Token).ConfigureAwait(false);
-                   if (string.IsNullOrEmpty(lastRunDataString)
-                        || (DateTime.TryParse(lastRunDataString, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out DateTime lastRunDate)
-                            && lastRunDate < DateTime.UtcNow - _taskRecurrencyTime[recurrentTask.Metadata.Recurrency]))
+                    if (string.IsNullOrEmpty(lastRunDataString)
+                         || (DateTime.TryParse(lastRunDataString, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out DateTime lastRunDate)
+                             && lastRunDate < DateTime.UtcNow - _taskRecurrencyTime[recurrentTask.Metadata.Recurrency]))
                     {
                         await _dataManager.SetBrownBagDataAsync(
                             BrownBagRecurrentTaskNamePrefix + recurrentTask.Metadata.Name,

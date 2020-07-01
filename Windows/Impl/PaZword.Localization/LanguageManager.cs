@@ -39,6 +39,7 @@ namespace PaZword.Localization
         private readonly OtherDataStrings _otherdata = new OtherDataStrings();
         private readonly PasswordGeneratorDialogStrings _passwordgeneratordialog = new PasswordGeneratorDialogStrings();
         private readonly PaymentCardDataStrings _paymentcarddata = new PaymentCardDataStrings();
+        private readonly RateAndReviewAppStrings _rateandreviewapp = new RateAndReviewAppStrings();
         private readonly SettingsPageStrings _settingspage = new SettingsPageStrings();
         private readonly SetupTwoFactorAuthenticationStrings _setuptwofactorauthentication = new SetupTwoFactorAuthenticationStrings();
         private readonly WiFiCredentialDataStrings _wificredentialdata = new WiFiCredentialDataStrings();
@@ -139,6 +140,11 @@ namespace PaZword.Localization
         /// Gets the <see cref="PaymentCardDataStrings"/>.
         /// </summary>
         public PaymentCardDataStrings PaymentCardData => _paymentcarddata;
+
+        /// <summary>
+        /// Gets the <see cref="RateAndReviewAppStrings"/>.
+        /// </summary>
+        public RateAndReviewAppStrings RateAndReviewApp => _rateandreviewapp;
 
         /// <summary>
         /// Gets the <see cref="SettingsPageStrings"/>.
@@ -1245,6 +1251,78 @@ namespace PaZword.Localization
         /// Gets the resource Visa.
         /// </summary>
         public string Visa => _resources.GetString("Visa");
+    }
+
+    public class RateAndReviewAppStrings : INotifyPropertyChanged
+    {
+        private readonly ResourceLoader _resources = ResourceLoader.GetForViewIndependentUse("PaZword.Localization/RateAndReviewApp");
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Gets the resource EnjoyingCloseButtonText.
+        /// </summary>
+        public string EnjoyingCloseButtonText => _resources.GetString("EnjoyingCloseButtonText");
+
+        /// <summary>
+        /// Gets the resource EnjoyingMessage.
+        /// </summary>
+        public string EnjoyingMessage => _resources.GetString("EnjoyingMessage");
+
+        /// <summary>
+        /// Gets the resource EnjoyingPrimaryButtonText.
+        /// </summary>
+        public string EnjoyingPrimaryButtonText => _resources.GetString("EnjoyingPrimaryButtonText");
+
+        /// <summary>
+        /// Gets the resource EnjoyingTitle.
+        /// </summary>
+        public string EnjoyingTitle => _resources.GetString("EnjoyingTitle");
+
+        /// <summary>
+        /// Gets the resource FeedbackCloseButtonText.
+        /// </summary>
+        public string FeedbackCloseButtonText => _resources.GetString("FeedbackCloseButtonText");
+
+        /// <summary>
+        /// Gets the resource FeedbackMessage.
+        /// </summary>
+        public string FeedbackMessage => _resources.GetString("FeedbackMessage");
+
+        /// <summary>
+        /// Gets the resource FeedbackPrimaryButtonText.
+        /// </summary>
+        public string FeedbackPrimaryButtonText => _resources.GetString("FeedbackPrimaryButtonText");
+
+        /// <summary>
+        /// Gets the resource FeedbackTitle.
+        /// </summary>
+        public string FeedbackTitle => _resources.GetString("FeedbackTitle");
+
+        /// <summary>
+        /// Gets the resource RateCloseButtonText.
+        /// </summary>
+        public string RateCloseButtonText => _resources.GetString("RateCloseButtonText");
+
+        /// <summary>
+        /// Gets the resource RateMessage.
+        /// </summary>
+        public string RateMessage => _resources.GetString("RateMessage");
+
+        /// <summary>
+        /// Gets the resource RatePrimaryButtonText.
+        /// </summary>
+        public string RatePrimaryButtonText => _resources.GetString("RatePrimaryButtonText");
+
+        /// <summary>
+        /// Gets the resource RateSecondaryButtonText.
+        /// </summary>
+        public string RateSecondaryButtonText => _resources.GetString("RateSecondaryButtonText");
+
+        /// <summary>
+        /// Gets the resource RateTitle.
+        /// </summary>
+        public string RateTitle => _resources.GetString("RateTitle");
     }
 
     public class SettingsPageStrings : INotifyPropertyChanged

@@ -7,6 +7,7 @@
     {
         public const string PwnedRecurrentTask = "Pwned";
         public const string InactivityDetectionRecurrentTask = "InactivityDetection";
+        public const string RequestRateAndReviewRecurrentTask = "RequestRateAndReview";
 
         public const string CategoryAllId = "{00000000-0000-0000-0000-000000000000}";
 

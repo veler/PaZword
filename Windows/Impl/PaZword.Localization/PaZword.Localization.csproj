@@ -37,6 +37,7 @@
     <PRIResource Include="Strings\fr\Core.resw" />
     <PRIResource Include="Strings\fr\CredentialData.resw" />
     <PRIResource Include="Strings\fr\Dropbox.resw" />
+    <PRIResource Include="Strings\en\RateAndReviewApp.resw" />
     <None Include="Strings\fr\FAQ-RemoteStorageProvider.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -58,6 +59,7 @@
     <None Include="Strings\en\PrivacyStatement.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <PRIResource Include="Strings\fr\RateAndReviewApp.resw" />
     <None Include="Strings\LICENSE.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

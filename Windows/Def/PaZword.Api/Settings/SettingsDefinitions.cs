@@ -94,5 +94,29 @@ namespace PaZword.Api.Settings
             name: nameof(PasswordGeneratorEasyToRead),
             isRoaming: false,
             defaultValue: false);
+
+        /// <summary>
+        /// Whether the last time the app closed was due to a crash or not.
+        /// </summary>
+        public readonly static SettingDefinition<bool> LastAppShutdownWasCrash = new SettingDefinition<bool>(
+            name: nameof(LastAppShutdownWasCrash),
+            isRoaming: true,
+            defaultValue: false);
+
+        /// <summary>
+        /// The number of time the app has been started.
+        /// </summary>
+        public readonly static SettingDefinition<int> NumberOfTimeTheAppStarted = new SettingDefinition<int>(
+            name: nameof(NumberOfTimeTheAppStarted),
+            isRoaming: true,
+            defaultValue: 0);
+
+        /// <summary>
+        /// Whether the user rated and reviewed the app or not.
+        /// </summary>
+        public readonly static SettingDefinition<bool> UserRatedAndReviewedTheApp = new SettingDefinition<bool>(
+            name: nameof(UserRatedAndReviewedTheApp),
+            isRoaming: true,
+            defaultValue: false);
     }
 }
