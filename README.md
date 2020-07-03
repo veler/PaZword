@@ -9,7 +9,7 @@
 
 A password manager made in UWP.
 
-<a href='//www.microsoft.com/store/apps/9p47mfg7rxhd?cid=storebadge&ocid=badge'><img src='https://developer.microsoft.com/en-us/store/badges/images/English_get-it-from-MS.png' alt='Get PaZword on the Microsoft Store' style='width: 284px; height: 104px;'/></a>
+<a href='//www.microsoft.com/store/apps/9p47mfg7rxhd?cid=storebadge&ocid=badge'><img src='https://developer.microsoft.com/en-us/store/badges/images/English_get-it-from-MS.png' alt='Get PaZword on the Microsoft Store' width="284px" height="104px"/></a>
 
 ## Features
 
