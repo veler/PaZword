@@ -110,7 +110,7 @@ namespace PaZword.Core.Data
                 }
 
                 // Loads the user data bundle and migrate it (if needed)
-                await _upgradeService.MigrateUserDataBundleAsync(dataFile).ConfigureAwait(false);
+                await _upgradeService.UpgradeUserDataBundleAsync(dataFile).ConfigureAwait(false);
 
                 return true;
             }
@@ -138,7 +138,7 @@ namespace PaZword.Core.Data
                 }
 
                 // Loads the user data bundle and migrate it (if needed)
-                (bool updated, UserDataBundle data) = await _upgradeService.MigrateUserDataBundleAsync(dataFile).ConfigureAwait(false);
+                (bool updated, UserDataBundle data) = await _upgradeService.UpgradeUserDataBundleAsync(dataFile).ConfigureAwait(false);
 
                 _logger.LogEvent(LoadedEvent, string.Empty);
                 if (_data == null)
@@ -193,7 +193,7 @@ namespace PaZword.Core.Data
                 byte[] byteArray = new byte[fileStream.Size];
                 reader.ReadBytes(byteArray);
 
-                string encryptedFileContent = _encryptionProvider.EncryptString(Convert.ToBase64String(byteArray));
+                string encryptedFileContent = _encryptionProvider.EncryptString(Convert.ToBase64String(byteArray), reuseGlobalIV: true);
 
                 await CoreHelper.RetryAsync(async () =>
                 {
@@ -702,8 +702,8 @@ namespace PaZword.Core.Data
 
                 // Encrypt the user data.
                 string jsonData = _serializationProvider.SerializeObject(_data);
-                string encryptedUserDataBundle = _encryptionProvider.EncryptString(jsonData);
-                //_upgradeService.CurrentUserBundleVersion + ":" + _encryptionProvider.EncryptString(jsonData);
+                string encryptedUserDataBundle =
+                    _upgradeService.CurrentUserBundleVersion + ":" + _encryptionProvider.EncryptString(jsonData);
 
                 await CoreHelper.RetryAsync(async () =>
                 {

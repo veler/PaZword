@@ -1,16 +1,18 @@
 ﻿using Newtonsoft.Json;
+using PaZword.Api.Data;
 using PaZword.Api.Models;
 using PaZword.Core;
 using PaZword.Core.Json;
 using System;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace PaZword.Models.Data
 {
     /// <summary>
     /// Represents the data for a file.
     /// </summary>
-    internal sealed class FileData : AccountData
+    internal sealed class FileData : AccountData, IUpgradableAccountData
     {
         [SecurityCritical]
         [JsonProperty(nameof(FileName))]
@@ -106,6 +108,22 @@ namespace PaZword.Models.Data
                 && fileData._fileName.IsEqualTo(_fileName)
                 && fileData._fileExtension.IsEqualTo(_fileExtension)
                 && string.Equals(fileData._base64Thumbnail, _base64Thumbnail, StringComparison.Ordinal);
+        }
+
+        public Task UpgradeAsync(int oldVersion, int targetVersion)
+        {
+            if (oldVersion == 1)
+            {
+                // In Version 1, there was a vulnerability in the encryption engine.
+                // Let's fix it by decrypting and re-encrypting all data.
+
+#pragma warning disable CA2245 // Do not assign a property to itself.
+                FileName = FileName;
+                FileExtension = FileExtension;
+#pragma warning restore CA2245 // Do not assign a property to itself.
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

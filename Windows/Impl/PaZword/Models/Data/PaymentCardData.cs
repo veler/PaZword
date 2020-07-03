@@ -1,16 +1,18 @@
 ﻿using Newtonsoft.Json;
+using PaZword.Api.Data;
 using PaZword.Api.Models;
 using PaZword.Core;
 using PaZword.Core.Json;
 using System;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace PaZword.Models.Data
 {
     /// <summary>
     /// Represents the data associated to a payment card.
     /// </summary>
-    internal sealed class PaymentCardData : AccountData
+    internal sealed class PaymentCardData : AccountData, IUpgradableAccountData
     {
         [SecurityCritical]
         [JsonProperty(nameof(BankName))]
@@ -129,6 +131,24 @@ namespace PaZword.Models.Data
                 && paymentCardData._cardHolderName.IsEqualTo(_cardHolderName)
                 && paymentCardData._cardNumber.IsEqualTo(_cardNumber)
                 && paymentCardData._cardCryptogram.IsEqualTo(_cardCryptogram);
+        }
+
+        public Task UpgradeAsync(int oldVersion, int targetVersion)
+        {
+            if (oldVersion == 1)
+            {
+                // In Version 1, there was a vulnerability in the encryption engine.
+                // Let's fix it by decrypting and re-encrypting all data.
+
+#pragma warning disable CA2245 // Do not assign a property to itself.
+                BankName = BankName;
+                CardHolderName = CardHolderName;
+                CardNumber = CardNumber;
+                CardCryptogram = CardCryptogram;
+#pragma warning restore CA2245 // Do not assign a property to itself.
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

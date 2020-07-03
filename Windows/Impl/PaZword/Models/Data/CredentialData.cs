@@ -1,16 +1,18 @@
 ﻿using Newtonsoft.Json;
+using PaZword.Api.Data;
 using PaZword.Api.Models;
 using PaZword.Core;
 using PaZword.Core.Json;
 using System;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace PaZword.Models.Data
 {
     /// <summary>
     /// Represents the data associated to a login.
     /// </summary>
-    internal sealed class CredentialData : AccountData
+    internal sealed class CredentialData : AccountData, IUpgradableAccountData
     {
         [SecurityCritical]
         [JsonProperty(nameof(Username))]
@@ -133,6 +135,25 @@ namespace PaZword.Models.Data
                 && credentialData._password.IsEqualTo(_password)
                 && credentialData._securityQuestion.IsEqualTo(_securityQuestion)
                 && credentialData._securityQuestionAnswer.IsEqualTo(_securityQuestionAnswer);
+        }
+
+        public Task UpgradeAsync(int oldVersion, int targetVersion)
+        {
+            if (oldVersion == 1)
+            {
+                // In Version 1, there was a vulnerability in the encryption engine.
+                // Let's fix it by decrypting and re-encrypting all data.
+
+#pragma warning disable CA2245 // Do not assign a property to itself.
+                Username = Username;
+                EmailAddress = EmailAddress;
+                Password = Password;
+                SecurityQuestion = SecurityQuestion;
+                SecurityQuestionAnswer = SecurityQuestionAnswer;
+#pragma warning restore CA2245 // Do not assign a property to itself.
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

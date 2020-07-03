@@ -127,7 +127,7 @@
     <value>Nom de la banque</value>
   </data>
   <data name="DisplayName" xml:space="preserve">
-    <value>Numéro de compte en banque</value>
+    <value>Compte en banque</value>
   </data>
   <data name="IbanNumber" xml:space="preserve">
     <value>IBAN</value>
