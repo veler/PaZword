@@ -55,16 +55,18 @@ namespace PaZword.Api.Security
         /// Encrypts a given string using AES encryption algorithm and returns it in Base64.
         /// </summary>
         /// <param name="data">Data to be encrypted</param>
+        /// <param name="reuseGlobalIV">Defines whether the global initialization vector (IV) should be used to encrypt.</param>
         /// <returns>An encrypted string in Base64</returns>
-        string EncryptString(string data);
+        string EncryptString(string data, bool reuseGlobalIV = false);
 
         /// <summary>
         /// Encrypts a given string using AES encryption algorithm and returns it in Base64.
         /// </summary>
         /// <param name="data">Data to be encrypted</param>
         /// <param name="defaultValue">The default value to return if the <paramref name="data"/> is empty.</param>
+        /// <param name="reuseGlobalIV">Defines whether the global initialization vector (IV) should be used to encrypt.</param>
         /// <returns>An encrypted string in Base64</returns>
-        string EncryptString(string data, string defaultValue);
+        string EncryptString(string data, string defaultValue, bool reuseGlobalIV = false);
 
         /// <summary>
         /// Decrypts a string through AES encryption algorithm.

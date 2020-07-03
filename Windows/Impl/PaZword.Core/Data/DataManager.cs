@@ -188,7 +188,7 @@ namespace PaZword.Core.Data
                 byte[] byteArray = new byte[fileStream.Size];
                 reader.ReadBytes(byteArray);
 
-                string encryptedFileContent = _encryptionProvider.EncryptString(Convert.ToBase64String(byteArray));
+                string encryptedFileContent = _encryptionProvider.EncryptString(Convert.ToBase64String(byteArray), reuseGlobalIV: true);
 
                 await CoreHelper.RetryAsync(async () =>
                 {
@@ -697,7 +697,7 @@ namespace PaZword.Core.Data
 
                 // Encrypt the user data.
                 string jsonData = _serializationProvider.SerializeObject(_data);
-                string encryptedData = _encryptionProvider.EncryptString(jsonData);
+                string encryptedData = _encryptionProvider.EncryptString(jsonData, reuseGlobalIV: true);
 
                 await CoreHelper.RetryAsync(async () =>
                 {

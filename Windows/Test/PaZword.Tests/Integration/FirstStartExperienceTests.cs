@@ -94,7 +94,7 @@ namespace PaZword.Tests.Integration
             viewModel.RegisterToRemoteStorageServiceCommand.WaitRunToCompletion();
 
             Assert.AreEqual(FirstStartExperiencePageViewModel.StepWindowsHello, viewModel.CurrentStepIndex);
-            Assert.IsTrue(viewModel.UseWindowsHello);
+            Assert.IsFalse(viewModel.UseWindowsHello);
 
             viewModel.BackCommand.Execute(null);
             Assert.AreEqual(FirstStartExperiencePageViewModel.StepRegisterToCloudService, viewModel.CurrentStepIndex);

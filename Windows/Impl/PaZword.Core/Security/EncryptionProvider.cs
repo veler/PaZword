@@ -16,18 +16,21 @@ namespace PaZword.Core.Security
         // Changing this will require existing users to re-enter their credentials.
         private const string PaZwordSecretKeysName = "PaZwordSecretKeys";
 
+        private const char IVSeparator = ';';
+        private const int IVLength = 32;
+
         private readonly SymmetricKeyAlgorithmProvider _cryptingProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
         private readonly object _lock = new object();
 
         private CryptographicKey _cryptographicKey;
-        private IBuffer _randomBuffer;
-        private IBuffer _randomBufferCBC;
+        private IBuffer _aesGlobalKey;
+        private IBuffer _aesGlobalIV;
         private PasswordCredential _secretKeys;
 
         public PasswordCredential GenerateSecretKeys()
         {
             string userName = CryptographicBuffer.EncodeToBase64String(CryptographicBuffer.GenerateRandom(_cryptingProvider.BlockLength));
-            string password = CryptographicBuffer.EncodeToBase64String(CryptographicBuffer.GenerateRandom(32));
+            string password = CryptographicBuffer.EncodeToBase64String(CryptographicBuffer.GenerateRandom(IVLength));
 
             return new PasswordCredential(PaZwordSecretKeysName, userName, password);
         }
@@ -110,24 +113,25 @@ namespace PaZword.Core.Security
 
             lock (_lock)
             {
-                _randomBuffer = CryptographicBuffer.DecodeFromBase64String(secretKeys.UserName);
-                _randomBufferCBC = CryptographicBuffer.DecodeFromBase64String(secretKeys.Password);
+                _aesGlobalKey = CryptographicBuffer.DecodeFromBase64String(secretKeys.UserName);
+                _aesGlobalIV = CryptographicBuffer.DecodeFromBase64String(secretKeys.Password);
 
-                _cryptographicKey = _cryptingProvider.CreateSymmetricKey(_randomBuffer);
+                _cryptographicKey = _cryptingProvider.CreateSymmetricKey(_aesGlobalKey);
                 _secretKeys = new PasswordCredential(PaZwordSecretKeysName, secretKeys.UserName, secretKeys.Password);
             }
         }
 
-        public string EncryptString(string data)
+        public string EncryptString(string data, bool reuseGlobalIV = false)
         {
             Arguments.NotNull(data, nameof(data));
 
-            var dataString = data;
-
-            Arguments.NotNull(dataString, nameof(data));
+            if (string.IsNullOrEmpty(data))
+            {
+                return data;
+            }
 
             CryptographicKey cryptographicKey;
-            IBuffer randomBufferCBC;
+            IBuffer iv;
 
             lock (_lock)
             {
@@ -137,33 +141,41 @@ namespace PaZword.Core.Security
                 }
 
                 cryptographicKey = _cryptographicKey;
-                randomBufferCBC = _randomBufferCBC;
+
+                if (reuseGlobalIV)
+                {
+                    iv = _aesGlobalIV;
+                }
+                else
+                {
+                    iv = CryptographicBuffer.GenerateRandom(IVLength);
+                }
             }
 
-            var binaryData = CryptographicBuffer.ConvertStringToBinary(dataString, BinaryStringEncoding.Utf8);
+            var binaryData = CryptographicBuffer.ConvertStringToBinary(data, BinaryStringEncoding.Utf8);
 
-            var encryptedBinaryData = CryptographicEngine.Encrypt(cryptographicKey, binaryData, randomBufferCBC);
-            var encryptedStringData = CryptographicBuffer.EncodeToBase64String(encryptedBinaryData);
+            IBuffer encryptedBinaryData = CryptographicEngine.Encrypt(cryptographicKey, binaryData, iv);
+            string encryptedStringData = CryptographicBuffer.EncodeToBase64String(encryptedBinaryData);
 
-            if (encryptedStringData == CryptographicBuffer.EncodeToBase64String(binaryData))
+            if (!reuseGlobalIV)
             {
-                throw new Exception("The data has not been encrypted.");
+                encryptedStringData = CryptographicBuffer.EncodeToBase64String(iv) + IVSeparator + encryptedStringData;
             }
 
             return encryptedStringData;
         }
 
-        public string EncryptString(string data, string defaultValue)
+        public string EncryptString(string data, string defaultValue, bool reuseGlobalIV = false)
         {
-            return data == null || string.IsNullOrEmpty(data) ? defaultValue : EncryptString(data);
+            return data == null || string.IsNullOrEmpty(data) ? EncryptString(defaultValue, reuseGlobalIV) : EncryptString(data, reuseGlobalIV);
         }
 
         public string DecryptString(string base64EncryptedData)
         {
-            Arguments.NotNull(base64EncryptedData, nameof(base64EncryptedData));
+            Arguments.NotNullOrWhiteSpace(base64EncryptedData, nameof(base64EncryptedData));
 
             CryptographicKey cryptographicKey;
-            IBuffer randomBufferCBC;
+            IBuffer iv;
 
             lock (_lock)
             {
@@ -173,12 +185,20 @@ namespace PaZword.Core.Security
                 }
 
                 cryptographicKey = _cryptographicKey;
-                randomBufferCBC = _randomBufferCBC;
+                iv = _aesGlobalIV;
             }
 
-            var encryptedBinaryData = CryptographicBuffer.DecodeFromBase64String(base64EncryptedData);
-            var decryptedData = CryptographicEngine.Decrypt(cryptographicKey, encryptedBinaryData, randomBufferCBC);
-            return CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, decryptedData);
+            int ivSeparatorPosition = base64EncryptedData.IndexOf(IVSeparator);
+            if (ivSeparatorPosition == -1)
+            {
+                // retro-compatibility with implementation before https://github.com/veler/PaZword/issues/4
+                return DecryptInternal(base64EncryptedData, cryptographicKey, iv);
+            }
+
+            iv = CryptographicBuffer.DecodeFromBase64String(base64EncryptedData.Substring(0, ivSeparatorPosition));
+            base64EncryptedData = base64EncryptedData.Substring(ivSeparatorPosition + 1);
+
+            return DecryptInternal(base64EncryptedData, cryptographicKey, iv);
         }
 
         public string DecryptString(string base64EncryptedData, string defaultValue)
@@ -186,6 +206,13 @@ namespace PaZword.Core.Security
             return base64EncryptedData == null
                 || string.IsNullOrEmpty(base64EncryptedData)
                 ? defaultValue : DecryptString(base64EncryptedData);
+        }
+
+        private string DecryptInternal(string base64EncryptedData, CryptographicKey cryptographicKey, IBuffer iv)
+        {
+            IBuffer encryptedBinaryData = CryptographicBuffer.DecodeFromBase64String(base64EncryptedData);
+            IBuffer decryptedData = CryptographicEngine.Decrypt(cryptographicKey, encryptedBinaryData, iv);
+            return CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, decryptedData);
         }
     }
 }
