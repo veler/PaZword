@@ -145,7 +145,7 @@
     <value>Supprimer '{0}' définitivement ?</value>
   </data>
   <data name="DiscardChanges" xml:space="preserve">
-    <value>Ignorer les modifications</value>
+    <value>Ignorer</value>
   </data>
   <data name="DiscardUnsavedChangesConfirmationDescription" xml:space="preserve">
     <value>Certaines modifications n'ont pas été enregistrées pour ce compte. Souhaitez-vous les enregistrer maintenant ?</value>
@@ -179,7 +179,7 @@
     <value>Enregistrer</value>
   </data>
   <data name="SaveChanges" xml:space="preserve">
-    <value>Enregistrer les modifications</value>
+    <value>Enregistrer</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Titre</value>
