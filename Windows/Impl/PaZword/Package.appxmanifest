@@ -10,7 +10,7 @@
     <Identity
       Name="64360VelerSoftware.PaZword"
       Publisher="CN=3D87C8C2-C6F4-4875-B258-5FEC13B08F81"
-      Version="2020.7.1.0" />
+      Version="2020.7.3.0" />
 
     <mp:PhoneIdentity PhoneProductId="8c4858c9-136d-4797-bd39-ad0bada941ea" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
