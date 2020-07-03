@@ -121,7 +121,7 @@
     <value>Nom de l'entreprise</value>
   </data>
   <data name="DisplayName" xml:space="preserve">
-    <value>Numéro de compte en banque</value>
+    <value>Licence</value>
   </data>
   <data name="LicenseKey" xml:space="preserve">
     <value>Clé de licence</value>
