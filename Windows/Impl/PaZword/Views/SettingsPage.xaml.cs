@@ -16,6 +16,15 @@ namespace PaZword.Views
         public SettingsPage()
         {
             InitializeComponent();
+
+            Unloaded += SettingsPage_Unloaded;
+
+            ViewModel.Load();
+        }
+
+        private void SettingsPage_Unloaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            ViewModel.Unload();
         }
     }
 }

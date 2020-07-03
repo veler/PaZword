@@ -252,11 +252,21 @@ namespace PaZword.ViewModels
             _timer = new DispatcherTimer();
             _timer.Tick += Timer_Tick;
             _timer.Interval = TimeSpan.FromSeconds(2);
+        }
+
+        internal void Load()
+        {
             _timer.Start();
 
             Timer_Tick(null, null);
 
+            UpdatePasswordVault();
             UpdateAccountInfoAsync(_accountInfoCancellationTokenSource.Token).Forget();
+        }
+
+        internal void Unload()
+        {
+            _timer.Stop();
         }
 
         #region SignInToRemoteStorageServiceCommand

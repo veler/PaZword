@@ -76,7 +76,7 @@ namespace PaZword.ViewModels.Other
         private bool _invalidRecoveryKey;
         private string _invalidRecoveryKeyReason;
         private bool _windowsHelloIsEnabled;
-        private bool _useWindowsHello = true;
+        private bool _useWindowsHello;
         private IPrintDocumentSource _printDocumentSource;
         private PrintDocument _printDocument;
 
@@ -620,7 +620,13 @@ namespace PaZword.ViewModels.Other
             {
                 try
                 {
+                    var oldWindowsHelloIsEnabled = WindowsHelloIsEnabled;
                     WindowsHelloIsEnabled = await _windowsHelloAuthProvider.IsWindowsHelloEnabledAsync().ConfigureAwait(false);
+
+                    if (WindowsHelloIsEnabled && oldWindowsHelloIsEnabled != WindowsHelloIsEnabled)
+                    {
+                        UseWindowsHello = true;
+                    }
                 }
                 finally
                 {
