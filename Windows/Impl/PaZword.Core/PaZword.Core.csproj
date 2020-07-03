@@ -37,6 +37,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="CoreHelper.cs" />
     <Compile Include="Data\DataManager.cs" />
+    <Compile Include="Data\UpgradeService.cs" />
     <Compile Include="Data\RemoteSynchronizationService.cs" />
     <Compile Include="Data\SerializationProvider.cs" />
     <Compile Include="Json\SecureStringJsonConverter.cs" />

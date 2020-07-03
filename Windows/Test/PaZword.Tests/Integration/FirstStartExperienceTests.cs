@@ -94,7 +94,7 @@ namespace PaZword.Tests.Integration
             viewModel.RegisterToRemoteStorageServiceCommand.WaitRunToCompletion();
 
             Assert.AreEqual(FirstStartExperiencePageViewModel.StepWindowsHello, viewModel.CurrentStepIndex);
-            Assert.IsTrue(viewModel.UseWindowsHello);
+            Assert.IsFalse(viewModel.UseWindowsHello);
 
             viewModel.BackCommand.Execute(null);
             Assert.AreEqual(FirstStartExperiencePageViewModel.StepRegisterToCloudService, viewModel.CurrentStepIndex);
@@ -191,7 +191,7 @@ namespace PaZword.Tests.Integration
             Assert.IsFalse(viewModel.InvalidRecoveryKey);
 
             Assert.AreEqual(FirstStartExperiencePageViewModel.StepWindowsHello, viewModel.CurrentStepIndex);
-            Assert.IsTrue(viewModel.UseWindowsHello);
+            Assert.IsFalse(viewModel.UseWindowsHello);
 
             viewModel.ContinueWindowsHelloCommand.Execute(null);
 
@@ -218,7 +218,8 @@ namespace PaZword.Tests.Integration
                         _app.ExportProvider.GetExport<ILogger>(),
                         _app.ExportProvider.GetExport<IEncryptionProvider>(),
                         _app.ExportProvider.GetExport<ISerializationProvider>(),
-                        new MockIRemoteSynchronizationService()),
+                        new MockIRemoteSynchronizationService(),
+                        _app.ExportProvider.GetExport<IUpgradeService>()),
                     _app.ExportProvider.GetExport<IRecurrentTaskService>(),
                     new List<Lazy<IRemoteStorageProvider, RemoteStorageProviderMetadata>>
                  {

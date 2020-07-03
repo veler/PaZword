@@ -373,13 +373,15 @@ namespace PaZword.Tests.Data
             var logger = ExportProvider.GetExport<ILogger>();
             var encryptionProvider = ExportProvider.GetExport<IEncryptionProvider>();
             var serializationProvider = ExportProvider.GetExport<ISerializationProvider>();
+            var upgradeService = ExportProvider.GetExport<IUpgradeService>();
 
 #pragma warning disable CA2000 // Dispose objects before losing scope
             var dataManager = new DataManager(
                 logger,
                 encryptionProvider,
                 serializationProvider,
-                new MockIRemoteSynchronizationService());
+                new MockIRemoteSynchronizationService(),
+                upgradeService);
 #pragma warning restore CA2000 // Dispose objects before losing scope
 
             if (clearExistingLocalData)

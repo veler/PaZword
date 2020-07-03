@@ -13,8 +13,10 @@
     <Compile Include="Collections\PendingChange.cs" />
     <Compile Include="Collections\PendingChangeType.cs" />
     <Compile Include="Data\IDataManager.cs" />
+    <Compile Include="Data\IUpgradeService.cs" />
     <Compile Include="Data\IRemoteSynchronizationService.cs" />
     <Compile Include="Data\ISerializationProvider.cs" />
+    <Compile Include="Data\IUpgradableAccountData.cs" />
     <Compile Include="Data\SynchronizationResultEventArgs.cs" />
     <Compile Include="IApp.cs" />
     <Compile Include="IExactEquatable.cs" />
