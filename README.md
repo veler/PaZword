@@ -46,7 +46,7 @@ See below to help with existing translations or add a new language.
 ### Manual
 
 - Download and extract the latest [release](https://github.com/veler/PaZword/releases).
-- Double click the *.appxbundle file.
+- Double click the *.msixbundle file.
 
 ## How to set up a development environment
 
