@@ -18,6 +18,13 @@ namespace PaZword.Views.Dialog
             InitializeComponent();
 
             ViewModel.CloseDialog += ViewModel_CloseDialog;
+
+            Closed += SetupTwoFactorAuthenticationDialog_Closed;
+        }
+
+        private void SetupTwoFactorAuthenticationDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
+        {
+            ViewModel.Closed();
         }
 
         private void ViewModel_CloseDialog(object sender, System.EventArgs e)

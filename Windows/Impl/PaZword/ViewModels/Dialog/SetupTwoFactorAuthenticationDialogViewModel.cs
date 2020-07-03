@@ -175,6 +175,11 @@ namespace PaZword.ViewModels.Dialog
 
         #endregion
 
+        internal void Closed()
+        {
+            _timer.Stop();
+        }
+
         private void Timer_Tick(object sender, object e)
         {
             TaskHelper.ThrowIfNotOnUIThread();
