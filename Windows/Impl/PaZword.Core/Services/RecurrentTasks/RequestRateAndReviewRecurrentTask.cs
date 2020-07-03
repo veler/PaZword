@@ -15,7 +15,7 @@ namespace PaZword.Core.Services.RecurrentTasks
 {
     [Export(typeof(IRecurrentTask))]
     [ExportMetadata(nameof(RecurrentTaskMetadata.Name), Constants.RequestRateAndReviewRecurrentTask)]
-    [ExportMetadata(nameof(RecurrentTaskMetadata.Recurrency), TaskRecurrency.OneDay)]
+    [ExportMetadata(nameof(RecurrentTaskMetadata.Recurrency), TaskRecurrency.Manual)]
     [Shared()]
     internal sealed class RequestRateAndReviewRecurrentTask : IRecurrentTask
     {

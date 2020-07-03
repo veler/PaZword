@@ -128,6 +128,8 @@ namespace PaZword.ViewModels
                 Category defaultCategory = await _dataManager.GetCategoryAsync(new Guid(Constants.CategoryAllId), CancellationToken.None).ConfigureAwait(false);
                 await ChangeSelectedMenuToCategoryAsync(defaultCategory).ConfigureAwait(false);
             }
+
+            _recurrentTaskService.RunTaskExplicitly(Constants.RequestRateAndReviewRecurrentTask);
         }
 
         internal void Unload()
