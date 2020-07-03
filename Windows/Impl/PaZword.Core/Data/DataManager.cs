@@ -42,6 +42,7 @@ namespace PaZword.Core.Data
         private readonly IEncryptionProvider _encryptionProvider;
         private readonly ISerializationProvider _serializationProvider;
         private readonly IRemoteSynchronizationService _remoteSynchronizationService;
+        private readonly IUpgradeService _upgradeService;
 
         private StorageFolder _localUserDataFolder;
         private UserDataBundle _data;
@@ -55,12 +56,14 @@ namespace PaZword.Core.Data
             ILogger logger,
             IEncryptionProvider encryptionProvider,
             ISerializationProvider serializationProvider,
-            IRemoteSynchronizationService remoteSynchronizationService)
+            IRemoteSynchronizationService remoteSynchronizationService,
+            IUpgradeService migrationService)
         {
             _logger = Arguments.NotNull(logger, nameof(logger));
             _encryptionProvider = Arguments.NotNull(encryptionProvider, nameof(encryptionProvider));
             _serializationProvider = Arguments.NotNull(serializationProvider, nameof(serializationProvider));
             _remoteSynchronizationService = Arguments.NotNull(remoteSynchronizationService, nameof(remoteSynchronizationService));
+            _upgradeService = Arguments.NotNull(migrationService, nameof(migrationService));
 
             _remoteSynchronizationService.SynchronizationCompleted += RemoteSynchronizationService_SynchronizationCompleted;
         }
@@ -106,10 +109,9 @@ namespace PaZword.Core.Data
                     throw new FileLoadException("The file isn't available.");
                 }
 
-                string encryptedData = await FileIO.ReadTextAsync(dataFile);
-                string jsonData = _encryptionProvider.DecryptString(encryptedData);
+                // Loads the user data bundle and migrate it (if needed)
+                await _upgradeService.MigrateUserDataBundleAsync(dataFile).ConfigureAwait(false);
 
-                _serializationProvider.DeserializeObject<UserDataBundle>(jsonData);
                 return true;
             }
         }
@@ -135,11 +137,8 @@ namespace PaZword.Core.Data
                     throw new FileLoadException("The file isn't available.");
                 }
 
-                UserDataBundle data;
-                string encryptedData = await FileIO.ReadTextAsync(dataFile);
-                string jsonData = _encryptionProvider.DecryptString(encryptedData);
-
-                data = _serializationProvider.DeserializeObject<UserDataBundle>(jsonData);
+                // Loads the user data bundle and migrate it (if needed)
+                (bool updated, UserDataBundle data) = await _upgradeService.MigrateUserDataBundleAsync(dataFile).ConfigureAwait(false);
 
                 _logger.LogEvent(LoadedEvent, string.Empty);
                 if (_data == null)
@@ -155,10 +154,16 @@ namespace PaZword.Core.Data
                     // what we already had in RAM.
                     if (MergeUserDataBundle(data))
                     {
-                        // Something has changed during the merge. So let's save the data to be sure we save the merge
-                        // and let's (re)synchronize to be sure the server has the changes from the merge too.
-                        await SaveLocalDataInternalAsync(synchronize: true).ConfigureAwait(false);
+                        updated = true;
                     }
+                }
+
+                if (updated)
+                {
+                    // Something has changed during the merge, and/or the data have been migrated from an older version.
+                    // So let's save the data to be sure we save the merge and let's (re)synchronize to be
+                    // sure the server has the changes from the merge too.
+                    await SaveLocalDataInternalAsync(synchronize: true).ConfigureAwait(false);
                 }
             }
         }
@@ -697,14 +702,15 @@ namespace PaZword.Core.Data
 
                 // Encrypt the user data.
                 string jsonData = _serializationProvider.SerializeObject(_data);
-                string encryptedData = _encryptionProvider.EncryptString(jsonData, reuseGlobalIV: true);
+                string encryptedUserDataBundle =
+                    _upgradeService.CurrentUserBundleVersion + ":" + _encryptionProvider.EncryptString(jsonData);
 
                 await CoreHelper.RetryAsync(async () =>
                 {
                     // Create and save the data in the new file.
                     await EnsureInitializedAsync().ConfigureAwait(false);
                     StorageFile dataFileCreated = await _localUserDataFolder.CreateFileAsync(Constants.UserDataBundleFileName, CreationCollisionOption.ReplaceExisting);
-                    await FileIO.WriteTextAsync(dataFileCreated, encryptedData);
+                    await FileIO.WriteTextAsync(dataFileCreated, encryptedUserDataBundle);
                 }).ConfigureAwait(false);
 
                 _logger.LogEvent(SaveLocalDataEvent, string.Empty);
