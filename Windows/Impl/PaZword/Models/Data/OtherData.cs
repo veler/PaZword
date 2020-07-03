@@ -1,16 +1,18 @@
 ﻿using Newtonsoft.Json;
+using PaZword.Api.Data;
 using PaZword.Api.Models;
 using PaZword.Core;
 using PaZword.Core.Json;
 using System;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace PaZword.Models.Data
 {
     /// <summary>
     /// Represents the data for a random type of data.
     /// </summary>
-    internal sealed class OtherData : AccountData
+    internal sealed class OtherData : AccountData, IUpgradableAccountData
     {
         [SecurityCritical]
         [JsonProperty(nameof(Name))]
@@ -82,6 +84,22 @@ namespace PaZword.Models.Data
                 && otherData.Id == Id
                 && otherData._name.IsEqualTo(_name)
                 && otherData._value.IsEqualTo(_value);
+        }
+
+        public Task UpgradeAsync(int oldVersion, int targetVersion)
+        {
+            if (oldVersion == 1)
+            {
+                // In Version 1, there was a vulnerability in the encryption engine.
+                // Let's fix it by decrypting and re-encrypting all data.
+
+#pragma warning disable CA2245 // Do not assign a property to itself.
+                Name = Name;
+                Value = Value;
+#pragma warning restore CA2245 // Do not assign a property to itself.
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

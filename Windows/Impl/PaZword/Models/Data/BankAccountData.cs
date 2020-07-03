@@ -1,16 +1,18 @@
 ﻿using Newtonsoft.Json;
+using PaZword.Api.Data;
 using PaZword.Api.Models;
 using PaZword.Core;
 using PaZword.Core.Json;
 using System;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace PaZword.Models.Data
 {
     /// <summary>
     /// Represents the data associated to a bank account.
     /// </summary>
-    internal sealed class BankAccountData : AccountData
+    internal sealed class BankAccountData : AccountData, IUpgradableAccountData
     {
         [SecurityCritical]
         [JsonProperty(nameof(BankName))]
@@ -167,6 +169,27 @@ namespace PaZword.Models.Data
                 && bankAccountData._pin.IsEqualTo(_pin)
                 && bankAccountData._routingNumber.IsEqualTo(_routingNumber)
                 && bankAccountData._swiftCode.IsEqualTo(_swiftCode);
+        }
+
+        public Task UpgradeAsync(int oldVersion, int targetVersion)
+        {
+            if (oldVersion == 1)
+            {
+                // In Version 1, there was a vulnerability in the encryption engine.
+                // Let's fix it by decrypting and re-encrypting all data.
+
+#pragma warning disable CA2245 // Do not assign a property to itself.
+                AccountHolderName = AccountHolderName;
+                AccountNumber = AccountNumber;
+                BankName = BankName;
+                IbanNumber = IbanNumber;
+                Pin = Pin;
+                RoutingNumber = RoutingNumber;
+                SwiftCode = SwiftCode;
+#pragma warning restore CA2245 // Do not assign a property to itself.
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

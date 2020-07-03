@@ -19,11 +19,11 @@ namespace PaZword.Api.Data
         /// </summary>
         /// <param name="userDataBundleFile">The file containing the user data bundle to migrate.</param>
         /// <returns>A up to date user data bundle and a value indicated if it had to be updated.</returns>
-        Task<(bool updated, UserDataBundle userDataBundle)> MigrateUserDataBundleAsync(StorageFile userDataBundleFile);
+        Task<(bool updated, UserDataBundle userDataBundle)> UpgradeUserDataBundleAsync(StorageFile userDataBundleFile);
 
         /// <summary>
         /// Migrates the application settings.
         /// </summary>
-        void MigrateSettings();
+        void UpgradeSettings();
     }
 }

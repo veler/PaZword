@@ -110,7 +110,7 @@ namespace PaZword.Core.Data
                 }
 
                 // Loads the user data bundle and migrate it (if needed)
-                await _upgradeService.MigrateUserDataBundleAsync(dataFile).ConfigureAwait(false);
+                await _upgradeService.UpgradeUserDataBundleAsync(dataFile).ConfigureAwait(false);
 
                 return true;
             }
@@ -138,7 +138,7 @@ namespace PaZword.Core.Data
                 }
 
                 // Loads the user data bundle and migrate it (if needed)
-                (bool updated, UserDataBundle data) = await _upgradeService.MigrateUserDataBundleAsync(dataFile).ConfigureAwait(false);
+                (bool updated, UserDataBundle data) = await _upgradeService.UpgradeUserDataBundleAsync(dataFile).ConfigureAwait(false);
 
                 _logger.LogEvent(LoadedEvent, string.Empty);
                 if (_data == null)
