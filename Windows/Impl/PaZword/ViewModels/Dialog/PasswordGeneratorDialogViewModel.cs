@@ -33,7 +33,10 @@ namespace PaZword.ViewModels.Dialog
         private const string SecondaryButtonEvent = "PasswordGenerator.SecondaryButton.Command";
         private const string RefreshPasswordEvent = "PasswordGenerator.RefreshPassword.Command";
 
-        private readonly char[] PasswordCharacters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_-+={[}]|\:;<>/?.,".ToCharArray();
+        private readonly char[] PasswordLowercaseCharacters = @"abcdefghijklmnopqrstuvwxyz".ToCharArray();
+        private readonly char[] PasswordUppercaseCharacters = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+        private readonly char[] PasswordNumbers = @"1234567890".ToCharArray();
+        private readonly char[] PasswordSymbols = @"!@#$%^&*()_-+={[}]|\:;<>/?.,".ToCharArray();
         private readonly Dictionary<char, List<char>> _lettersReplacement = new Dictionary<char, List<char>>
         {
             ['a'] = new List<char> { '@', 'a' },
@@ -54,6 +57,10 @@ namespace PaZword.ViewModels.Dialog
         private SecureString _generatedPassword;
         private SolidColorBrush _strengthBrush;
         private int _strength;
+        private bool _includeUpperCaseLetters = true;
+        private bool _includeLowerCaseLetters = true;
+        private bool _includeNumbers = true;
+        private bool _includeSymbols = true;
         private bool _easyToRead;
         private bool _fetchingDictionary;
         private string _fetchingDictionaryDescription;
@@ -117,6 +124,86 @@ namespace PaZword.ViewModels.Dialog
             }
         }
 
+        internal bool IsIncludeUpperCaseLettersEnabled => !EasyToRead && (IncludeLowerCaseLetters || IncludeNumbers || IncludeSymbols);
+
+        /// <summary>
+        /// Gets or sets whether upper case letters should be included in the generated password.
+        /// </summary>
+        internal bool IncludeUpperCaseLetters
+        {
+            get => _includeUpperCaseLetters;
+            set
+            {
+                _includeUpperCaseLetters = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsIncludeUpperCaseLettersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeLowerCaseLettersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeNumbersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeSymbolsEnabled));
+                RefreshPasswordCommand.Execute(null);
+            }
+        }
+
+        internal bool IsIncludeLowerCaseLettersEnabled => !EasyToRead && (IncludeUpperCaseLetters || IncludeNumbers || IncludeSymbols);
+
+        /// <summary>
+        /// Gets or sets whether lower case letters should be included in the generated password.
+        /// </summary>
+        internal bool IncludeLowerCaseLetters
+        {
+            get => _includeLowerCaseLetters;
+            set
+            {
+                _includeLowerCaseLetters = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsIncludeUpperCaseLettersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeLowerCaseLettersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeNumbersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeSymbolsEnabled));
+                RefreshPasswordCommand.Execute(null);
+            }
+        }
+
+        internal bool IsIncludeNumbersEnabled => !EasyToRead && (IncludeUpperCaseLetters || IncludeLowerCaseLetters || IncludeSymbols);
+
+        /// <summary>
+        /// Gets or sets whether numbers should be included in the generated password.
+        /// </summary>
+        internal bool IncludeNumbers
+        {
+            get => _includeNumbers;
+            set
+            {
+                _includeNumbers = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsIncludeUpperCaseLettersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeLowerCaseLettersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeNumbersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeSymbolsEnabled));
+                RefreshPasswordCommand.Execute(null);
+            }
+        }
+
+        internal bool IsIncludeSymbolsEnabled => !EasyToRead && (IncludeUpperCaseLetters || IncludeLowerCaseLetters || IncludeNumbers);
+
+        /// <summary>
+        /// Gets or sets whether symbols should be included in the generated password.
+        /// </summary>
+        internal bool IncludeSymbols
+        {
+            get => _includeSymbols;
+            set
+            {
+                _includeSymbols = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsIncludeUpperCaseLettersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeLowerCaseLettersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeNumbersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeSymbolsEnabled));
+                RefreshPasswordCommand.Execute(null);
+            }
+        }
+
         /// <summary>
         /// Gets or sets whether the password should be easy to read and remember or not.
         /// </summary>
@@ -126,7 +213,18 @@ namespace PaZword.ViewModels.Dialog
             set
             {
                 _easyToRead = value;
+                if (value)
+                {
+                    IncludeLowerCaseLetters = true;
+                    IncludeUpperCaseLetters = true;
+                    IncludeNumbers = true;
+                    IncludeSymbols = true;
+                }
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsIncludeUpperCaseLettersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeLowerCaseLettersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeNumbersEnabled));
+                RaisePropertyChanged(nameof(IsIncludeSymbolsEnabled));
 
                 if (value)
                 {
@@ -408,11 +506,33 @@ namespace PaZword.ViewModels.Dialog
                 crypto.GetBytes(buffer);
             }
 
+            var passwordCharacters = new List<char>();
+
+            if (IncludeLowerCaseLetters)
+            {
+                passwordCharacters.AddRange(PasswordLowercaseCharacters);
+            }
+
+            if (IncludeUpperCaseLetters)
+            {
+                passwordCharacters.AddRange(PasswordUppercaseCharacters);
+            }
+
+            if (IncludeNumbers)
+            {
+                passwordCharacters.AddRange(PasswordNumbers);
+            }
+
+            if (IncludeSymbols)
+            {
+                passwordCharacters.AddRange(PasswordSymbols);
+            }
+
             for (int i = 0; i < length; i++)
             {
                 uint random = BitConverter.ToUInt32(buffer, i * 4);
-                long charToPickUp = random % PasswordCharacters.Length;
-                char c = PasswordCharacters[charToPickUp];
+                long charToPickUp = random % passwordCharacters.Count;
+                char c = passwordCharacters[(int)charToPickUp];
 
                 password.Append(c);
             }

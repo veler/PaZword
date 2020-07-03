@@ -1151,6 +1151,26 @@ namespace PaZword.Localization
         public string FetchingDictionary => _resources.GetString("FetchingDictionary");
 
         /// <summary>
+        /// Gets the resource IncludeLowerCaseLetters.
+        /// </summary>
+        public string IncludeLowerCaseLetters => _resources.GetString("IncludeLowerCaseLetters");
+
+        /// <summary>
+        /// Gets the resource IncludeNumbers.
+        /// </summary>
+        public string IncludeNumbers => _resources.GetString("IncludeNumbers");
+
+        /// <summary>
+        /// Gets the resource IncludeSymbols.
+        /// </summary>
+        public string IncludeSymbols => _resources.GetString("IncludeSymbols");
+
+        /// <summary>
+        /// Gets the resource IncludeUpperCaseLetters.
+        /// </summary>
+        public string IncludeUpperCaseLetters => _resources.GetString("IncludeUpperCaseLetters");
+
+        /// <summary>
         /// Gets the resource NoInternet.
         /// </summary>
         public string NoInternet => _resources.GetString("NoInternet");
