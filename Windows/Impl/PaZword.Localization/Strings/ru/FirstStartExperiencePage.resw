@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AllFileType" xml:space="preserve">
+    <value>Все Файлы</value>
+  </data>
+  <data name="AllSetDescription" xml:space="preserve">
+    <value>Ладно! Есть еще несколько настроек, к которым вы можете получить доступ, чтобы улучшить свой опыт и сделать его еще более безопасным.
+
+Нажмите на кнопку ниже, чтобы продолжить.</value>
+  </data>
+  <data name="AllSetTitle" xml:space="preserve">
+    <value>Всё готово!</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Вернуться</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="EnterSecretKeyDescription" xml:space="preserve">
+    <value>Пожалуйста, введите ваш ключ восстановления. Это очень важный ключ, который программа создала для вас при первом использовании. Возможно, вы сохранили его в файле или распечатали.</value>
+  </data>
+  <data name="EnterSecretKeyInvalidKeyReasonFileNotFound" xml:space="preserve">
+    <value>Не удалось найти хранилище на жестком диске. Попробуйте снова выполнить синхронизацию, вернувшись к предыдущему шагу, или попробуйте создать новое хранилище.</value>
+  </data>
+  <data name="EnterSecretKeyInvalidKeyReasonInvalidSecretKey" xml:space="preserve">
+    <value>Неверный ключ восстановления. Пожалуйста, попробуйте снова.</value>
+  </data>
+  <data name="EnterSecretKeyTextBox" xml:space="preserve">
+    <value>Ваш ключ восстановления</value>
+  </data>
+  <data name="EnterSecretKeyTitle" xml:space="preserve">
+    <value>Ключ восстановления</value>
+  </data>
+  <data name="GenerateSecretKeyDescription" xml:space="preserve">
+    <value>PaZword сгенерировал ключ восстановления. Очень важно хранить этот ключ в надежном месте. Этот ключ будет запрашиваться в некоторых сценариях, например, при входе пользователя на другом устройстве.
+
+Настоятельно рекомендуется сохранить ключ восстановления в файле или распечатать его.
+
+Разработчик PaZword не сможет помочь, если вы потеряете этот ключ восстановления.</value>
+  </data>
+  <data name="GenerateSecretKeyPrint" xml:space="preserve">
+    <value>Распечатать ключ восстановления</value>
+  </data>
+  <data name="GenerateSecretKeySave" xml:space="preserve">
+    <value>Сохранить в файле</value>
+  </data>
+  <data name="GenerateSecretKeyTitle" xml:space="preserve">
+    <value>Сохранить ключи восстановления</value>
+  </data>
+  <data name="GenerateSecretKeyYourKey" xml:space="preserve">
+    <value>Ваш новый ключ шифрования:</value>
+  </data>
+  <data name="MaybeLater" xml:space="preserve">
+    <value>Возможно позже</value>
+  </data>
+  <data name="NewOrReturningUserDescription" xml:space="preserve">
+    <value>Для начала сообщите нам, если вы новичок в PaZword.</value>
+  </data>
+  <data name="NewOrReturningUserNewUser" xml:space="preserve">
+    <value>Я новый пользователь</value>
+  </data>
+  <data name="NewOrReturningUserReturningUser" xml:space="preserve">
+    <value>Я старый пользователь и хочу получить доступ к своему хранилищу</value>
+  </data>
+  <data name="NewOrReturningUserTitle" xml:space="preserve">
+    <value>Вы новый или старый пользователь?</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Дальше</value>
+  </data>
+  <data name="PlainTextFile" xml:space="preserve">
+    <value>Обычный текст (*.txt)</value>
+  </data>
+  <data name="RegisterToCloudServiceDescription" xml:space="preserve">
+    <value>Настоятельно рекомендуется подключить PaZword к службе облачного хранилища, чтобы ваше хранилище можно было синхронизировать с облаком. Синхронизация действует как резервная копия для извлечения ваших данных с другого устройства.
+
+Пароль не будет хранить ваши данные на скрытом и недоступном сервере. Предлагаются только персональные облачные хранилища, такие как Microsoft OneDrive. Таким образом, вы можете сохранить контроль над своим собственным хранилищем в своем личном облачном хранилище.</value>
+  </data>
+  <data name="RegisterToCloudServiceTitle" xml:space="preserve">
+    <value>Выберите облачную службу хранения данных</value>
+  </data>
+  <data name="SecretKeyFileName" xml:space="preserve">
+    <value>ключ-восстановления.txt</value>
+  </data>
+  <data name="SecretKeyPrintTitle" xml:space="preserve">
+    <value>Ключ восстановления PaZword</value>
+  </data>
+  <data name="SignInToCloudServiceDescription" xml:space="preserve">
+    <value>Войдите в своё собственное облачное хранилище, где находится ваше хранилище, чтобы PaZword мог получить его.</value>
+  </data>
+  <data name="SignInToCloudServiceTitle" xml:space="preserve">
+    <value>Подключение к Вашему облачному хранилищу</value>
+  </data>
+  <data name="SynchronizationInProgress" xml:space="preserve">
+    <value>Синхронизация вашего хранилища продолжается, пожалуйста, подождите...</value>
+  </data>
+  <data name="WelcomeDescription" xml:space="preserve">
+    <value>Вместе сохраним ваши пароли в безопасности.
+
+Этот мастер поможет вам впервые пройти аутентификацию в PaZword как новый или вернувшийся пользователь.</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>Добро пожаловать в PaZword</value>
+  </data>
+  <data name="WindowsHelloConfigure" xml:space="preserve">
+    <value>Настроить Windows Hello</value>
+  </data>
+  <data name="WindowsHelloDescription" xml:space="preserve">
+    <value>Используйте Windows Hello для аутентификации в PaZword с помощью PIN-кода или биометрического датчика (отпечаток пальца, распознавание лица...).</value>
+  </data>
+  <data name="WindowsHelloSetting" xml:space="preserve">
+    <value>Использовать Windows Hello (рекомендуется)</value>
+  </data>
+  <data name="WindowsHelloTitle" xml:space="preserve">
+    <value>Войти с помощью Windows Hello</value>
+  </data>
+</root>

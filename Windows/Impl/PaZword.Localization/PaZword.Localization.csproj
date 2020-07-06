@@ -38,6 +38,33 @@
     <PRIResource Include="Strings\fr\CredentialData.resw" />
     <PRIResource Include="Strings\fr\Dropbox.resw" />
     <PRIResource Include="Strings\en\RateAndReviewApp.resw" />
+    <PRIResource Include="Strings\ru\AccountPage.resw" />
+    <PRIResource Include="Strings\ru\AuthenticationPage.resw" />
+    <PRIResource Include="Strings\ru\BankAccountData.resw" />
+    <PRIResource Include="Strings\ru\BreachDiscoveredDialog.resw" />
+    <PRIResource Include="Strings\ru\CategoryPage.resw" />
+    <PRIResource Include="Strings\ru\Core.resw" />
+    <PRIResource Include="Strings\ru\CredentialData.resw" />
+    <PRIResource Include="Strings\ru\Dropbox.resw" />
+    <None Include="Strings\ru\FAQ-RemoteStorageProvider.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <PRIResource Include="Strings\ru\FileData.resw" />
+    <PRIResource Include="Strings\ru\FirstStartExperiencePage.resw" />
+    <PRIResource Include="Strings\ru\InputDialog.resw" />
+    <PRIResource Include="Strings\ru\LicenseKeyData.resw" />
+    <PRIResource Include="Strings\ru\MainPage.resw" />
+    <PRIResource Include="Strings\ru\OneDrive.resw" />
+    <PRIResource Include="Strings\ru\OtherData.resw" />
+    <PRIResource Include="Strings\ru\PasswordGeneratorDialog.resw" />
+    <PRIResource Include="Strings\ru\PaymentCardData.resw" />
+    <None Include="Strings\ru\PrivacyStatement.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <PRIResource Include="Strings\ru\RateAndReviewApp.resw" />
+    <PRIResource Include="Strings\ru\SettingsPage.resw" />
+    <PRIResource Include="Strings\ru\SetupTwoFactorAuthentication.resw" />
+    <PRIResource Include="Strings\ru\WiFiCredentialData.resw" />
     <None Include="Strings\fr\FAQ-RemoteStorageProvider.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
