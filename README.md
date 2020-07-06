@@ -32,6 +32,7 @@ A password manager made in UWP.
 
 - English
 - French
+- Russian
 
 See below to help with existing translations or add a new language.
 
