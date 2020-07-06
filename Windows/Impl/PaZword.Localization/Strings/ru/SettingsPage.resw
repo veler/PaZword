@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>About this app</value>
+    <value>Об этом приложении</value>
   </data>
   <data name="AskSecretKeyOccasionallyDescription" xml:space="preserve">
-    <value>Every 14 days, the recovery key will be asked to authenticate.</value>
+    <value>Каждые 14 дней будет запрашиваться ключ восстановления для аутентификации.</value>
   </data>
   <data name="AskSecretKeyOccasionallySetting" xml:space="preserve">
-    <value>Authenticate with the recovery key occasionally</value>
+    <value>Время от времени аутентифицируйтесь с помощью ключа восстановления</value>
   </data>
   <data name="AskSecretKeyOccasionallyTitle" xml:space="preserve">
-    <value>Authenticate with the recovery key every 14 days</value>
+    <value>Аутентификация с ключом восстановления каждые 14 дней</value>
   </data>
   <data name="CloudStorageServiceDescription" xml:space="preserve">
-    <value>Register or sign in to a cloud storage service to synchronize your vault.</value>
+    <value>Зарегистрируйтесь или войдите в облачную службу для синхронизации вашего хранилища.</value>
   </data>
   <data name="CloudStorageServiceTitle" xml:space="preserve">
-    <value>Cloud storage service account</value>
+    <value>Учетная запись службы облачного хранилища</value>
   </data>
   <data name="ContributorList" xml:space="preserve">
     <value>Christophe Chichmanian
@@ -141,126 +141,126 @@ Jean Blanc
 Danil Podobin</value>
   </data>
   <data name="Contributors" xml:space="preserve">
-    <value>Thanks to the contributors!</value>
+    <value>Спасибо всем участникам проекта!</value>
   </data>
   <data name="DiscoverOtherApps" xml:space="preserve">
-    <value>Discover my other apps</value>
+    <value>Откройте для себя мои другие приложения</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>General</value>
+    <value>Основные</value>
   </data>
   <data name="License" xml:space="preserve">
-    <value>License</value>
+    <value>Лицензия</value>
   </data>
   <data name="LockAfterInactivityDescription" xml:space="preserve">
-    <value>Lock PaZword automatically after a certain period of inactivity in the app.</value>
+    <value>Блокировка PaZword автоматически после определенного периода неактивности в приложении.</value>
   </data>
   <data name="LockAfterInactivitySetting" xml:space="preserve">
-    <value>Lock when inactive</value>
+    <value>Блокировка при неактивности</value>
   </data>
   <data name="LockAfterInactivityTitle" xml:space="preserve">
-    <value>Auto-lock</value>
+    <value>Авто-блокировка</value>
   </data>
   <data name="LockAfterInactivity_FifteenMinutes" xml:space="preserve">
-    <value>15 minutes</value>
+    <value>15 минут</value>
   </data>
   <data name="LockAfterInactivity_FiveMinutes" xml:space="preserve">
-    <value>5 minutes</value>
+    <value>5 минут</value>
   </data>
   <data name="LockAfterInactivity_Never" xml:space="preserve">
-    <value>Never</value>
+    <value>Никогда</value>
   </data>
   <data name="LockAfterInactivity_OneHour" xml:space="preserve">
-    <value>1 hour</value>
+    <value>1 час</value>
   </data>
   <data name="LockAfterInactivity_TenMinutes" xml:space="preserve">
-    <value>10 minutes</value>
+    <value>10 минут</value>
   </data>
   <data name="LockAfterInactivity_ThirtyMinutes" xml:space="preserve">
-    <value>30 minutes</value>
+    <value>30 минут</value>
   </data>
   <data name="Logs" xml:space="preserve">
-    <value>Logs</value>
+    <value>Журналы</value>
   </data>
   <data name="MadeWithLove" xml:space="preserve">
-    <value>Made with ♥ from British Columbia.</value>
+    <value>Сделано с ♥ в Британской Колумбии.</value>
   </data>
   <data name="OpenSource" xml:space="preserve">
-    <value>This software is Open Source</value>
+    <value>Это программное обеспечение с открытым исходным кодом</value>
   </data>
   <data name="PrivacyStatement" xml:space="preserve">
-    <value>Privacy statement</value>
+    <value>Заявление о конфиденциальности</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>Security</value>
+    <value>Безопасность</value>
   </data>
   <data name="SignOut" xml:space="preserve">
-    <value>Sign out</value>
+    <value>Выйти</value>
   </data>
   <data name="SubmitFeedback" xml:space="preserve">
-    <value>Submit Feedback to the developer</value>
+    <value>Отправить отзыв разработчику</value>
   </data>
   <data name="SyncCloudDescription" xml:space="preserve">
-    <value>This option will synchronize your vault through your personal cloud storage service account to let you backup and retrieve them on another device. Please refer to the Frequently Asked Questions for more information.</value>
+    <value>Эта опция синхронизирует ваше хранилище через вашу личную учетную запись службы облачного хранения, чтобы вы могли создавать резервные копии и получать их на другом устройстве. Пожалуйста, обратитесь к часто задаваемым вопросам для получения дополнительной информации.</value>
   </data>
   <data name="SyncCloudSetting" xml:space="preserve">
-    <value>Synchronize data</value>
+    <value>Синхронизировать данные</value>
   </data>
   <data name="SyncCloudTitle" xml:space="preserve">
-    <value>Synchronization with the Cloud</value>
+    <value>Синхронизация с облаком</value>
   </data>
   <data name="Synchronization" xml:space="preserve">
-    <value>Synchronization</value>
+    <value>Синхронизация</value>
   </data>
   <data name="SyncNow" xml:space="preserve">
-    <value>Sync now</value>
+    <value>Синхронизировать сейчас</value>
   </data>
   <data name="ThemeConfigure" xml:space="preserve">
-    <value>Windows color settings</value>
+    <value>Параметры цвета Windows</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Тёмная</value>
   </data>
   <data name="ThemeDefault" xml:space="preserve">
-    <value>Windows default</value>
+    <value>Тема системы</value>
   </data>
   <data name="ThemeDescription" xml:space="preserve">
-    <value>Choose the color theme</value>
+    <value>Выберите цветовую тему</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Светлая</value>
   </data>
   <data name="ThemeTitle" xml:space="preserve">
-    <value>Theme</value>
+    <value>Тема</value>
   </data>
   <data name="ThirdPartyServices" xml:space="preserve">
-    <value>Third-party services</value>
+    <value>Сторонние сервисы</value>
   </data>
   <data name="ThirdPartySoftware" xml:space="preserve">
-    <value>Third-party software notice</value>
+    <value>Уведомление о стороннем программном обеспечении</value>
   </data>
   <data name="TwoFactorDescription" xml:space="preserve">
-    <value>Use your trusted devices and email address to verify your identify when authenticating.</value>
+    <value>Используйте ваши доверенные устройства и адрес электронной почты, чтобы подтвердить свою личность при аутентификации.</value>
   </data>
   <data name="TwoFactorSetting" xml:space="preserve">
-    <value>Two-step verification</value>
+    <value>Двухфакторная верификация</value>
   </data>
   <data name="TwoFactorTitle" xml:space="preserve">
-    <value>Two-step verification</value>
+    <value>Двухфакторная верификация</value>
   </data>
   <data name="WarningNoSecurity" xml:space="preserve">
-    <value>Because all the authentication features are disabled, you will be asked to enter your recovery key the next time to authenticate in the app.</value>
+    <value>Поскольку все функции аутентификации отключены, вам будет предложено ввести ключ восстановления в следующий раз для аутентификации в приложении.</value>
   </data>
   <data name="WindowsHelloConfigure" xml:space="preserve">
-    <value>Configure Windows Hello</value>
+    <value>Настроить Windows Hello</value>
   </data>
   <data name="WindowsHelloDescription" xml:space="preserve">
-    <value>Use Windows Hello to authenticates in PaZword with a PIN code or biometric sensor (fingerprint, face recognition...).</value>
+    <value>Используйте Windows Hello для аутентификации в PaZword с помощью PIN-кода или биометрического датчика (отпечаток пальца, распознавание лица...).</value>
   </data>
   <data name="WindowsHelloSetting" xml:space="preserve">
-    <value>Use Windows Hello (recommended)</value>
+    <value>Использовать Windows Hello (рекомендуется)</value>
   </data>
   <data name="WindowsHelloTitle" xml:space="preserve">
-    <value>Sign in with Windows Hello</value>
+    <value>Войти с помощью Windows Hello</value>
   </data>
 </root>
