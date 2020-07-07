@@ -176,7 +176,7 @@ namespace PaZword.Localization
         {
             CultureInfo.DefaultThreadCurrentCulture = culture;
             CultureInfo.DefaultThreadCurrentUICulture = culture;
-            ApplicationLanguages.PrimaryLanguageOverride = culture.TwoLetterISOLanguageName;
+            ApplicationLanguages.PrimaryLanguageOverride = culture.TextInfo.CultureName;
 
             if (culture.TextInfo.IsRightToLeft)
             {
