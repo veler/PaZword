@@ -15,6 +15,7 @@
       <DependentUpon>AssemblyInfo.tt</DependentUpon>
     </Compile>
     <Compile Include="LanguageManager.Markdown.cs" />
+    <Compile Include="StringEncodingHelper.cs" />
     <None Include="..\..\..\ThirdPartyNotices.md">
       <Link>Strings\ThirdPartyNotices.md</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

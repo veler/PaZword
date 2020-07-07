@@ -28,7 +28,6 @@ using System.Resources;
 [assembly: AssemblyCopyright("© <#= DateTime.Now.Year.ToString() #> Etienne BAUDOUX. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: NeutralResourcesLanguage("en")]
 
 
 

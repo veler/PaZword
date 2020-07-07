@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -54,7 +53,7 @@ namespace PaZword.Localization
             IStorageItem file = await installationFolder.TryGetItemAsync(path);
             if (file != null)
             {
-                return File.ReadAllText(file.Path);
+                return StringEncodingHelper.DetectAndReadTextWithEncoding(file.Path);
             }
 
             return string.Empty;
