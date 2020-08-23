@@ -128,6 +128,11 @@ namespace PaZword.ViewModels
         /// </summary>
         internal event EventHandler DeleteAccount;
 
+        /// <summary>
+        /// Raised when the app needs to discard unsaved changes.
+        /// </summary>
+        internal event EventHandler DiscardUnsavedChanges;
+
         [ImportingConstructor]
         public CommonViewModel(
             IDataManager dataManager,
@@ -184,10 +189,17 @@ namespace PaZword.ViewModels
         /// <summary>
         /// Raises an event to indicates the users wants to delete the selected account. Generally this happens through a user command from the category page.
         /// </summary>
-        /// <param name="category"></param>
         internal void RaiseDeleteAccount()
         {
             DeleteAccount?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises an event to indicates we want to discard unsaved changes in the current editing account (if any).
+        /// </summary>
+        internal void RaiseDiscardUnsavedChanges()
+        {
+            DiscardUnsavedChanges?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

@@ -18,7 +18,6 @@ using System.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -265,6 +264,7 @@ namespace PaZword.ViewModels
 
             _commonViewModel.DeleteAccount += CommonViewModel_DeleteAccount;
             _commonViewModel.PreviewSelectedAccountChanged += CommonViewModel_PreviewSelectedAccountChanged;
+            _commonViewModel.DiscardUnsavedChanges += CommonViewModel_DiscardChanges;
         }
 
         internal async Task InitializeAsync(AccountPageNavigationParameters args)
@@ -526,7 +526,7 @@ namespace PaZword.ViewModels
 
         #region DiscardChangesCommand
 
-        public ActionCommand<object> DiscardChangesCommand { get; }
+        internal ActionCommand<object> DiscardChangesCommand { get; }
 
         private void ExecuteDiscardChangesCommand(object parameter)
         {
@@ -537,9 +537,12 @@ namespace PaZword.ViewModels
                 _findIconOnlineCancellationTokenSource = null;
             }
 
-            IsEditing = false;
-            AccountPageToAccountDataViewModelBridge.ClearViewModelsForDeletion();
-            AccountEditMode = _serializationProvider.CloneObject(Account);
+            if (IsEditing)
+            {
+                IsEditing = false;
+                AccountPageToAccountDataViewModelBridge.ClearViewModelsForDeletion();
+                AccountEditMode = _serializationProvider.CloneObject(Account);
+            }
         }
 
         #endregion
@@ -608,6 +611,7 @@ namespace PaZword.ViewModels
         private void CommonViewModel_PreviewSelectedAccountChanged(object sender, EventArgs e)
         {
             _commonViewModel.DeleteAccount -= CommonViewModel_DeleteAccount;
+            _commonViewModel.DiscardUnsavedChanges -= CommonViewModel_DiscardChanges;
             _commonViewModel.PreviewSelectedAccountChanged -= CommonViewModel_PreviewSelectedAccountChanged;
         }
 
@@ -619,6 +623,11 @@ namespace PaZword.ViewModels
         private void CommonViewModel_DeleteAccount(object sender, EventArgs e)
         {
             DeleteAccountCommand.Execute(null);
+        }
+
+        private void CommonViewModel_DiscardChanges(object sender, EventArgs e)
+        {
+            DiscardChangesCommand.Execute(null);
         }
 
         /// <summary>
