@@ -212,7 +212,7 @@ namespace PaZword.Tests.Integration
                     _app.ExportProvider.GetExport<ILogger>(),
                     _app.ExportProvider.GetExport<IEncryptionProvider>(),
                     _app.ExportProvider.GetExport<ISettingsProvider>(),
-                    _app.ExportProvider.GetExport<IWindowsHelloAuthProvider>(),
+                    new MockIWindowsHelloAuthProvider(),
                     new MockIRemoteSynchronizationService(),
                     new DataManager(
                         _app.ExportProvider.GetExport<ILogger>(),

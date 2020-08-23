@@ -8,9 +8,10 @@ This project incorporates components from the projects listed below. The origina
 4.  micjahn/ZXing.Net version 0.16.5 (https://github.com/micjahn/ZXing.Net)
 5.  Microsoft.Graph version 3.5.0 (https://github.com/microsoftgraph/msgraph-sdk-dotnet)
 6.  Microsoft.Identity.Client version 4.13.0 (https://github.com/AzureAD/microsoft-authentication-library-for-dotnet)
-7.  an-array-of-english-words (https://github.com/words/an-array-of-english-words)
-8.  an-array-of-spanish-words (https://github.com/words/an-array-of-spanish-words)
-9.  an-array-of-french-words (https://github.com/words/an-array-of-french-words)
+7.  WriteableBitmapEx 1.6.7 (https://github.com/reneschulte/WriteableBitmapEx)
+8.  an-array-of-english-words (https://github.com/words/an-array-of-english-words)
+9.  an-array-of-spanish-words (https://github.com/words/an-array-of-spanish-words)
+10.  an-array-of-french-words (https://github.com/words/an-array-of-french-words)
 11. DropBox's Zxcvbn (https://github.com/bitbeans/zxcvbn-cs)
 12. DropBox API 4.10.0.0 (https://github.com/dropbox/dropbox-sdk-dotnet)
 13. Dinosaur icon made by Freepik perfect from www.flaticon.com (https://www.flaticon.com/authors/freepik)
@@ -357,6 +358,30 @@ THE SOFTWARE.
 MIT License
 
 Copyright (c) Microsoft Corporation
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+%% WriteableBitmapEx NOTICES AND INFORMATION BEGIN HERE
+=========================================
+The MIT License (MIT)
+
+Copyright (c) 2009-2015 Rene Schulte
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

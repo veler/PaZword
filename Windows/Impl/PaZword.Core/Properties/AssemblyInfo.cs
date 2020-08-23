@@ -35,8 +35,8 @@ using System.Runtime.CompilerServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2020.7.7.3")]
-[assembly: AssemblyFileVersion("2020.7.7.3")]
+[assembly: AssemblyVersion("2020.8.22.3")]
+[assembly: AssemblyFileVersion("2020.8.22.3")]
 
 [assembly: InternalsVisibleTo("PaZword.Tests")]
 

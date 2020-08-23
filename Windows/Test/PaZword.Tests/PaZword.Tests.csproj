@@ -26,6 +26,7 @@
     <Compile Include="Mocks\MockIRemoteSynchronizationService.cs" />
     <Compile Include="Mocks\MockIRemoteStorageProvider.cs" />
     <Compile Include="Mocks\MockIWindowManager.cs" />
+    <Compile Include="Mocks\MockIWindowsHelloAuthProvider.cs" />
     <Compile Include="Mocks\MockRecurrentTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecurrentTasks\PwnedRecurrentTaskTests.cs" />

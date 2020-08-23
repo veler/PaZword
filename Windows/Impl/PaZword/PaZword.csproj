@@ -8,7 +8,7 @@
     <AssemblyName>PaZword</AssemblyName>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-    <PackageCertificateThumbprint>ED6BAA1639E641578BA7F61D9817564AD24A6F81</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>E5A43EE23FD5D278810D4B5E58949E1F00061FD0</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
