@@ -36,6 +36,9 @@ namespace PaZword.ViewModels
         private const string AddAccountDataEvent = "Account.AddAccountData.Command";
         private const string SaveEvent = "Account.Save.Command";
         private const string DiscardChangesEvent = "Account.DiscardChanges.Command";
+        private const string IconAutoDetectEvent = "Account.IconAutoDetect.Command";
+        private const string IconDefaultEvent = "Account.IconDefault.Command";
+        private const string IconSelectFileEvent = "Account.IconSelectFile.Command";
 
         private const int MaximumSubtitleLength = 64;
 
@@ -50,9 +53,11 @@ namespace PaZword.ViewModels
 
         private bool _isAskingUserAboutUnsavedChanges;
         private bool _isEditing;
+        private bool _isLoadingIcon;
         private Account _account;
         private Account _accountEdit;
         private int _categoryIndex = -1;
+        private CancellationTokenSource _findIconOnlineCancellationTokenSource;
 
         internal IWindowManager WindowManager { get; set; }
 
@@ -170,6 +175,19 @@ namespace PaZword.ViewModels
         }
 
         /// <summary>
+        /// Gets whether the icon of the account is loaded.
+        /// </summary>
+        internal bool IsLoadingIcon
+        {
+            get => _isLoadingIcon;
+            private set
+            {
+                _isLoadingIcon = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        /// <summary>
         /// Gets the list of categories.
         /// </summary>
         internal ConcurrentObservableCollection<Category> Categories => GetCategories();
@@ -232,17 +250,21 @@ namespace PaZword.ViewModels
 
             AccountPageToAccountDataViewModelBridge = new AccountPageToAccountDataViewModelBridge(this);
 
-            HeaderTitleUpdatedCommand = new AsyncActionCommand<object>(_logger, HeaderTitleUpdatedEvent, ExecuteHeaderTitleUpdatedCommandAsync);
+            HeaderTitleUpdatedCommand = new ActionCommand<object>(_logger, HeaderTitleUpdatedEvent, ExecuteHeaderTitleUpdatedCommand);
             EditAccountCommand = new AsyncActionCommand<object>(_logger, EditAccountEvent, ExecuteEditAccountCommandAsync);
             DeleteAccountCommand = new AsyncActionCommand<object>(_logger, DeleteAccountEvent, ExecuteDeleteAccountCommandAsync);
             AddAccountDataCommand = new AsyncActionCommand<IAccountDataProvider>(_logger, AddAccountDataEvent, ExecuteAddAccountDataCommandAsync, CanExecuteAddAccountDataCommand);
             SaveChangesCommand = new AsyncActionCommand<object>(_logger, SaveEvent, ExecuteSaveChangesCommandAsync);
             DiscardChangesCommand = new ActionCommand<object>(_logger, DiscardChangesEvent, ExecuteDiscardChangesCommand);
+            IconAutoDetectCommand = new ActionCommand<object>(_logger, IconAutoDetectEvent, ExecuteIconAutoDetectCommand);
+            IconDefaultCommand = new ActionCommand<object>(_logger, IconDefaultEvent, ExecuteIconDefaultCommand);
+            IconSelectFileCommand = new AsyncActionCommand<object>(_logger, IconSelectFileEvent, ExecuteIconSelectFileCommandAsync);
 
             InitializeAddAccountDataContextMenu();
 
             _commonViewModel.DeleteAccount += CommonViewModel_DeleteAccount;
             _commonViewModel.PreviewSelectedAccountChanged += CommonViewModel_PreviewSelectedAccountChanged;
+            _commonViewModel.DiscardUnsavedChanges += CommonViewModel_DiscardChanges;
         }
 
         internal async Task InitializeAsync(AccountPageNavigationParameters args)
@@ -264,6 +286,7 @@ namespace PaZword.ViewModels
         {
             var orderedAccountDataProviders = _orderedAccountDataProviders.Select(l => l.Value);
             var menu = new MenuFlyout();
+            menu.Placement = Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.Bottom;
 
             foreach (IAccountDataProvider accountDataProvider in orderedAccountDataProviders)
             {
@@ -297,11 +320,14 @@ namespace PaZword.ViewModels
 
         #region HeaderTitleUpdatedCommand
 
-        internal AsyncActionCommand<object> HeaderTitleUpdatedCommand { get; }
+        internal ActionCommand<object> HeaderTitleUpdatedCommand { get; }
 
-        private async Task ExecuteHeaderTitleUpdatedCommandAsync(object parameter, CancellationToken cancellationToken)
+        private void ExecuteHeaderTitleUpdatedCommand(object parameter)
         {
-            await FindIconAsync(cancellationToken).ConfigureAwait(false);
+            if (AccountEditMode.IconMode == IconMode.Automatic)
+            {
+                FindIcon();
+            }
         }
 
         #endregion
@@ -319,9 +345,10 @@ namespace PaZword.ViewModels
             CategoryIndex = _dataManager.Categories.IndexOf(category);
             RaisePropertyChanged(nameof(Base64Icon));
 
-            if (string.IsNullOrEmpty(AccountEditMode.Base64Icon))
+            if (AccountEditMode.IconMode == IconMode.Automatic
+                && string.IsNullOrEmpty(AccountEditMode.Base64Icon))
             {
-                await FindIconAsync(cancellationToken).ConfigureAwait(false);
+                FindIcon();
             }
         }
 
@@ -341,6 +368,14 @@ namespace PaZword.ViewModels
 
             if (dialogResult == ContentDialogResult.Primary)
             {
+                lock (_lock)
+                {
+                    // Stop the icon automatic detection, if any.
+                    _findIconOnlineCancellationTokenSource?.Cancel();
+                    _findIconOnlineCancellationTokenSource?.Dispose();
+                    _findIconOnlineCancellationTokenSource = null;
+                }
+
                 for (int i = 0; i < AccountPageToAccountDataViewModelBridge.ViewModels.Count; i++)
                 {
                     await AccountPageToAccountDataViewModelBridge.ViewModels[i].UnloadingAsync().ConfigureAwait(false);
@@ -409,6 +444,14 @@ namespace PaZword.ViewModels
                 {
                     return;
                 }
+            }
+
+            lock (_lock)
+            {
+                // Stop the icon automatic detection, if any.
+                _findIconOnlineCancellationTokenSource?.Cancel();
+                _findIconOnlineCancellationTokenSource?.Dispose();
+                _findIconOnlineCancellationTokenSource = null;
             }
 
             // Detects if the user changed the category of the account.
@@ -483,13 +526,79 @@ namespace PaZword.ViewModels
 
         #region DiscardChangesCommand
 
-        public ActionCommand<object> DiscardChangesCommand { get; }
+        internal ActionCommand<object> DiscardChangesCommand { get; }
 
         private void ExecuteDiscardChangesCommand(object parameter)
         {
-            IsEditing = false;
-            AccountPageToAccountDataViewModelBridge.ClearViewModelsForDeletion();
-            AccountEditMode = _serializationProvider.CloneObject(Account);
+            lock (_lock)
+            {
+                _findIconOnlineCancellationTokenSource?.Cancel();
+                _findIconOnlineCancellationTokenSource?.Dispose();
+                _findIconOnlineCancellationTokenSource = null;
+            }
+
+            if (IsEditing)
+            {
+                IsEditing = false;
+                AccountPageToAccountDataViewModelBridge.ClearViewModelsForDeletion();
+                AccountEditMode = _serializationProvider.CloneObject(Account);
+            }
+        }
+
+        #endregion
+
+        #region IconAutoDetect
+
+        internal ActionCommand<object> IconAutoDetectCommand { get; }
+
+        private void ExecuteIconAutoDetectCommand(object parameter)
+        {
+            FindIcon();
+        }
+
+        #endregion
+
+        #region IconSelectFile
+
+        internal AsyncActionCommand<object> IconSelectFileCommand { get; }
+
+        private async Task ExecuteIconSelectFileCommandAsync(object parameter, CancellationToken cancellationToken)
+        {
+            lock (_lock)
+            {
+                _findIconOnlineCancellationTokenSource?.Cancel();
+                _findIconOnlineCancellationTokenSource?.Dispose();
+                _findIconOnlineCancellationTokenSource = new CancellationTokenSource();
+            }
+
+            string base64Icon = await _iconService.PickUpIconFromLocalFileAsync(_findIconOnlineCancellationTokenSource.Token).ConfigureAwait(false);
+
+            if (!string.IsNullOrEmpty(base64Icon))
+            {
+                AccountEditMode.Base64Icon = base64Icon;
+                AccountEditMode.IconMode = IconMode.Browse;
+                RaisePropertyChanged(nameof(Base64Icon));
+            }
+        }
+
+        #endregion
+
+        #region IconDefault
+
+        internal ActionCommand<object> IconDefaultCommand { get; }
+
+        private void ExecuteIconDefaultCommand(object parameter)
+        {
+            lock (_lock)
+            {
+                _findIconOnlineCancellationTokenSource?.Cancel();
+                _findIconOnlineCancellationTokenSource?.Dispose();
+                _findIconOnlineCancellationTokenSource = null;
+            }
+
+            AccountEditMode.Base64Icon = string.Empty;
+            AccountEditMode.IconMode = IconMode.DefaultIcon;
+            RaisePropertyChanged(nameof(Base64Icon));
         }
 
         #endregion
@@ -502,6 +611,7 @@ namespace PaZword.ViewModels
         private void CommonViewModel_PreviewSelectedAccountChanged(object sender, EventArgs e)
         {
             _commonViewModel.DeleteAccount -= CommonViewModel_DeleteAccount;
+            _commonViewModel.DiscardUnsavedChanges -= CommonViewModel_DiscardChanges;
             _commonViewModel.PreviewSelectedAccountChanged -= CommonViewModel_PreviewSelectedAccountChanged;
         }
 
@@ -515,6 +625,15 @@ namespace PaZword.ViewModels
             DeleteAccountCommand.Execute(null);
         }
 
+        private void CommonViewModel_DiscardChanges(object sender, EventArgs e)
+        {
+            DiscardChangesCommand.Execute(null);
+        }
+
+        /// <summary>
+        /// In Edit mode, asks the user whether he wants to save of not the changes when clicking on the dark overlay
+        /// that is over the category and account list, on the left of the UI.
+        /// </summary>
         private async Task EditingOverlayClickedAsync()
         {
             lock (_lock)
@@ -563,6 +682,11 @@ namespace PaZword.ViewModels
             return result;
         }
 
+        /// <summary>
+        /// Generates the sub title of the account. It will be displayed in the list of accounts, under the account name.
+        /// </summary>
+        /// <param name="viewModels">The account data.</param>
+        /// <returns>Returns the generated sub title.</returns>
         private string GenerateAccountSubtitle(IReadOnlyList<IAccountDataViewModel> viewModels)
         {
             var subtitle = string.Empty;
@@ -610,37 +734,60 @@ namespace PaZword.ViewModels
         /// <summary>
         /// Try to find the best icon that matches with the current account.
         /// </summary>
-        private async Task FindIconAsync(CancellationToken cancellationToken)
+        private void FindIcon()
         {
-            if (!CoreHelper.IsInternetAccess())
+            lock (_lock)
             {
-                RaisePropertyChanged(nameof(Base64Icon));
-                return;
+                _findIconOnlineCancellationTokenSource?.Cancel();
+                _findIconOnlineCancellationTokenSource?.Dispose();
+                _findIconOnlineCancellationTokenSource = new CancellationTokenSource();
             }
 
-            string base64Icon;
-            if (IsEditing)
+            Task.Run(async () =>
             {
-                base64Icon = await _iconService.ResolveIconOnlineAsync(AccountEditMode.Title, AccountEditMode.Url, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                base64Icon = await _iconService.ResolveIconOnlineAsync(Account.Title, Account.Url, cancellationToken).ConfigureAwait(false);
-            }
+                TaskHelper.ThrowIfOnUIThread();
 
-            cancellationToken.ThrowIfCancellationRequested();
+                if (!CoreHelper.IsInternetAccess())
+                {
+                    RaisePropertyChanged(nameof(Base64Icon));
+                    return;
+                }
 
-            // The status might changed during the process to find an icon.
-            if (IsEditing && !string.Equals(base64Icon, AccountEditMode.Base64Icon, StringComparison.Ordinal))
-            {
-                AccountEditMode.Base64Icon = base64Icon;
-                RaisePropertyChanged(nameof(Base64Icon));
-            }
-            else if (string.Equals(base64Icon, Account.Base64Icon, StringComparison.Ordinal))
-            {
-                AccountEditMode.Base64Icon = base64Icon;
-                RaisePropertyChanged(nameof(Base64Icon));
-            }
+                try
+                {
+                    IsLoadingIcon = true;
+
+                    string base64Icon;
+                    if (IsEditing)
+                    {
+                        base64Icon = await _iconService.ResolveIconOnlineAsync(AccountEditMode.Title, AccountEditMode.Url, _findIconOnlineCancellationTokenSource.Token).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        base64Icon = await _iconService.ResolveIconOnlineAsync(Account.Title, Account.Url, _findIconOnlineCancellationTokenSource.Token).ConfigureAwait(false);
+                    }
+
+                    _findIconOnlineCancellationTokenSource.Token.ThrowIfCancellationRequested();
+
+                    // The status might changed during the process to find an icon.
+                    if (IsEditing && !string.Equals(base64Icon, AccountEditMode.Base64Icon, StringComparison.Ordinal))
+                    {
+                        AccountEditMode.Base64Icon = base64Icon;
+                        AccountEditMode.IconMode = IconMode.Automatic;
+                        RaisePropertyChanged(nameof(Base64Icon));
+                    }
+                    else if (!string.Equals(base64Icon, Account.Base64Icon, StringComparison.Ordinal))
+                    {
+                        Account.Base64Icon = base64Icon;
+                        AccountEditMode.IconMode = IconMode.Automatic;
+                        RaisePropertyChanged(nameof(Base64Icon));
+                    }
+                }
+                finally
+                {
+                    IsLoadingIcon = false;
+                }
+            });
         }
     }
 }

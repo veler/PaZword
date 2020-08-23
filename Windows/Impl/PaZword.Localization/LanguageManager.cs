@@ -280,6 +280,26 @@ namespace PaZword.Localization
         public string Edit => _resources.GetString("Edit");
 
         /// <summary>
+        /// Gets the resource EditIcon.
+        /// </summary>
+        public string EditIcon => _resources.GetString("EditIcon");
+
+        /// <summary>
+        /// Gets the resource EditIconDefault.
+        /// </summary>
+        public string EditIconDefault => _resources.GetString("EditIconDefault");
+
+        /// <summary>
+        /// Gets the resource EditIconDetectAutomatically.
+        /// </summary>
+        public string EditIconDetectAutomatically => _resources.GetString("EditIconDetectAutomatically");
+
+        /// <summary>
+        /// Gets the resource EditIconLocalFile.
+        /// </summary>
+        public string EditIconLocalFile => _resources.GetString("EditIconLocalFile");
+
+        /// <summary>
         /// Gets the resource Favorite.
         /// </summary>
         public string Favorite => _resources.GetString("Favorite");

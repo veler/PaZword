@@ -315,6 +315,13 @@ namespace PaZword.ViewModels
                             }
                         }
 
+                        // If an account is in Edit mode, discard unsaved changes.
+                        if (CommonViewModel.IsEditing)
+                        {
+                            CommonViewModel.RaiseDiscardUnsavedChanges();
+                        }
+
+                        // Jump to the authentication page.
                         frame.Navigate(typeof(AuthenticationPage), null);
                     }
                     break;

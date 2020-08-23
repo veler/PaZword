@@ -475,6 +475,13 @@
                         <TextBlock
                             Margin="0,10,0,0"
                             HorizontalAlignment="Left">
+                            <Hyperlink NavigateUri="https://azure.microsoft.com/en-us/services/cognitive-services/bing-entity-search-api/">
+                                <Run Text="Bing Entity Search" />
+                            </Hyperlink>
+                        </TextBlock>
+                        <TextBlock
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Left">
                             <Hyperlink NavigateUri="https://ritekit.com/api-demo/company-logo">
                                 <Run Text="RiteKit" />
                             </Hyperlink>

@@ -156,6 +156,18 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="EditIcon" xml:space="preserve">
+    <value>Change the icon</value>
+  </data>
+  <data name="EditIconDefault" xml:space="preserve">
+    <value>Default icon</value>
+  </data>
+  <data name="EditIconDetectAutomatically" xml:space="preserve">
+    <value>Detect automatically</value>
+  </data>
+  <data name="EditIconLocalFile" xml:space="preserve">
+    <value>Local file</value>
+  </data>
   <data name="Favorite" xml:space="preserve">
     <value>Favorite</value>
   </data>

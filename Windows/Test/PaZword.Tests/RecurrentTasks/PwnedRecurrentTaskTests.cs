@@ -55,14 +55,12 @@ namespace PaZword.Tests.RecurrentTasks
 
             Assert.IsTrue(await service.CanExecuteAsync(CancellationToken.None).ConfigureAwait(false));
 
-            Dictionary<SecureString, IReadOnlyList<Breach>> result = await service.ExecuteAsync(CancellationToken.None).ConfigureAwait(false) as Dictionary<SecureString, IReadOnlyList<Breach>>;
+            List<Breach> result = await service.ExecuteAsync(CancellationToken.None).ConfigureAwait(false) as List<Breach>;
 
-            Assert.AreEqual(1, result.Count);
-            Assert.IsTrue(result.First().Value.Count >= 25);
-
+            Assert.IsTrue(result.Count >= 25);
             Assert.IsTrue(await service.CanExecuteAsync(CancellationToken.None).ConfigureAwait(false));
 
-            result = await service.ExecuteAsync(CancellationToken.None).ConfigureAwait(false) as Dictionary<SecureString, IReadOnlyList<Breach>>;
+            result = await service.ExecuteAsync(CancellationToken.None).ConfigureAwait(false) as List<Breach>;
 
             Assert.AreEqual(0, result.Count);
         }

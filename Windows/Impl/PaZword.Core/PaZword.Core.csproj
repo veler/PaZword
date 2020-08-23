@@ -70,7 +70,16 @@
     <Compile Include="Security\PasswordStrengthEvaluator\Utility.cs" />
     <Compile Include="Security\PasswordStrengthEvaluator\Zxcvbn.cs" />
     <Compile Include="Services\Dropbox\DropboxStorageProvider.cs" />
-    <Compile Include="Services\IconService.cs" />
+    <Compile Include="Services\Icons\BingEntitySearch.cs" />
+    <Compile Include="Services\Icons\Bing\BingEntitySearchResponse.cs" />
+    <Compile Include="Services\Icons\Bing\Entities.cs" />
+    <Compile Include="Services\Icons\Bing\Image.cs" />
+    <Compile Include="Services\Icons\Bing\Provider.cs" />
+    <Compile Include="Services\Icons\Bing\ValueElement.cs" />
+    <Compile Include="Services\Icons\FaviconFinder.cs" />
+    <Compile Include="Services\Icons\Favicon\FaviconFinderResponse.cs" />
+    <Compile Include="Services\Icons\Favicon\Icon.cs" />
+    <Compile Include="Services\Icons\IconService.cs" />
     <Compile Include="Services\RecurrentTaskService.cs" />
     <Compile Include="Services\RecurrentTasks\InactivityDetectionRecurrentTask.cs" />
     <Compile Include="Services\RecurrentTasks\RequestRateAndReviewRecurrentTask.cs" />
@@ -114,6 +123,7 @@
     <PackageReference Include="Microsoft.Identity.Client" Version="4.13.0" />
     <PackageReference Include="ZXing.Net" Version="0.16.5" />
     <PackageReference Include="ksemenenko.ColorThief" Version="1.1.1.4" />
+    <PackageReference Include="WriteableBitmapEx" Version="1.6.7" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
