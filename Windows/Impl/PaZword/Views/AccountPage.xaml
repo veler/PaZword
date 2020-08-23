@@ -80,13 +80,53 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top"
                         Padding="24">
-                        <Image
+                        <Grid
                             x:Name="HeaderAccountLogo"
                             Height="128"
                             Width="128"
-                            HorizontalAlignment="Left"
-                            DataContext="{x:Bind ViewModel.Base64Icon, Mode=OneWay, Converter={StaticResource Base64ImageToAccountIconSourceConverter}}"
-                            Source="{Binding Result, Mode=OneWay}"/>
+                            HorizontalAlignment="Left">
+                            <Image
+                                DataContext="{x:Bind ViewModel.Base64Icon, Mode=OneWay, Converter={StaticResource Base64ImageToAccountIconSourceConverter}}"
+                                Source="{Binding Result, Mode=OneWay}"
+                                Visibility="{x:Bind ViewModel.IsLoadingIcon, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=OneWay}"/>
+                            <ProgressRing
+                                Height="48"
+                                Width="48"
+                                IsActive="{x:Bind ViewModel.IsLoadingIcon, Mode=OneWay}"/>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Right"
+                                Margin="0,0,5,5"
+                                Visibility="{x:Bind ViewModel.IsEditing, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                                <Button
+                                    Padding="0"
+                                    Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                                    Style="{ThemeResource TextBlockButtonStyle}"
+                                    AutomationProperties.Name="{x:Bind ViewModel.Strings.EditIcon}"
+                                    TabIndex="0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <SymbolIcon
+                                            Symbol="Edit"
+                                            ToolTipService.ToolTip="{x:Bind ViewModel.Strings.EditIcon}"/>
+                                    </StackPanel>
+                                    <Button.Flyout>
+                                        <MenuFlyout
+                                            Placement="BottomEdgeAlignedRight">
+                                            <MenuFlyoutItem
+                                                Text="{x:Bind ViewModel.Strings.EditIconDetectAutomatically}"
+                                                Command="{x:Bind ViewModel.IconAutoDetectCommand}"/>
+                                            <MenuFlyoutItem
+                                                Text="{x:Bind ViewModel.Strings.EditIconLocalFile}"
+                                                Command="{x:Bind ViewModel.IconSelectFileCommand}"/>
+                                            <MenuFlyoutItem
+                                                Text="{x:Bind ViewModel.Strings.EditIconDefault}"
+                                                Command="{x:Bind ViewModel.IconDefaultCommand}"/>
+                                        </MenuFlyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
                         <Grid Padding="152,0,0,0">
                             <StackPanel>
                                 <controls:EditableTextBlock
@@ -146,9 +186,9 @@
                                         TabIndex="0">
                                         <i:Interaction.Behaviors>
                                             <ui:EventToCommandBehavior 
-                                            Event="LostFocus"
-                                            Command="{x:Bind ViewModel.HeaderTitleUpdatedCommand}"
-                                            PassArguments="false"/>
+                                                Event="LostFocus"
+                                                Command="{x:Bind ViewModel.HeaderTitleUpdatedCommand}"
+                                                PassArguments="false"/>
                                         </i:Interaction.Behaviors>
                                     </controls:EditableHyperlink>
                                     <ComboBox

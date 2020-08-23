@@ -82,6 +82,7 @@ namespace PaZword.ViewModels
                 {
                     Title = input,
                     CategoryID = CommonViewModel.CurrentCategoryId,
+                    IconMode = IconMode.Automatic,
                     CreationDate = DateTime.Now,
                     LastModificationDate = DateTime.Now
                 };

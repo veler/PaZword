@@ -12,6 +12,8 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace PaZword.Core.Services.Icons
@@ -20,6 +22,7 @@ namespace PaZword.Core.Services.Icons
     internal sealed class IconService : IIconService
     {
         private const string DownloadAccountIconBase64AsyncFaultEvent = "IconService.DownloadAccountIconBase64Async.Fault";
+        private const string PickUpIconFromLocalFileAsyncFaultEvent = "IconService.PickUpIconFromLocalFileAsync.Fault";
         private const string RiteKiteEvent = "IconService.ResolveIconOnlineAsync.RiteKit";
         private const string ClearBitEvent = "IconService.ResolveIconOnlineAsync.ClearBit";
         private const string BingEntitySearchEvent = "IconService.ResolveIconOnlineAsync.BingEntitySearch";
@@ -45,6 +48,59 @@ namespace PaZword.Core.Services.Icons
             _logger = Arguments.NotNull(logger, nameof(logger));
             _bingEntitySearch = Arguments.NotNull(bingEntitySearch, nameof(bingEntitySearch));
             _faviconFinder = Arguments.NotNull(faviconFinder, nameof(faviconFinder));
+        }
+
+        public async Task<string> PickUpIconFromLocalFileAsync(CancellationToken cancellationToken)
+        {
+            return await TaskHelper.RunOnUIThreadAsync(async () =>
+            {
+                try
+                {
+                    var fileOpenPicker = new Windows.Storage.Pickers.FileOpenPicker
+                    {
+                        ViewMode = Windows.Storage.Pickers.PickerViewMode.List,
+                        SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary
+                    };
+                    fileOpenPicker.FileTypeFilter.Add(".jpg");
+                    fileOpenPicker.FileTypeFilter.Add(".jpeg");
+                    fileOpenPicker.FileTypeFilter.Add(".png");
+                    fileOpenPicker.FileTypeFilter.Add(".bmp");
+
+                    StorageFile storageFile = await fileOpenPicker.PickSingleFileAsync();
+                    if (storageFile != null)
+                    {
+                        using (IRandomAccessStream fileStream = await storageFile.OpenAsync(FileAccessMode.ReadWrite))
+                        {
+                            BitmapImage bitmapImage = new BitmapImage();
+                            await bitmapImage.SetSourceAsync(fileStream);
+
+                            WriteableBitmap image = new WriteableBitmap(bitmapImage.PixelWidth, bitmapImage.PixelHeight);
+                            fileStream.Seek(0);
+                            await image.SetSourceAsync(fileStream);
+
+                            if (image.PixelWidth > Constants.AccountIconSize + 50)
+                            {
+                                // If we judge the image is too big, we resize it. This improves the image quality because the resize is bilinear,
+                                // and it reduce the size of the user data bundle file.
+                                double propotion = image.PixelWidth / (double)image.PixelHeight;
+                                image = image.Resize(
+                                    (int)Constants.AccountIconSize,
+                                    (int)(Constants.AccountIconSize / propotion),
+                                    WriteableBitmapExtensions.Interpolation.Bilinear);
+                            }
+
+                            return await _serializationProvider.WritableBitmapToBase64Async(image, cancellationToken).ConfigureAwait(true);
+                        }
+                    }
+                }
+                catch (OperationCanceledException) { }
+                catch (Exception ex)
+                {
+                    _logger.LogFault(PickUpIconFromLocalFileAsyncFaultEvent, $"Unable to open an image file.", ex);
+                }
+
+                return string.Empty;
+            }).ConfigureAwait(false);
         }
 
         public async Task<string> ResolveIconOnlineAsync(string entityName, string url, CancellationToken cancellationToken)
@@ -251,6 +307,7 @@ namespace PaZword.Core.Services.Icons
                     }
                 }
             }
+            catch (OperationCanceledException) { }
             catch (Exception ex)
             {
                 _logger.LogFault(DownloadAccountIconBase64AsyncFaultEvent, $"Unable to download an icon from the url '{uri.OriginalString}'.", ex);

@@ -136,17 +136,19 @@ namespace PaZword.Core.Data
             using (var memoryStream = new InMemoryRandomAccessStream())
             {
                 BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, memoryStream);
+                cancellationToken.ThrowIfCancellationRequested();
 
                 using (SoftwareBitmap softwareBitmap = SoftwareBitmap.CreateCopyFromBuffer(bitmap.PixelBuffer, BitmapPixelFormat.Rgba8, bitmap.PixelWidth, bitmap.PixelHeight))
                 {
                     encoder.SetSoftwareBitmap(softwareBitmap);
                     await encoder.FlushAsync();
+                    cancellationToken.ThrowIfCancellationRequested();
                 }
 
                 var bytes = new byte[memoryStream.Size];
                 using (Stream stream = memoryStream.AsStream())
                 {
-                    await stream.ReadAsync(bytes, 0, bytes.Length).ConfigureAwait(false);
+                    await stream.ReadAsync(bytes, 0, bytes.Length, cancellationToken).ConfigureAwait(false);
                 }
 
                 return Convert.ToBase64String(bytes);
