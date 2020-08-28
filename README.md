@@ -51,6 +51,14 @@ See below to help with existing translations or add a new language.
 
 ## How to set up a development environment
 
+### Explore the repository online
+
+Use Rich Code Navigation to explore the repository in the web browser with the support of Find All References, Go To Definition and other navigation features:
+
+[https://online.visualstudio.com/github/veler/PaZword](https://online.visualstudio.com/github/veler/PaZword)
+
+### On a local machine
+
 1. Clone the repository.
 2. Install Visual Studio 2019 by importing the following [configuration](https://github.com/veler/PaZword/blob/master/Windows/.vsconfig).
 3. Rename `ServicesKeys-sample.txt` to `ServicesKeys.txt`.
