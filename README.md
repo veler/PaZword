@@ -64,7 +64,8 @@ Use Rich Code Navigation to explore the repository in the web browser with the s
 3. Rename `ServicesKeys-sample.txt` to `ServicesKeys.txt`.
 4. (optional, but recommended) Complete `ServicesKeys.txt` if you need to debug OneDrive, DropBox, RiteKit, Two factor authentication and more.
 5. Open the solution `Windows/PaZword.sln`
-6. Rebuild the solution.
+6. Generate a certificate. To do so, right click the project under the Solution Explorer -> Properties -> Package Manifest. Go to the "Packaging" tab -> Choose Certificate -> Create. You will be prompted to choose a password and then click OK.
+7. Rebuild the solution.
 
 ### Edit the localizable strings
 
