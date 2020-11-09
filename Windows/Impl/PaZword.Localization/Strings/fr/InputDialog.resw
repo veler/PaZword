@@ -126,21 +126,6 @@
   <data name="AddAccountTitle" xml:space="preserve">
     <value>Ajouter un compte</value>
   </data>
-  <data name="AddCategoryPrimaryButton" xml:space="preserve">
-    <value>Ajouter</value>
-  </data>
-  <data name="AddCategoryTitle" xml:space="preserve">
-    <value>Ajouter une catégorie</value>
-  </data>
-  <data name="CategoryNamePlaceholder" xml:space="preserve">
-    <value>Nom de la catégorie</value>
-  </data>
-  <data name="RenamePrimaryButton" xml:space="preserve">
-    <value>Renommer</value>
-  </data>
-  <data name="RenameTitle" xml:space="preserve">
-    <value>Renommer une catégorie</value>
-  </data>
   <data name="SecondaryButton" xml:space="preserve">
     <value>Annuler</value>
   </data>

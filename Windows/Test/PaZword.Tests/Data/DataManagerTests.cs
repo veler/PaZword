@@ -69,7 +69,7 @@ namespace PaZword.Tests.Data
 
                 Assert.AreEqual(5, dataManager.Categories.Count);
 
-                await dataManager.AddNewCategoryAsync("foo", CancellationToken.None).ConfigureAwait(false);
+                await dataManager.AddNewCategoryAsync("foo", CategoryIcon.Home, CancellationToken.None).ConfigureAwait(false);
                 await dataManager.SaveLocalUserDataBundleAsync(true, CancellationToken.None).ConfigureAwait(false);
             }
 
@@ -88,8 +88,8 @@ namespace PaZword.Tests.Data
             {
                 await dataManager.LoadOrCreateLocalUserDataBundleAsync(CancellationToken.None).ConfigureAwait(false);
 
-                await dataManager.AddNewCategoryAsync("foo", CancellationToken.None).ConfigureAwait(false);
-                await dataManager.AddNewCategoryAsync("bar", CancellationToken.None).ConfigureAwait(false);
+                await dataManager.AddNewCategoryAsync("foo", CategoryIcon.Home, CancellationToken.None).ConfigureAwait(false);
+                await dataManager.AddNewCategoryAsync("bar", CategoryIcon.Home, CancellationToken.None).ConfigureAwait(false);
 
                 Assert.AreEqual(7, dataManager.Categories.Count);
 
@@ -112,7 +112,7 @@ namespace PaZword.Tests.Data
                 await dataManager.LoadOrCreateLocalUserDataBundleAsync(CancellationToken.None).ConfigureAwait(false);
 
                 var financialCategory = dataManager.Categories.Single(c => string.Equals(c.Name, LanguageManager.Instance.Core.CategoryFinancial, StringComparison.Ordinal));
-                await dataManager.RenameCategoryAsync(financialCategory.Id, "zoo", CancellationToken.None).ConfigureAwait(false);
+                await dataManager.RenameCategoryAsync(financialCategory.Id, "zoo", CategoryIcon.Home, CancellationToken.None).ConfigureAwait(false);
 
                 Assert.AreEqual("zoo", dataManager.Categories.Last().Name); // Renaming to re-sort the items.
             }
@@ -126,7 +126,7 @@ namespace PaZword.Tests.Data
             {
                 await dataManager.LoadOrCreateLocalUserDataBundleAsync(CancellationToken.None).ConfigureAwait(false);
 
-                await dataManager.RenameCategoryAsync(new Guid(Constants.CategoryAllId), "foo", CancellationToken.None).ConfigureAwait(false);
+                await dataManager.RenameCategoryAsync(new Guid(Constants.CategoryAllId), "foo", CategoryIcon.Home, CancellationToken.None).ConfigureAwait(false);
 
                 Assert.Fail();
             }
@@ -261,7 +261,7 @@ namespace PaZword.Tests.Data
                     tasks.Add(Task.Run(async () =>
                     {
                         manualResetEvent.WaitOne();
-                        await dataManager.AddNewCategoryAsync("foo", CancellationToken.None).ConfigureAwait(false);
+                        await dataManager.AddNewCategoryAsync("foo", CategoryIcon.Home, CancellationToken.None).ConfigureAwait(false);
                     }));
 
                     tasks.Add(Task.Run(async () =>
@@ -312,9 +312,9 @@ namespace PaZword.Tests.Data
             {
                 await dataManager.LoadOrCreateLocalUserDataBundleAsync(CancellationToken.None).ConfigureAwait(false);
 
-                categoryFoo = (await dataManager.AddNewCategoryAsync("foo", CancellationToken.None).ConfigureAwait(false)).Id;
-                categoryBar = (await dataManager.AddNewCategoryAsync("bar", CancellationToken.None).ConfigureAwait(false)).Id;
-                categoryBoo = (await dataManager.AddNewCategoryAsync("boo", CancellationToken.None).ConfigureAwait(false)).Id;
+                categoryFoo = (await dataManager.AddNewCategoryAsync("foo", CategoryIcon.Home, CancellationToken.None).ConfigureAwait(false)).Id;
+                categoryBar = (await dataManager.AddNewCategoryAsync("bar", CategoryIcon.Home, CancellationToken.None).ConfigureAwait(false)).Id;
+                categoryBoo = (await dataManager.AddNewCategoryAsync("boo", CategoryIcon.Home, CancellationToken.None).ConfigureAwait(false)).Id;
 
                 await dataManager.SaveLocalUserDataBundleAsync(true, CancellationToken.None).ConfigureAwait(false);
 
@@ -325,7 +325,7 @@ namespace PaZword.Tests.Data
 
                 await dataManager.DeleteCategoryAsync(categoryFoo, CancellationToken.None).ConfigureAwait(false);
                 await dataManager.DeleteCategoryAsync(categoryBar, CancellationToken.None).ConfigureAwait(false);
-                await dataManager.RenameCategoryAsync(categoryBoo, "HelloThere", CancellationToken.None).ConfigureAwait(false); // local change is more recent, so "hellothere" should persist after merge.
+                await dataManager.RenameCategoryAsync(categoryBoo, "HelloThere", CategoryIcon.Home, CancellationToken.None).ConfigureAwait(false); // local change is more recent, so "hellothere" should persist after merge.
 
                 await dataManager.SaveLocalUserDataBundleAsync(true, CancellationToken.None).ConfigureAwait(false);
 

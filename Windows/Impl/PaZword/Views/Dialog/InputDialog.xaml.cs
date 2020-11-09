@@ -45,7 +45,7 @@ namespace PaZword.Views.Dialog
             set => SetValue(PlaceholderProperty, value);
         }
 
-        internal ContentDialogResult Result { get; set; }
+        internal ContentDialogResult Result { get; private set; }
 
         public InputDialog()
         {

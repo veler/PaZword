@@ -10,13 +10,24 @@ namespace PaZword.Core.UI.Converters
     {
         public bool IsInverted { get; set; }
 
+        public bool EnforceNonWhiteSpaceString { get; set; }
+
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value?.GetType() == typeof(string))
             {
                 if (IsInverted)
                 {
+                    if (EnforceNonWhiteSpaceString)
+                    {
+                        return string.IsNullOrWhiteSpace((string)value) ? false : true;
+                    }
                     return string.IsNullOrEmpty((string)value) ? false : true;
+                }
+
+                if (EnforceNonWhiteSpaceString)
+                {
+                    return string.IsNullOrWhiteSpace((string)value) ? false : true;
                 }
                 return string.IsNullOrEmpty((string)value) ? true : false;
             }

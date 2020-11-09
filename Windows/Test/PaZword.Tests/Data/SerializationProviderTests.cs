@@ -12,7 +12,7 @@ namespace PaZword.Tests.Data
         public void CloneObjectTest()
         {
             var data = new UserDataBundle();
-            data.Categories.Add(new Category(Guid.NewGuid(), "Category"));
+            data.Categories.Add(new Category(Guid.NewGuid(), "Category", CategoryIcon.BankCard));
 
             var dataCopy = ExportProvider.GetExport<ISerializationProvider>().CloneObject(data);
 

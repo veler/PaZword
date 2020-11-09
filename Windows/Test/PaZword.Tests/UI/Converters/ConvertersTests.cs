@@ -54,24 +54,6 @@ namespace PaZword.Tests.UI.Converters
         }
 
         [TestMethod]
-        public void CategoryIdToIconConverterTest()
-        {
-            var converter = new CategoryIdToIconConverter();
-
-            Assert.AreEqual("\xE10F", converter.Convert(new Guid(Constants.CategoryAllId), typeof(Symbol), null, null));
-            Assert.AreEqual("\xE179", converter.Convert(Guid.NewGuid(), typeof(Symbol), null, null));
-        }
-
-        [TestMethod]
-        public void CategoryIdToBooleanConverterTest()
-        {
-            var converter = new CategoryIdToBooleanConverter();
-
-            Assert.IsFalse((bool)converter.Convert(new Guid(Constants.CategoryAllId), typeof(bool), null, null));
-            Assert.IsTrue((bool)converter.Convert(Guid.NewGuid(), typeof(bool), null, null));
-        }
-
-        [TestMethod]
         public void BooleanToVisibilityConverterTest()
         {
             var converter = new BooleanToVisibilityConverter();

@@ -26,6 +26,7 @@ namespace PaZword.Localization
         private readonly AuthenticationPageStrings _authenticationpage = new AuthenticationPageStrings();
         private readonly BankAccountDataStrings _bankaccountdata = new BankAccountDataStrings();
         private readonly BreachDiscoveredDialogStrings _breachdiscovereddialog = new BreachDiscoveredDialogStrings();
+        private readonly CategoryNameDialogStrings _categorynamedialog = new CategoryNameDialogStrings();
         private readonly CategoryPageStrings _categorypage = new CategoryPageStrings();
         private readonly CoreStrings _core = new CoreStrings();
         private readonly CredentialDataStrings _credentialdata = new CredentialDataStrings();
@@ -75,6 +76,11 @@ namespace PaZword.Localization
         /// Gets the <see cref="BreachDiscoveredDialogStrings"/>.
         /// </summary>
         public BreachDiscoveredDialogStrings BreachDiscoveredDialog => _breachdiscovereddialog;
+
+        /// <summary>
+        /// Gets the <see cref="CategoryNameDialogStrings"/>.
+        /// </summary>
+        public CategoryNameDialogStrings CategoryNameDialog => _categorynamedialog;
 
         /// <summary>
         /// Gets the <see cref="CategoryPageStrings"/>.
@@ -568,6 +574,43 @@ namespace PaZword.Localization
         }
     }
 
+    public class CategoryNameDialogStrings : INotifyPropertyChanged
+    {
+        private readonly ResourceLoader _resources = ResourceLoader.GetForViewIndependentUse("PaZword.Localization/CategoryNameDialog");
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Gets the resource AddCategoryPrimaryButton.
+        /// </summary>
+        public string AddCategoryPrimaryButton => _resources.GetString("AddCategoryPrimaryButton");
+
+        /// <summary>
+        /// Gets the resource AddCategoryTitle.
+        /// </summary>
+        public string AddCategoryTitle => _resources.GetString("AddCategoryTitle");
+
+        /// <summary>
+        /// Gets the resource CategoryNamePlaceholder.
+        /// </summary>
+        public string CategoryNamePlaceholder => _resources.GetString("CategoryNamePlaceholder");
+
+        /// <summary>
+        /// Gets the resource IconPlaceholder.
+        /// </summary>
+        public string IconPlaceholder => _resources.GetString("IconPlaceholder");
+
+        /// <summary>
+        /// Gets the resource RenamePrimaryButton.
+        /// </summary>
+        public string RenamePrimaryButton => _resources.GetString("RenamePrimaryButton");
+
+        /// <summary>
+        /// Gets the resource RenameTitle.
+        /// </summary>
+        public string RenameTitle => _resources.GetString("RenameTitle");
+    }
+
     public class CategoryPageStrings : INotifyPropertyChanged
     {
         private readonly ResourceLoader _resources = ResourceLoader.GetForViewIndependentUse("PaZword.Localization/CategoryPage");
@@ -991,31 +1034,6 @@ namespace PaZword.Localization
         /// Gets the resource AddAccountTitle.
         /// </summary>
         public string AddAccountTitle => _resources.GetString("AddAccountTitle");
-
-        /// <summary>
-        /// Gets the resource AddCategoryPrimaryButton.
-        /// </summary>
-        public string AddCategoryPrimaryButton => _resources.GetString("AddCategoryPrimaryButton");
-
-        /// <summary>
-        /// Gets the resource AddCategoryTitle.
-        /// </summary>
-        public string AddCategoryTitle => _resources.GetString("AddCategoryTitle");
-
-        /// <summary>
-        /// Gets the resource CategoryNamePlaceholder.
-        /// </summary>
-        public string CategoryNamePlaceholder => _resources.GetString("CategoryNamePlaceholder");
-
-        /// <summary>
-        /// Gets the resource RenamePrimaryButton.
-        /// </summary>
-        public string RenamePrimaryButton => _resources.GetString("RenamePrimaryButton");
-
-        /// <summary>
-        /// Gets the resource RenameTitle.
-        /// </summary>
-        public string RenameTitle => _resources.GetString("RenameTitle");
 
         /// <summary>
         /// Gets the resource SecondaryButton.

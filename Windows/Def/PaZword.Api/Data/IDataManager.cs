@@ -117,18 +117,20 @@ namespace PaZword.Api.Data
         /// Adds a new category to the bundle.
         /// </summary>
         /// <param name="name">The category name.</param>
+        /// <param name="icon">The category icon.</param>
         /// <param name="cancellationToken">A token to cancel the task.</param>
         /// <returns>The created <see cref="Category"/>.</returns>
-        Task<Category> AddNewCategoryAsync(string name, CancellationToken cancellationToken);
+        Task<Category> AddNewCategoryAsync(string name, CategoryIcon icon, CancellationToken cancellationToken);
 
         /// <summary>
         /// Renames a category in the bundle.
         /// </summary>
         /// <param name="id">The category ID.</param>
         /// <param name="name">The category name.</param>
+        /// <param name="icon">The category icon.</param>
         /// <param name="cancellationToken">A token to cancel the task.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task RenameCategoryAsync(Guid id, string name, CancellationToken cancellationToken);
+        Task RenameCategoryAsync(Guid id, string name, CategoryIcon icon, CancellationToken cancellationToken);
 
         /// <summary>
         /// Deletes a category from the bundle.

@@ -10,6 +10,7 @@ namespace PaZword.Api.Models
     public sealed class Category : INotifyPropertyChanged, IExactEquatable<Category>
     {
         private string _name;
+        private CategoryIcon _categoryIcon;
 
         /// <summary>
         /// Gets the category's unique ID.
@@ -28,6 +29,20 @@ namespace PaZword.Api.Models
             {
                 _name = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the category's icon.
+        /// </summary>
+        [JsonProperty]
+        public CategoryIcon Icon
+        {
+            get => _categoryIcon;
+            set
+            {
+                _categoryIcon = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Icon)));
             }
         }
 
@@ -51,10 +66,11 @@ namespace PaZword.Api.Models
         /// </summary>
         /// <param name="id">The unique ID of the category</param>
         /// <param name="name">The category name</param>
-        public Category(Guid id, string name)
+        public Category(Guid id, string name, CategoryIcon icon)
         {
             Id = id;
             Name = name;
+            Icon = icon;
         }
 
         public override bool Equals(object obj)
@@ -88,7 +104,8 @@ namespace PaZword.Api.Models
             return ReferenceEquals(this, other)
                 || (other.Id == Id
                     && other.LastModificationDate == LastModificationDate
-                    && string.Equals(other.Name, Name, StringComparison.Ordinal));
+                    && string.Equals(other.Name, Name, StringComparison.Ordinal))
+                    && other.Icon == Icon;
         }
 
         public override int GetHashCode()

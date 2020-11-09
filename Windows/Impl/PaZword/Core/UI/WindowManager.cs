@@ -1,4 +1,5 @@
-﻿using PaZword.Api.UI;
+﻿using PaZword.Api.Models;
+using PaZword.Api.UI;
 using PaZword.Core.Threading;
 using PaZword.Views.Dialog;
 using System;
@@ -69,6 +70,25 @@ namespace PaZword.Core.UI
                 }
 
                 return await confirmationDialog.ShowAsync();
+            }).ConfigureAwait(false);
+        }
+
+        public async Task<(bool, string, CategoryIcon)> ShowAddOrRenameCategoryAsync(Category categoryToRename = null)
+        {
+            return await TaskHelper.RunOnUIThreadAsync(async () =>
+            {
+                var categoryNameDialog = new CategoryNameDialog(categoryToRename);
+                await categoryNameDialog.ShowAsync();
+
+                if (categoryNameDialog.Result == ContentDialogResult.Primary)
+                {
+                    return
+                        (true,
+                        categoryNameDialog.ViewModel.CategoryName,
+                        categoryNameDialog.ViewModel.Icon);
+                }
+
+                return (false, string.Empty, CategoryIcon.Default);
             }).ConfigureAwait(false);
         }
     }

@@ -1,4 +1,5 @@
-﻿using PaZword.Api.UI;
+﻿using PaZword.Api.Models;
+using PaZword.Api.UI;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
@@ -9,6 +10,16 @@ namespace PaZword.Tests.Mocks
         internal string InputDialogResult { get; set; }
 
         internal ContentDialogResult MessageDialogResult { get; set; }
+
+        public Task<(bool, string, CategoryIcon)> ShowAddOrRenameCategoryAsync(Category categoryToRename = null)
+        {
+            if (categoryToRename == null)
+            {
+                return Task.FromResult((true, "New Category", CategoryIcon.Default));
+            }
+
+            return Task.FromResult((true, "Renamed", CategoryIcon.Default));
+        }
 
         public Task<string> ShowInputDialogAsync(string defaultInputValue, string placeHolder, string primaryButtonText, string title = null)
         {

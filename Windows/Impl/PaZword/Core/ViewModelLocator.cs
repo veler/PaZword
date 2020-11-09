@@ -35,5 +35,8 @@ namespace PaZword.Core
 
         // Getting a new instance everytime this property is called.
         public PasswordGeneratorDialogViewModel PasswordGeneratorDialog => ExportProvider?.GetExport<PasswordGeneratorDialogViewModel>();
+
+        // Getting a new instance everytime this property is called.
+        public CategoryNameDialogViewModel CategoryNameDialog => ExportProvider?.GetExport<CategoryNameDialogViewModel>();
     }
 }

@@ -23,6 +23,7 @@
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountData.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\CategoryIcon.cs" />
     <Compile Include="Services\IIconService.cs" />
     <Compile Include="Services\IRecurrentTask.cs" />
     <Compile Include="Services\IRecurrentTaskService.cs" />
