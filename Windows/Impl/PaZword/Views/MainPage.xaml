@@ -14,8 +14,7 @@
     DataContext="{Binding Path=MainPage, Source={StaticResource ViewModelLocator}}">
 
     <Page.Resources>
-        <converters:CategoryIdToIconConverter x:Key="CategoryIdToIconConverter"/>
-        <converters:CategoryIdToBooleanConverter x:Key="CategoryIdToBooleanConverter"/>
+        <converters:CategoryIconToBitmapImageConverter x:Key="CategoryIconToBitmapImageConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" IsInverted="True"/>
     </Page.Resources>
@@ -29,13 +28,11 @@
             <controls:CustomNavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:Category">
                     <StackPanel Orientation="Horizontal" AutomationProperties.Name="{x:Bind Name, Mode=OneWay}">
-                        <Viewbox x:Name="IconBox">
-                            <FontIcon
-                                Margin="0,16,16,16"
-                                FontSize="16"
-                                Glyph="{x:Bind Id, Converter={StaticResource CategoryIdToIconConverter}}"
-                                Foreground="{ThemeResource NavigationViewItemForeground}"/>
-                        </Viewbox>
+                        <Image x:Name="IconBox"
+                            Margin="0,16,16,16"
+                            Height="16"
+                            Width="16"
+                            Source="{x:Bind Icon, Converter={StaticResource CategoryIconToBitmapImageConverter}, Mode=OneWay}"/>
                         <TextBlock
                             Margin="0,16"
                             Text="{x:Bind Name, Mode=OneWay}"

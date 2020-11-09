@@ -299,7 +299,7 @@ namespace PaZword.Core.Data
             }
         }
 
-        public async Task<Category> AddNewCategoryAsync(string name, CancellationToken cancellationToken)
+        public async Task<Category> AddNewCategoryAsync(string name, CategoryIcon icon, CancellationToken cancellationToken)
         {
             Arguments.NotNullOrEmpty(name, nameof(name));
 
@@ -309,7 +309,7 @@ namespace PaZword.Core.Data
                 CheckState();
 
                 Guid uniqueId = GenerateUniqueId();
-                category = new Category(uniqueId, name)
+                category = new Category(uniqueId, name, icon)
                 {
                     LastModificationDate = DateTime.Now
                 };
@@ -322,7 +322,7 @@ namespace PaZword.Core.Data
             return category;
         }
 
-        public async Task RenameCategoryAsync(Guid id, string name, CancellationToken cancellationToken)
+        public async Task RenameCategoryAsync(Guid id, string name, CategoryIcon icon, CancellationToken cancellationToken)
         {
             Arguments.NotNull(id, nameof(id));
             Arguments.NotNullOrEmpty(name, nameof(name));
@@ -342,6 +342,7 @@ namespace PaZword.Core.Data
                 await TaskHelper.RunOnUIThreadAsync(() =>
                 {
                     existingCategory.Name = name;
+                    existingCategory.Icon = icon;
                 }).ConfigureAwait(false);
 
                 SortData();
@@ -643,11 +644,37 @@ namespace PaZword.Core.Data
         private void CreateNewUserDataBundle()
         {
             _data = new UserDataBundle();
-            _data.Categories.Add(new Category(new Guid(Constants.CategoryAllId), LanguageManager.Instance.Core.CategoryAll));
-            _data.Categories.Add(new Category(GenerateUniqueId(), LanguageManager.Instance.Core.CategoryFinancial));
-            _data.Categories.Add(new Category(GenerateUniqueId(), LanguageManager.Instance.Core.CategoryPersonal));
-            _data.Categories.Add(new Category(GenerateUniqueId(), LanguageManager.Instance.Core.CategoryProfessional));
-            _data.Categories.Add(new Category(GenerateUniqueId(), LanguageManager.Instance.Core.CategorySocial));
+
+            // Add the default categories
+            _data.Categories.Add(
+                new Category(
+                    new Guid(Constants.CategoryAllId),
+                    LanguageManager.Instance.Core.CategoryAll,
+                    CategoryIcon.Home));
+
+            _data.Categories.Add(
+                new Category(
+                    GenerateUniqueId(),
+                    LanguageManager.Instance.Core.CategoryFinancial,
+                    CategoryIcon.BankCard));
+
+            _data.Categories.Add(
+                new Category(
+                    GenerateUniqueId(),
+                    LanguageManager.Instance.Core.CategoryPersonal,
+                    CategoryIcon.Personal2));
+
+            _data.Categories.Add(
+                new Category(
+                    GenerateUniqueId(),
+                    LanguageManager.Instance.Core.CategoryProfessional,
+                    CategoryIcon.Professional));
+
+            _data.Categories.Add(
+                new Category(
+                    GenerateUniqueId(),
+                    LanguageManager.Instance.Core.CategorySocial,
+                    CategoryIcon.SocialMedia));
 
             SortData();
         }

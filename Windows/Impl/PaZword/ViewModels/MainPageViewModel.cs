@@ -197,15 +197,16 @@ namespace PaZword.ViewModels
 
         private async Task ExecuteAddACategoryNavigationViewItemTappedCommandAsync(object parameter, CancellationToken cancellationToken)
         {
-            string input = await WindowManager.ShowInputDialogAsync(
-                defaultInputValue: null,
-                placeHolder: LanguageManager.Instance.InputDialog.CategoryNamePlaceholder,
-                primaryButtonText: LanguageManager.Instance.InputDialog.AddCategoryPrimaryButton,
-                title: LanguageManager.Instance.InputDialog.AddCategoryTitle).ConfigureAwait(false);
+            (bool created, string categoryName, CategoryIcon icon) = await WindowManager.ShowAddOrRenameCategoryAsync().ConfigureAwait(false);
 
-            if (!string.IsNullOrWhiteSpace(input))
+            if (created)
             {
-                var category = await _dataManager.AddNewCategoryAsync(input, cancellationToken).ConfigureAwait(false);
+                var category 
+                    = await _dataManager.AddNewCategoryAsync(
+                        categoryName,
+                        icon,
+                        cancellationToken)
+                    .ConfigureAwait(false);
 
                 await ChangeSelectedMenuToCategoryAsync(category, changeProgrammatically: false).ConfigureAwait(false);
 
@@ -230,15 +231,16 @@ namespace PaZword.ViewModels
 
         private async Task ExecuteRenameCategoryCommandAsync(Category category, CancellationToken cancellationToken)
         {
-            string input = await WindowManager.ShowInputDialogAsync(
-                defaultInputValue: category.Name,
-                placeHolder: LanguageManager.Instance.InputDialog.CategoryNamePlaceholder,
-                primaryButtonText: LanguageManager.Instance.InputDialog.RenamePrimaryButton,
-                title: LanguageManager.Instance.InputDialog.RenameTitle).ConfigureAwait(false);
+            (bool renamed, string categoryName, CategoryIcon icon) = await WindowManager.ShowAddOrRenameCategoryAsync(category).ConfigureAwait(false);
 
-            if (!string.IsNullOrWhiteSpace(input))
+            if (renamed)
             {
-                await _dataManager.RenameCategoryAsync(category.Id, input, cancellationToken).ConfigureAwait(false);
+                await _dataManager.RenameCategoryAsync(
+                    category.Id,
+                    categoryName,
+                    icon,
+                    cancellationToken)
+                    .ConfigureAwait(false);
 
                 RaisePropertyChanged(nameof(Categories));
                 category = Categories.Single(c => c == category);

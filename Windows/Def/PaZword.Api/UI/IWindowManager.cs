@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using PaZword.Api.Models;
 using Windows.UI.Xaml.Controls;
 
 namespace PaZword.Api.UI
@@ -39,5 +40,12 @@ namespace PaZword.Api.UI
             string primaryButtonText,
             string defaultInputValue = null,
             string title = null);
+
+        /// <summary>
+        /// Prompt a dialog to the user to add or rename a category.
+        /// </summary>
+        /// <param name="categoryToRename">Null when "Add a category" should be shown. Not null when renaming a category.</param>
+        /// <returns>Returns <code>True</code> if the user validated the prompt.</returns>
+        Task<(bool, string, CategoryIcon)> ShowAddOrRenameCategoryAsync(Category categoryToRename = null);
     }
 }

@@ -4,6 +4,7 @@ using PaZword.Api.Data;
 using PaZword.Api.Models;
 using PaZword.Api.Security;
 using PaZword.Api.Settings;
+using PaZword.Localization;
 using System;
 using System.Collections.Generic;
 using System.Composition;
@@ -19,13 +20,14 @@ namespace PaZword.Core.Data
     {
         private const string NoUpgradeRequiredEventName = "UpgradeService.NoUpgradeRequired";
         private const string Version1ToVersion2EventName = "UpgradeService.Upgrading.Version1.To.Version2";
+        private const string Version2ToVersion3EventName = "UpgradeService.Upgrading.Version2.To.Version3";
 
         /// <summary>
         /// This should be increased every time a breaking change is made to the
         /// <see cref="UserDataBundle"/> or the encryption engine or anything else that requires
         /// a migration of the user data.
         /// </summary>
-        private const int CurrentSupportedUserBundleVersion = 2;
+        private const int CurrentSupportedUserBundleVersion = 3;
 
         private readonly ILogger _logger;
         private readonly ISettingsProvider _settingsProvider;
@@ -55,16 +57,31 @@ namespace PaZword.Core.Data
         {
             string encryptedData = await FileIO.ReadTextAsync(userDataBundleFile);
             int version = GetVersion(encryptedData);
+            UserDataBundle userDataBundle = null;
+            var updated = false;
 
+            // Migrating to version 2
             if (version == 1)
             {
-                return (updated: true, await UpgradeToVersion2Async(encryptedData).ConfigureAwait(false));
+                updated = true;
+                userDataBundle = await UpgradeToVersion2Async(encryptedData).ConfigureAwait(false);
+            }
+
+            // Migration to version 3
+            if (updated || version == 2)
+            {
+                updated = true;
+                userDataBundle = UpgradeToVersion3(userDataBundle, encryptedData);
             }
 
             // No migration needed. Just load the data
-            UserDataBundle userDataBundle = Load(encryptedData);
-            _logger.LogEvent(NoUpgradeRequiredEventName, string.Empty);
-            return (updated: false, userDataBundle);
+            if (userDataBundle == null)
+            {
+                userDataBundle = Load(encryptedData);
+                _logger.LogEvent(NoUpgradeRequiredEventName, string.Empty);
+            }
+
+            return (updated, userDataBundle);
         }
 
         /// <summary>
@@ -111,7 +128,61 @@ namespace PaZword.Core.Data
             return userDataBundle;
         }
 
-        private int GetVersion(string encryptedData)
+        /// <summary>
+        /// Migrates from version 2 to 3.
+        /// </summary>
+        private UserDataBundle UpgradeToVersion3(UserDataBundle version2UserDataBundle, string encryptedData)
+        {
+            // Version 2 can be loaded as version 3.
+            // The difference between 2 and 3 is the support of custom icons in the categories.
+            // The migration consists in defining the default icons of the existing categories.
+            _logger.LogEvent(Version2ToVersion3EventName, string.Empty);
+
+            UserDataBundle userDataBundle;
+
+            if (version2UserDataBundle == null)
+            {
+                userDataBundle = Load(encryptedData);
+            }
+            else
+            {
+                userDataBundle = version2UserDataBundle;
+            }
+
+            for (int i = 0; i < userDataBundle.Categories.Count; i++)
+            {
+                Category category = userDataBundle.Categories[i];
+
+                if (category.Id == new Guid(Constants.CategoryAllId))
+                {
+                    category.Icon = CategoryIcon.Home;
+                }
+                else if (string.Equals(category.Name, LanguageManager.Instance.Core.CategoryFinancial, StringComparison.OrdinalIgnoreCase))
+                {
+                    category.Icon = CategoryIcon.BankCard;
+                }
+                else if (string.Equals(category.Name, LanguageManager.Instance.Core.CategoryPersonal, StringComparison.OrdinalIgnoreCase))
+                {
+                    category.Icon = CategoryIcon.Personal2;
+                }
+                else if (string.Equals(category.Name, LanguageManager.Instance.Core.CategoryProfessional, StringComparison.OrdinalIgnoreCase))
+                {
+                    category.Icon = CategoryIcon.Professional;
+                }
+                else if (string.Equals(category.Name, LanguageManager.Instance.Core.CategorySocial, StringComparison.OrdinalIgnoreCase))
+                {
+                    category.Icon = CategoryIcon.SocialMedia;
+                }
+                else
+                {
+                    category.Icon = CategoryIcon.Default;
+                }
+            }
+
+            return userDataBundle;
+        }
+
+        private static int GetVersion(string encryptedData)
         {
             int firstColonPosition = encryptedData.IndexOf(':');
 

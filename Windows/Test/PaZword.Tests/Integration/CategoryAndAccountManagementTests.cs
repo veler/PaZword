@@ -65,7 +65,6 @@ namespace PaZword.Tests.Integration
         {
             Assert.AreEqual(5, _viewModelLocator.MainPage.Categories.Count);
 
-            _windowManager.InputDialogResult = "New Category";
             var mainPage = _viewModelLocator.MainPage;
             mainPage.AddACategoryNavigationViewItemTappedCommand.Execute(null);
             mainPage.AddACategoryNavigationViewItemTappedCommand.WaitRunToCompletion();
@@ -86,7 +85,6 @@ namespace PaZword.Tests.Integration
         [TestMethod]
         public void RenameCategory()
         {
-            _windowManager.InputDialogResult = "Renamed";
             var mainPage = _viewModelLocator.MainPage;
 
             // Can't rename the "All" category.

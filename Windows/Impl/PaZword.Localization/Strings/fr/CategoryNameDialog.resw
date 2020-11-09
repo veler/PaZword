@@ -117,16 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccountTitlePlaceholder" xml:space="preserve">
-    <value>Заголовок аккаунта</value>
+  <data name="AddCategoryPrimaryButton" xml:space="preserve">
+    <value>Ajouter</value>
   </data>
-  <data name="AddAccountPrimaryButton" xml:space="preserve">
-    <value>Добавить</value>
+  <data name="AddCategoryTitle" xml:space="preserve">
+    <value>Ajouter une catégorie</value>
   </data>
-  <data name="AddAccountTitle" xml:space="preserve">
-    <value>Добавить аккаунт</value>
+  <data name="CategoryNamePlaceholder" xml:space="preserve">
+    <value>Nom de la catégorie</value>
   </data>
-  <data name="SecondaryButton" xml:space="preserve">
-    <value>Отменить</value>
+  <data name="IconPlaceholder" xml:space="preserve">
+    <value>Icône</value>
+  </data>
+  <data name="RenamePrimaryButton" xml:space="preserve">
+    <value>Renommer</value>
+  </data>
+  <data name="RenameTitle" xml:space="preserve">
+    <value>Renommer une catégorie</value>
   </data>
 </root>

@@ -18,12 +18,12 @@
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <EnableGatekeeperAnalysis>false</EnableGatekeeperAnalysis>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
@@ -55,6 +55,7 @@
     <Compile Include="Core\UI\Controls\EditablePassword.cs" />
     <Compile Include="Core\UI\Controls\EditableTextBlock.cs" />
     <Compile Include="Core\UI\Controls\SynchronizationIndicator.cs" />
+    <Compile Include="Core\UI\Converters\CategoryIconToBitmapImageConverter.cs" />
     <Compile Include="Core\UI\Converters\EntityNameToAccountIconSourceConverter.cs" />
     <Compile Include="Core\UI\Converters\Base64ImageToAccountIconSourceConverter.cs" />
     <Compile Include="Core\UI\Converters\Base64ImageToDominantColorSourceConverter.cs" />
@@ -63,8 +64,6 @@
     <Compile Include="Core\UI\Converters\EnumToVisibilityConverter.cs" />
     <Compile Include="Core\UI\Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Core\UI\Converters\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Core\UI\Converters\CategoryIdToBooleanConverter.cs" />
-    <Compile Include="Core\UI\Converters\CategoryIdToIconConverter.cs" />
     <Compile Include="Core\UI\Converters\InvertedBooleanConverter.cs" />
     <Compile Include="Core\UI\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Core\UI\Converters\NullToBooleanConverter.cs" />
@@ -109,6 +108,7 @@
     <Compile Include="ViewModels\Data\WiFiCredential\WiFiCredentialDataProvider.cs" />
     <Compile Include="ViewModels\Data\WiFiCredential\WiFiCredentialDataViewModel.cs" />
     <Compile Include="ViewModels\Dialog\BreachDiscoveredDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialog\CategoryNameDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialog\PasswordGeneratorDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialog\SetupTwoFactorAuthenticationDialogViewModel.cs" />
     <Compile Include="ViewModels\Other\AuthenticationPageViewModel.cs" />
@@ -154,6 +154,9 @@
     <Compile Include="Views\Dialog\PasswordGeneratorDialog.xaml.cs">
       <DependentUpon>PasswordGeneratorDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialog\CategoryNameDialog.xaml.cs">
+      <DependentUpon>CategoryNameDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialog\SetupTwoFactorAuthenticationDialog.xaml.cs">
       <DependentUpon>SetupTwoFactorAuthenticationDialog.xaml</DependentUpon>
     </Compile>
@@ -180,11 +183,24 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.appxmanifest">
-      <SubType>Designer</SubType>
-    </AppxManifest>
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Assets\CategoryIcons\Bank.png" />
+    <Content Include="Assets\CategoryIcons\Bank2.png" />
+    <Content Include="Assets\CategoryIcons\BankCard.png" />
+    <Content Include="Assets\CategoryIcons\Default.png" />
+    <Content Include="Assets\CategoryIcons\Home.png" />
+    <Content Include="Assets\CategoryIcons\Id.png" />
+    <Content Include="Assets\CategoryIcons\Id2.png" />
+    <Content Include="Assets\CategoryIcons\Key.png" />
+    <Content Include="Assets\CategoryIcons\Money.png" />
+    <Content Include="Assets\CategoryIcons\Personal.png" />
+    <Content Include="Assets\CategoryIcons\Personal2.png" />
+    <Content Include="Assets\CategoryIcons\Professional.png" />
+    <Content Include="Assets\CategoryIcons\Professional2.png" />
+    <Content Include="Assets\CategoryIcons\Professional3.png" />
+    <Content Include="Assets\CategoryIcons\Safe.png" />
+    <Content Include="Assets\CategoryIcons\SocialMedia.png" />
+    <Content Include="Assets\CategoryIcons\UserGroup.png" />
+    <Content Include="Assets\CategoryIcons\UserGroup2.png" />
     <Content Include="Assets\DefaultAccountIcon.png" />
     <Content Include="Assets\DefaultProfilePicture.png" />
     <Content Include="Assets\Dinosaur.png" />
@@ -312,6 +328,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialog\CategoryNameDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Dialog\SetupTwoFactorAuthenticationDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -334,6 +354,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <AppxManifest Condition="'$(Configuration)' == 'Release'" Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <AppxManifest Condition="'$(Configuration)' != 'Release'" Include="Package.Debug.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
@@ -353,7 +381,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

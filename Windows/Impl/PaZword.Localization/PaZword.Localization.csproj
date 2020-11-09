@@ -47,6 +47,9 @@
     <PRIResource Include="Strings\ru\Core.resw" />
     <PRIResource Include="Strings\ru\CredentialData.resw" />
     <PRIResource Include="Strings\ru\Dropbox.resw" />
+    <PRIResource Include="Strings\en\CategoryNameDialog.resw" />
+    <PRIResource Include="Strings\fr\CategoryNameDialog.resw" />
+    <PRIResource Include="Strings\ru\CategoryNameDialog.resw" />
     <None Include="Strings\ru\FAQ-RemoteStorageProvider.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
