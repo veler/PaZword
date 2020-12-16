@@ -36,6 +36,19 @@ A password manager made in UWP.
 
 See below to help with existing translations or add a new language.
 
+## Would you like to help the project?
+
+ * [Paypal donation](https://www.paypal.com/donate?hosted_button_id=T4NTSX8BYEAVL)
+ * [Steam wishlist](https://store.steampowered.com/wishlist/id/velersoftware)
+ * [Amazon wishlist](https://www.amazon.ca/hz/wishlist/ls/UCJ65HR9ZJSD?ref_=wl_share)
+ * [Feedback (reporting bugs, ideas, etc)](https://github.com/veler/PaZword/issues/new/choose)
+ * Create a review. :)
+
+## Please, avoid selling this app as yours
+
+I don't care if you copy the source code to use in your project, but please avoid simply changing the name and selling as your work. 
+That's not why I'm sharing the source code, at all.
+
 ## How to install (as an end-user)
 
 ### Prerequisite
