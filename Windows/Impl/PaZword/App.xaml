@@ -2,85 +2,15 @@
     x:Class="PaZword.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:core="using:PaZword.Core">
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls">
 
     <Application.Resources>
-        <ResourceDictionary>
-            <core:ViewModelLocator x:Key="ViewModelLocator"/>
-
-            <ResourceDictionary.ThemeDictionaries>
-                <ResourceDictionary x:Key="Dark">
-                    <Color x:Key="SystemAccentColor">#FFE51C1C</Color>
-                    <SolidColorBrush x:Key="SystemAccentColorBrush" Color="{StaticResource SystemAccentColor}"/>
-
-                    <Color x:Key="BackgroundAccentColor">#FFAF1616</Color>
-                    <SolidColorBrush x:Key="BackgroundAccentColorBrush" Color="{StaticResource BackgroundAccentColor}"/>
-                    <Color x:Key="PressedAccentColor">#FFFF5151</Color>
-                    <SolidColorBrush x:Key="OverlayBackgroundColorBrush" Color="#99000000"/>
-
-                    <SolidColorBrush x:Key="NavigationViewItemForeground" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="#FFFFFF"/>
-
-                    <SolidColorBrush x:Key="AccountSubtitleForegroundColorBrush" Color="LightGray"/>
-
-                    <AcrylicBrush x:Key="AccountListBackground" BackgroundSource="HostBackdrop" TintColor="#FF191919" TintOpacity="0.8" FallbackColor="#FF191919"/>
-                    <AcrylicBrush x:Key="AccountDetailsBackground" BackgroundSource="HostBackdrop" TintColor="#FF0C0C0C" TintOpacity="1" FallbackColor="#FF0C0C0C"/>
-                </ResourceDictionary>
-
-                <ResourceDictionary x:Key="Light">
-                    <Color x:Key="SystemAccentColor">#FFE51C1C</Color>
-                    <SolidColorBrush x:Key="SystemAccentColorBrush" Color="{StaticResource SystemAccentColor}"/>
-
-                    <Color x:Key="BackgroundAccentColor">#FFAF1616</Color>
-                    <SolidColorBrush x:Key="BackgroundAccentColorBrush" Color="{StaticResource BackgroundAccentColor}"/>
-                    <Color x:Key="PressedAccentColor">#FFFF5151</Color>
-                    
-                    <SolidColorBrush x:Key="OverlayBackgroundColorBrush" Color="#99FFFFFF"/>
-
-                    <SolidColorBrush x:Key="NavigationViewItemForeground" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="#FFFFFF"/>
-
-                    <SolidColorBrush x:Key="AccountSubtitleForegroundColorBrush" Color="DarkSlateGray"/>
-
-                    <AcrylicBrush x:Key="AccountListBackground" BackgroundSource="HostBackdrop" TintColor="#FFE8E8E8" TintOpacity="0.8" FallbackColor="#FFE8E8E8"/>
-                    <AcrylicBrush x:Key="AccountDetailsBackground" BackgroundSource="HostBackdrop" TintColor="#FFF4F4F4" TintOpacity="1" FallbackColor="#FFF4F4F4"/>
-                </ResourceDictionary>
-
-                <ResourceDictionary x:Key="HighContrast">
-                    <Color x:Key="SystemAccentColor">#1AEBFF</Color>
-                    <SolidColorBrush x:Key="SystemAccentColorBrush" Color="{StaticResource SystemColorHighlightColor}"/>
-
-                    <Color x:Key="BackgroundAccentColor">#000000</Color>
-                    <SolidColorBrush x:Key="BackgroundAccentColorBrush" Color="{StaticResource BackgroundAccentColor}"/>
-                    <Color x:Key="PressedAccentColor">#000000</Color>
-
-                    <SolidColorBrush x:Key="OverlayBackgroundColorBrush" Color="#000000"/>
-
-                    <SolidColorBrush x:Key="NavigationViewItemForeground" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed" Color="#FFFFFF"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="#FFFFFF"/>
-
-                    <SolidColorBrush x:Key="AccountSubtitleForegroundColorBrush" Color="#FFFFFF"/>
-
-                    <AcrylicBrush x:Key="AccountListBackground" BackgroundSource="HostBackdrop" TintColor="#000000" TintOpacity="1" FallbackColor="#000000"/>
-                    <AcrylicBrush x:Key="AccountDetailsBackground" BackgroundSource="HostBackdrop" TintColor="#000000" TintOpacity="1" FallbackColor="#000000"/>
-                </ResourceDictionary>
-            </ResourceDictionary.ThemeDictionaries>
-            <ResourceDictionary.MergedDictionaries>
+        <controls:XamlControlsResources>
+            <controls:XamlControlsResources.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Themes/Generic.xaml"/>
                 <ResourceDictionary Source="ms-appx:///Themes/ColorTheme.xaml"/>
                 <ResourceDictionary Source="ms-appx:///Themes/Custom.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+            </controls:XamlControlsResources.MergedDictionaries>
+        </controls:XamlControlsResources>
     </Application.Resources>
 </Application>

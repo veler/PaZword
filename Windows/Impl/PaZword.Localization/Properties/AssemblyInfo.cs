@@ -19,7 +19,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Etienne BAUDOUX")]
 [assembly: AssemblyProduct("PaZword")]
-[assembly: AssemblyCopyright("© 2020 Etienne BAUDOUX. All rights reserved.")]
+[assembly: AssemblyCopyright("© 2022 Etienne BAUDOUX. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -35,8 +35,8 @@ using System.Runtime.CompilerServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2020.11.9.3")]
-[assembly: AssemblyFileVersion("2020.11.9.3")]
+[assembly: AssemblyVersion("2022.7.21.3")]
+[assembly: AssemblyFileVersion("2022.7.21.3")]
 
 [assembly: InternalsVisibleTo("PaZword.Tests")]
 
