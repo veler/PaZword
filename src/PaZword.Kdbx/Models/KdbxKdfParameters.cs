@@ -1,3 +1,5 @@
+using PaZword.Crypto;
+
 namespace PaZword.Kdbx.Models;
 
 /// <summary>
@@ -49,4 +51,46 @@ public sealed class KdbxKdfParameters
 
     /// <summary>AES-KDF round count.</summary>
     public ulong AesRounds { get; init; }
+
+    /// <summary>True if this is an Argon2-family KDF (id or d).</summary>
+    public bool IsArgon2 => Uuid == KdbxKdfUuids.Argon2id || Uuid == KdbxKdfUuids.Argon2d;
+
+    /// <summary>True if this is the recommended Argon2id KDF.</summary>
+    public bool IsArgon2id => Uuid == KdbxKdfUuids.Argon2id;
+
+    /// <summary>True if this is the AES-KDF (legacy).</summary>
+    public bool IsAesKdf => Uuid == KdbxKdfUuids.AesKdf;
+
+    /// <summary>
+    /// Validate that this set of parameters satisfies the production write floor
+    /// (Argon2id only — Argon2d / AES-KDF are read-only for compatibility).
+    /// </summary>
+    /// <exception cref="KdbxParameterFloorException">
+    /// If the KDF is not Argon2id, or any of t / m / p is below the floor.
+    /// </exception>
+    public void ValidateForWrite()
+    {
+        if (!IsArgon2id)
+            throw new KdbxParameterFloorException(
+                "KDBX writer only emits Argon2id. Got UUID " + Uuid + ".");
+        if (Salt is null || Salt.Length < 16)
+            throw new KdbxParameterFloorException("Argon2id salt must be at least 16 bytes.");
+        if (!KdfFloor.IsAtOrAboveFloor(Iterations, MemoryKib, Parallelism))
+            throw new KdbxParameterFloorException(
+                $"Argon2id parameters are below the production floor " +
+                $"(t={Iterations}, m={MemoryKib} KiB, p={Parallelism}; " +
+                $"floor: t>={KdfFloor.MinIterations}, " +
+                $"m>={KdfFloor.MinMemoryKib} KiB, p>={KdfFloor.MinParallelism}).");
+    }
+
+    /// <summary>Default Argon2id parameters at the production floor.</summary>
+    public static KdbxKdfParameters DefaultArgon2id(byte[] salt) => new()
+    {
+        Uuid = KdbxKdfUuids.Argon2id,
+        Salt = salt,
+        Iterations = (ulong)KdfFloor.MinIterations,
+        MemoryKib = (ulong)KdfFloor.MinMemoryKib,
+        Parallelism = (uint)KdfFloor.MinParallelism,
+        Version = 0x13,
+    };
 }

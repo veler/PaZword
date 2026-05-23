@@ -5,7 +5,7 @@ namespace PaZword.Kdbx.Models;
 /// </summary>
 public sealed class KdbxGroup
 {
-    public Guid Uuid { get; init; }
+    public Guid Uuid { get; set; }
     public string Name { get; set; } = string.Empty;
     public string? Notes { get; set; }
     public int IconId { get; set; }

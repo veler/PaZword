@@ -7,7 +7,7 @@ namespace PaZword.Kdbx.Models;
 /// </summary>
 public sealed class KdbxEntry
 {
-    public Guid Uuid { get; init; }
+    public Guid Uuid { get; set; }
     public int IconId { get; set; }
     public Guid? CustomIconUuid { get; set; }
     public string? ForegroundColor { get; set; }

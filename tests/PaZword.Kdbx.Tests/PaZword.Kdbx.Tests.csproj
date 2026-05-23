@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\PaZword.Kdbx\PaZword.Kdbx.csproj" />
+    <ProjectReference Include="..\..\src\PaZword.Core\PaZword.Core.csproj" />
   </ItemGroup>
 
 </Project>
