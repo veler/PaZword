@@ -4,13 +4,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:PaZword.App.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:recents="using:PaZword.App.Recents"
-    xmlns:local="using:PaZword.App.Pages"
-    mc:Ignorable="d"
-    Background="Transparent">
+    Background="Transparent"
+    mc:Ignorable="d">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <Grid Padding="48,32" RowSpacing="32">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -19,28 +19,39 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!-- Headline -->
-            <StackPanel Grid.Row="0" Spacing="12" HorizontalAlignment="Center" MaxWidth="640">
+            <!--  Headline  -->
+            <StackPanel
+                Grid.Row="0"
+                MaxWidth="640"
+                HorizontalAlignment="Center"
+                Spacing="12">
                 <Border
-                    Width="80" Height="80"
-                    CornerRadius="40"
+                    Width="80"
+                    Height="80"
+                    HorizontalAlignment="Center"
                     Background="{ThemeResource BrandSubtleBackgroundBrush}"
-                    HorizontalAlignment="Center">
-                    <FontIcon Glyph="&#xE72E;" FontSize="40" Foreground="{ThemeResource BrandPrimaryBrush}" />
+                    CornerRadius="40">
+                    <FontIcon
+                        FontSize="40"
+                        Foreground="{ThemeResource BrandPrimaryBrush}"
+                        Glyph="&#xE72E;" />
                 </Border>
                 <TextBlock
-                    Text="Welcome back"
                     Style="{ThemeResource TitleLargeTextBlockStyle}"
+                    Text="Welcome back"
                     TextAlignment="Center" />
                 <TextBlock
-                    Text="Open a vault to continue, or start a fresh one."
-                    Style="{ThemeResource BodyTextBlockStyle}"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    Text="Open a vault to continue, or start a fresh one."
                     TextAlignment="Center" />
             </StackPanel>
 
-            <!-- Three tiles -->
-            <Grid Grid.Row="1" HorizontalAlignment="Center" ColumnSpacing="16">
+            <!--  Three tiles  -->
+            <Grid
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                ColumnSpacing="16">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -49,86 +60,127 @@
 
                 <Button
                     Grid.Column="0"
-                    Command="{x:Bind ViewModel.CreateNewCommand}"
+                    Width="200"
+                    Height="160"
+                    Padding="24"
                     Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}"
                     BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1"
-                    CornerRadius="8"
-                    Padding="24"
-                    Width="200" Height="160">
-                    <StackPanel Spacing="12" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <FontIcon Glyph="&#xE710;" FontSize="32" Foreground="{ThemeResource BrandPrimaryBrush}" />
-                        <TextBlock Text="New vault" Style="{ThemeResource BodyStrongTextBlockStyle}" HorizontalAlignment="Center" />
-                        <TextBlock Text="Start fresh"
-                                   Style="{ThemeResource CaptionTextBlockStyle}"
-                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                   HorizontalAlignment="Center" />
+                    Command="{x:Bind ViewModel.CreateNewCommand}"
+                    CornerRadius="8">
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="12">
+                        <FontIcon
+                            FontSize="32"
+                            Foreground="{ThemeResource BrandPrimaryBrush}"
+                            Glyph="&#xE710;" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Style="{ThemeResource BodyStrongTextBlockStyle}"
+                            Text="New vault" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Style="{ThemeResource CaptionTextBlockStyle}"
+                            Text="Start fresh" />
                     </StackPanel>
                 </Button>
 
                 <Button
                     Grid.Column="1"
-                    Command="{x:Bind ViewModel.OpenExistingCommand}"
+                    Width="200"
+                    Height="160"
+                    Padding="24"
                     Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}"
                     BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1"
-                    CornerRadius="8"
-                    Padding="24"
-                    Width="200" Height="160">
-                    <StackPanel Spacing="12" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <FontIcon Glyph="&#xE8E5;" FontSize="32" Foreground="{ThemeResource BrandPrimaryBrush}" />
-                        <TextBlock Text="Open existing" Style="{ThemeResource BodyStrongTextBlockStyle}" HorizontalAlignment="Center" />
-                        <TextBlock Text="Pick a .kdbx file"
-                                   Style="{ThemeResource CaptionTextBlockStyle}"
-                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                   HorizontalAlignment="Center" />
+                    Command="{x:Bind ViewModel.OpenExistingCommand}"
+                    CornerRadius="8">
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="12">
+                        <FontIcon
+                            FontSize="32"
+                            Foreground="{ThemeResource BrandPrimaryBrush}"
+                            Glyph="&#xE8E5;" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Style="{ThemeResource BodyStrongTextBlockStyle}"
+                            Text="Open existing" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Style="{ThemeResource CaptionTextBlockStyle}"
+                            Text="Pick a .kdbx file" />
                     </StackPanel>
                 </Button>
 
                 <Button
                     Grid.Column="2"
-                    Command="{x:Bind ViewModel.MigrateCommand}"
+                    Width="200"
+                    Height="160"
+                    Padding="24"
                     Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}"
                     BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1"
-                    CornerRadius="8"
-                    Padding="24"
-                    Width="200" Height="160">
-                    <StackPanel Spacing="12" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <FontIcon Glyph="&#xE74A;" FontSize="32" Foreground="{ThemeResource BrandPrimaryBrush}" />
-                        <TextBlock Text="Migrate from PaZword" Style="{ThemeResource BodyStrongTextBlockStyle}"
-                                   HorizontalAlignment="Center" TextAlignment="Center" />
-                        <TextBlock Text="Bring your old vault"
-                                   Style="{ThemeResource CaptionTextBlockStyle}"
-                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                   HorizontalAlignment="Center" />
+                    Command="{x:Bind ViewModel.MigrateCommand}"
+                    CornerRadius="8">
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="12">
+                        <FontIcon
+                            FontSize="32"
+                            Foreground="{ThemeResource BrandPrimaryBrush}"
+                            Glyph="&#xE74A;" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Style="{ThemeResource BodyStrongTextBlockStyle}"
+                            Text="Migrate from PaZword"
+                            TextAlignment="Center" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Style="{ThemeResource CaptionTextBlockStyle}"
+                            Text="Bring your old vault" />
                     </StackPanel>
                 </Button>
             </Grid>
 
-            <!-- Sprint-3 placeholder banner for "New vault" -->
+            <!--  Sprint-3 placeholder banner for "New vault"  -->
             <InfoBar
-                Grid.Row="2"
-                IsOpen="{x:Bind ViewModel.ShowCreateNewBanner, Mode=TwoWay}"
-                IsClosable="True"
-                Severity="Informational"
                 Title="Coming in a future update"
-                Message="Creating a brand-new vault from the app arrives in the next sprint. For now, open an existing .kdbx — or create one in KeePassXC and open it here."
+                Grid.Row="2"
                 MaxWidth="640"
-                HorizontalAlignment="Center" />
+                HorizontalAlignment="Center"
+                IsClosable="True"
+                IsOpen="{x:Bind ViewModel.ShowCreateNewBanner, Mode=TwoWay}"
+                Message="Creating a brand-new vault from the app arrives in the next sprint. For now, open an existing .kdbx — or create one in KeePassXC and open it here."
+                Severity="Informational" />
 
-            <!-- Recents -->
-            <StackPanel Grid.Row="3" Spacing="12" HorizontalAlignment="Center" MaxWidth="640">
-                <TextBlock
-                    Text="Recent vaults"
-                    Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <!--  Recents  -->
+            <StackPanel
+                Grid.Row="3"
+                MaxWidth="640"
+                HorizontalAlignment="Center"
+                Spacing="12">
+                <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Recent vaults" />
 
                 <ListView
-                    ItemsSource="{x:Bind ViewModel.Recents, Mode=OneWay}"
-                    SelectionMode="None"
+                    x:Name="RecentsList"
                     IsItemClickEnabled="True"
                     ItemClick="OnRecentClicked"
+                    ItemsSource="{x:Bind ViewModel.Recents}"
+                    SelectionMode="None"
                     Visibility="{x:Bind RecentsListVisibility(ViewModel.HasRecents), Mode=OneWay}">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsStackPanel />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="recents:RecentVaultEntry">
                             <Grid Padding="8,4" ColumnSpacing="12">
@@ -137,33 +189,37 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <FontIcon Grid.Column="0" Glyph="&#xE8B7;" FontSize="20"
-                                          Foreground="{ThemeResource BrandPrimaryBrush}"
-                                          VerticalAlignment="Center" />
+                                <FontIcon
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    FontSize="20"
+                                    Foreground="{ThemeResource BrandPrimaryBrush}"
+                                    Glyph="&#xE8B7;" />
                                 <StackPanel Grid.Column="1" Spacing="2">
-                                    <TextBlock Text="{x:Bind FileName}"
-                                               Style="{ThemeResource BodyStrongTextBlockStyle}" />
-                                    <TextBlock Text="{x:Bind Path}"
-                                               Style="{ThemeResource CaptionTextBlockStyle}"
-                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                               TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}" Text="{x:Bind FileName}" />
+                                    <TextBlock
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{ThemeResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind Path}"
+                                        TextTrimming="CharacterEllipsis" />
                                 </StackPanel>
-                                <TextBlock Grid.Column="2"
-                                           Text="{x:Bind LastOpened.LocalDateTime, Mode=OneTime}"
-                                           Style="{ThemeResource CaptionTextBlockStyle}"
-                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                           VerticalAlignment="Center" />
+                                <TextBlock
+                                    Grid.Column="2"
+                                    VerticalAlignment="Center"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{ThemeResource CaptionTextBlockStyle}"
+                                    Text="{x:Bind LastOpened.LocalDateTime, Mode=OneTime}" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
 
                 <TextBlock
-                    Text="No vaults yet — open one above and we'll remember it here."
-                    Style="{ThemeResource BodyTextBlockStyle}"
+                    HorizontalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Visibility="{x:Bind EmptyRecentsVisibility(ViewModel.HasRecents), Mode=OneWay}"
-                    HorizontalAlignment="Center" />
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    Text="No vaults yet — open one above and we'll remember it here."
+                    Visibility="{x:Bind EmptyRecentsVisibility(ViewModel.HasRecents), Mode=OneWay}" />
             </StackPanel>
         </Grid>
     </ScrollViewer>
