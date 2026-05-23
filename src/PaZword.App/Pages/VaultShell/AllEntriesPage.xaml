@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="PaZword.App.Pages.VaultShell.AllEntriesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:PaZword.App.Controls"
+    xmlns:vm="using:PaZword.App.ViewModels"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <Grid ColumnSpacing="1" Background="{ThemeResource CardStrokeColorDefaultBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="360" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Left: tree placeholder + entry list -->
+        <Grid Grid.Column="0" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Tree placeholder: single "All" root. Real group tree lands in sprint 3. -->
+            <TreeView
+                Grid.Row="0"
+                SelectionMode="Single"
+                ItemInvoked="OnTreeRootInvoked"
+                IsTabStop="False"
+                MaxHeight="80">
+                <TreeView.RootNodes>
+                    <TreeViewNode Content="All entries" IsExpanded="True" />
+                </TreeView.RootNodes>
+            </TreeView>
+
+            <Border
+                Grid.Row="1"
+                Height="1"
+                Background="{ThemeResource CardStrokeColorDefaultBrush}" />
+
+            <!-- Entry list -->
+            <Grid Grid.Row="2">
+                <ListView
+                    x:Name="EntryList"
+                    ItemsSource="{x:Bind ViewModel.Entries, Mode=OneWay}"
+                    SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}"
+                    SelectionMode="Single"
+                    Visibility="{x:Bind ListVisibility(ViewModel.HasEntries), Mode=OneWay}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultListViewItemStyle}">
+                            <Setter Property="Padding" Value="0,4,12,4" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:EntryRow">
+                            <Grid ColumnSpacing="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <!-- 2-3px brand accent strip; visibility is controlled by IsSelected via the list-item style. -->
+                                <Rectangle
+                                    Grid.Column="0"
+                                    Width="3"
+                                    Fill="{ThemeResource SelectedRowAccentStripBrush}"
+                                    HorizontalAlignment="Left"
+                                    Visibility="Collapsed" />
+                                <Border
+                                    Grid.Column="1"
+                                    Width="28" Height="28"
+                                    CornerRadius="14"
+                                    Background="{ThemeResource BrandSubtleBackgroundBrush}"
+                                    VerticalAlignment="Center">
+                                    <FontIcon Glyph="&#xE192;" FontSize="14"
+                                              Foreground="{ThemeResource BrandPrimaryBrush}" />
+                                </Border>
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="0">
+                                    <TextBlock
+                                        Text="{x:Bind Title}"
+                                        Style="{ThemeResource BodyStrongTextBlockStyle}"
+                                        TextTrimming="CharacterEllipsis" />
+                                    <TextBlock
+                                        Text="{x:Bind UserName}"
+                                        Style="{ThemeResource CaptionTextBlockStyle}"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <controls:EmptyState
+                    Glyph="&#xE192;"
+                    Title="Your vault is empty"
+                    Body="Sprint 2 ships read-only browsing. Add your first entry in the next update."
+                    CtaText="Add your first entry"
+                    IsCtaEnabled="False"
+                    Visibility="{x:Bind EmptyStateVisibility(ViewModel.HasEntries), Mode=OneWay}" />
+            </Grid>
+        </Grid>
+
+        <!-- Right: read-only detail pane -->
+        <Grid Grid.Column="1" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}">
+            <ScrollViewer
+                Padding="24"
+                Visibility="{x:Bind DetailVisibility(ViewModel.HasSelection), Mode=OneWay}">
+                <StackPanel Spacing="14" MaxWidth="640">
+                    <TextBlock
+                        Text="{x:Bind ViewModel.SelectedTitle, Mode=OneWay}"
+                        Style="{ThemeResource SubtitleTextBlockStyle}" />
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Username"
+                                   Style="{ThemeResource CaptionTextBlockStyle}"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        <TextBox IsReadOnly="True" Text="{x:Bind ViewModel.SelectedUserName, Mode=OneWay}" />
+                    </StackPanel>
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Password"
+                                   Style="{ThemeResource CaptionTextBlockStyle}"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        <TextBox IsReadOnly="True"
+                                 FontFamily="Consolas"
+                                 Text="{x:Bind ViewModel.SelectedPasswordMasked, Mode=OneWay}" />
+                    </StackPanel>
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="URL"
+                                   Style="{ThemeResource CaptionTextBlockStyle}"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        <TextBox IsReadOnly="True" Text="{x:Bind ViewModel.SelectedUrl, Mode=OneWay}" />
+                    </StackPanel>
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Notes"
+                                   Style="{ThemeResource CaptionTextBlockStyle}"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        <TextBox IsReadOnly="True"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"
+                                 MinHeight="120"
+                                 Text="{x:Bind ViewModel.SelectedNotes, Mode=OneWay}" />
+                    </StackPanel>
+                    <InfoBar
+                        IsOpen="True"
+                        IsClosable="False"
+                        Severity="Informational"
+                        Title="Read-only this sprint"
+                        Message="Inline edit, copy-on-click, and TOTP arrive in sprints 3 and 6." />
+                </StackPanel>
+            </ScrollViewer>
+
+            <controls:EmptyState
+                Glyph="&#xE7C3;"
+                Title="No entry selected"
+                Body="Pick an entry from the list to see its details."
+                Visibility="{x:Bind NoSelectionVisibility(ViewModel.HasSelection, ViewModel.HasEntries), Mode=OneWay}" />
+        </Grid>
+    </Grid>
+</Page>

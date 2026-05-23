@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="PaZword.App.Pages.Onboarding.OnboardingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <Grid Padding="48,32" RowSpacing="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Screen content area (one of three is visible at a time) -->
+        <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="640">
+
+            <!-- 0 — Welcome intro -->
+            <StackPanel
+                Spacing="20"
+                HorizontalAlignment="Center"
+                Visibility="{x:Bind ViewModel.IsIntroVisible, Mode=OneWay}">
+                <Border
+                    Width="120" Height="120"
+                    CornerRadius="60"
+                    Background="{ThemeResource BrandSubtleBackgroundBrush}"
+                    HorizontalAlignment="Center">
+                    <FontIcon
+                        Glyph="&#xE72E;"
+                        FontSize="56"
+                        Foreground="{ThemeResource BrandPrimaryBrush}" />
+                </Border>
+                <TextBlock
+                    Text="Welcome to PaZword"
+                    Style="{ThemeResource TitleLargeTextBlockStyle}"
+                    TextAlignment="Center" />
+                <TextBlock
+                    Text="A modern Windows 11 password manager built around the open KeePass KDBX v4 format. Your vault is yours — portable, encrypted, and never locked into a single vendor."
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap"
+                    MaxWidth="520" />
+            </StackPanel>
+
+            <!-- 1 — KDBX explainer -->
+            <StackPanel
+                Spacing="20"
+                HorizontalAlignment="Center"
+                Visibility="{x:Bind ViewModel.IsExplainerVisible, Mode=OneWay}">
+                <Border
+                    Width="120" Height="120"
+                    CornerRadius="60"
+                    Background="{ThemeResource BrandSubtleBackgroundBrush}"
+                    HorizontalAlignment="Center">
+                    <FontIcon
+                        Glyph="&#xE8C8;"
+                        FontSize="56"
+                        Foreground="{ThemeResource BrandPrimaryBrush}" />
+                </Border>
+                <TextBlock
+                    Text="What is a KDBX vault?"
+                    Style="{ThemeResource TitleLargeTextBlockStyle}"
+                    TextAlignment="Center" />
+                <TextBlock
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap"
+                    MaxWidth="520">
+                    KDBX is the standard KeePass database format — a single, AES- or
+                    ChaCha20-encrypted file that holds all your entries. You can open it
+                    in PaZword, KeePassXC, KeePass2, KeePassium, Strongbox, and many other
+                    compliant clients. We don't lock you in.
+                </TextBlock>
+                <InfoBar
+                    IsOpen="True"
+                    IsClosable="False"
+                    Severity="Informational"
+                    Title="One file"
+                    Message="Back it up, sync it through OneDrive / Dropbox / Google Drive / iCloud Drive — your call."
+                    MaxWidth="520"
+                    HorizontalAlignment="Center" />
+            </StackPanel>
+
+            <!-- 2 — Choose action -->
+            <StackPanel
+                Spacing="20"
+                HorizontalAlignment="Center"
+                Visibility="{x:Bind ViewModel.IsChooseActionVisible, Mode=OneWay}">
+                <Border
+                    Width="120" Height="120"
+                    CornerRadius="60"
+                    Background="{ThemeResource BrandSubtleBackgroundBrush}"
+                    HorizontalAlignment="Center">
+                    <FontIcon
+                        Glyph="&#xE71D;"
+                        FontSize="56"
+                        Foreground="{ThemeResource BrandPrimaryBrush}" />
+                </Border>
+                <TextBlock
+                    Text="Let's get you set up"
+                    Style="{ThemeResource TitleLargeTextBlockStyle}"
+                    TextAlignment="Center" />
+                <TextBlock
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap"
+                    MaxWidth="520">
+                    Already have a vault, or want to bring your old PaZword data with you?
+                </TextBlock>
+                <Grid ColumnSpacing="16" HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="0"
+                        Style="{ThemeResource AccentButtonStyle}"
+                        Command="{x:Bind ViewModel.FinishToWelcomeCommand}"
+                        MinWidth="200" Padding="20,12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE710;" FontSize="16" />
+                            <TextBlock Text="Create or open a vault" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        Grid.Column="1"
+                        Command="{x:Bind ViewModel.FinishToMigrationCommand}"
+                        MinWidth="200" Padding="20,12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE74A;" FontSize="16" />
+                            <TextBlock Text="Migrate from PaZword" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <!-- Pip indicator -->
+        <StackPanel
+            Grid.Row="1"
+            Orientation="Horizontal"
+            Spacing="8"
+            HorizontalAlignment="Center">
+            <Ellipse Width="8" Height="8"
+                     Fill="{x:Bind PipFill(ViewModel.Pip0Filled), Mode=OneWay}" />
+            <Ellipse Width="8" Height="8"
+                     Fill="{x:Bind PipFill(ViewModel.Pip1Filled), Mode=OneWay}" />
+            <Ellipse Width="8" Height="8"
+                     Fill="{x:Bind PipFill(ViewModel.Pip2Filled), Mode=OneWay}" />
+        </StackPanel>
+
+        <!-- Footer: Skip / Back / Next -->
+        <Grid Grid.Row="2" ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                Grid.Column="0"
+                Content="Skip"
+                Command="{x:Bind ViewModel.SkipCommand}" />
+            <Button
+                Grid.Column="2"
+                Content="Back"
+                Command="{x:Bind ViewModel.BackCommand}" />
+            <Button
+                Grid.Column="3"
+                Content="Next"
+                Style="{ThemeResource AccentButtonStyle}"
+                Command="{x:Bind ViewModel.NextCommand}"
+                Visibility="{x:Bind NextButtonVisibility(ViewModel.IsFinalScreen), Mode=OneWay}" />
+        </Grid>
+    </Grid>
+</Page>

@@ -1,17 +1,58 @@
 <Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+  </Configurations>
   <Folder Name="/src/">
-    <Project Path="src/PaZword.App/PaZword.App.csproj" />
-    <Project Path="src/PaZword.Core/PaZword.Core.csproj" />
-    <Project Path="src/PaZword.Crypto/PaZword.Crypto.csproj" />
-    <Project Path="src/PaZword.Kdbx/PaZword.Kdbx.csproj" />
-    <Project Path="src/PaZword.Localization/PaZword.Localization.csproj" />
-    <Project Path="src/PaZword.Migration/PaZword.Migration.csproj" />
-    <Project Path="src/PaZword.Sync/PaZword.Sync.csproj" />
+    <Project Path="src/PaZword.App/PaZword.App.csproj">
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="Debug|Any CPU" Project="x64" />
+      <Deploy Solution="*|ARM64" />
+      <Deploy Solution="*|x64" />
+    </Project>
+    <Project Path="src/PaZword.Core/PaZword.Core.csproj">
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="src/PaZword.Crypto/PaZword.Crypto.csproj">
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="src/PaZword.Kdbx/PaZword.Kdbx.csproj">
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="src/PaZword.Localization/PaZword.Localization.csproj">
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="src/PaZword.Migration/PaZword.Migration.csproj">
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="src/PaZword.Sync/PaZword.Sync.csproj">
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests/PaZword.App.UITests/PaZword.App.UITests.csproj" />
-    <Project Path="tests/PaZword.Crypto.Tests/PaZword.Crypto.Tests.csproj" />
-    <Project Path="tests/PaZword.Kdbx.Tests/PaZword.Kdbx.Tests.csproj" />
-    <Project Path="tests/PaZword.Migration.Tests/PaZword.Migration.Tests.csproj" />
+    <Project Path="tests/PaZword.App.UITests/PaZword.App.UITests.csproj">
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="tests/PaZword.Crypto.Tests/PaZword.Crypto.Tests.csproj">
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="tests/PaZword.Kdbx.Tests/PaZword.Kdbx.Tests.csproj">
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="tests/PaZword.Migration.Tests/PaZword.Migration.Tests.csproj">
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
   </Folder>
 </Solution>

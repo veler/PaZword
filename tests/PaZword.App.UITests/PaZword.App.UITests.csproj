@@ -8,6 +8,7 @@
     <IsPackable>false</IsPackable>
     <!-- UI smoke tests launch the AOT-published .exe; they do not contain UI code themselves. -->
     <IsTrimmable>false</IsTrimmable>
+    <Platforms>AnyCPU;x64;ARM64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

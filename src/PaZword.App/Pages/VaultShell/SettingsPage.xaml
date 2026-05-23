@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="PaZword.App.Pages.VaultShell.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}">
+
+    <ScrollViewer Padding="32">
+        <StackPanel MaxWidth="640" Spacing="24">
+
+            <TextBlock Text="Settings" Style="{ThemeResource TitleTextBlockStyle}" />
+
+            <!-- Theme -->
+            <StackPanel Spacing="8"
+                        Background="{ThemeResource ControlFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="16">
+                <TextBlock Text="Appearance" Style="{ThemeResource BodyStrongTextBlockStyle}" />
+                <TextBlock
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="Choose how PaZword looks on this device." />
+                <ComboBox
+                    ItemsSource="{x:Bind ViewModel.ThemeOptions}"
+                    SelectedIndex="{x:Bind ViewModel.SelectedThemeIndex, Mode=TwoWay}"
+                    MinWidth="220"
+                    HorizontalAlignment="Left" />
+            </StackPanel>
+
+            <!-- Placeholders -->
+            <StackPanel Spacing="8"
+                        Background="{ThemeResource ControlFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="16">
+                <TextBlock Text="Security" Style="{ThemeResource BodyStrongTextBlockStyle}" />
+                <TextBlock
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="Auto-lock, clipboard hygiene, Windows Hello — coming soon." />
+            </StackPanel>
+
+            <StackPanel Spacing="8"
+                        Background="{ThemeResource ControlFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="16">
+                <TextBlock Text="Backup" Style="{ThemeResource BodyStrongTextBlockStyle}" />
+                <TextBlock
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="Rolling 5-copy backup-on-save — coming soon." />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

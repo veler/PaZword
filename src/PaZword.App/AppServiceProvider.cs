@@ -1,9 +1,13 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using PaZword.App.Navigation;
+using PaZword.App.Recents;
 using PaZword.App.Services;
+using PaZword.App.Shell;
 using PaZword.App.ViewModels;
+using PaZword.Core.Navigation;
 using PaZword.Core.Services;
 using PaZword.Core.Theming;
+using PaZword.Core.Vault;
 
 namespace PaZword.App;
 
@@ -20,32 +24,41 @@ internal static class AppServiceProvider
         _instance ?? throw new InvalidOperationException("Call AppServiceProvider.Build() before accessing Instance.");
 
     /// <summary>
-    /// Creates and freezes the DI container. Called once from App.OnLaunched.
+    /// Creates and freezes the DI container. Called once from <see cref="App"/> construction.
     /// </summary>
     public static IServiceProvider Build()
     {
         var services = new ServiceCollection();
 
-        // Logging
-        services.AddLogging(static builder =>
-        {
-            // Concrete sinks wired in sprint 2 (file logger).
-            // Default behaviour: emits to attached debugger via the framework.
-        });
+        // Logging — concrete sinks added when we have a file logger (later sprint).
+        services.AddLogging(static _ => { });
 
         // Core services
         services.AddSingleton<DiagnosticsService>();
-
-        // Theming (Light/Dark/System persistence stub — T-0.4)
         services.AddSingleton<IThemeService, ThemeService>();
 
-        // View-models (transient — pages are short-lived in Frame navigation)
-        services.AddTransient<MainPageViewModel>();
+        // Vault — Sage's sprint-1 service. Default ctor wires KdbxReader/KdbxWriter.
+        services.AddSingleton<IVaultService>(static _ => new VaultService());
+        services.AddSingleton<IVaultSessionService, VaultSessionService>();
 
-        // Navigation (concrete implementation registered by PaZword.App in sprint 2)
-        // services.AddSingleton<INavigationService, NavigationService>();
+        // Recents persistence (STJ source-gen → AOT-clean)
+        services.AddSingleton<IRecentVaultsService, RecentVaultsService>();
+
+        // Shell chrome + navigation
+        services.AddSingleton<IShellChromeService, ShellChromeService>();
+        services.AddSingleton<INavigationService, NavigationService>();
+
+        // View-models (transient — pages are short-lived in Frame navigation).
+        services.AddTransient<OnboardingViewModel>();
+        services.AddTransient<WelcomeViewModel>();
+        services.AddTransient<LockedViewModel>();
+        services.AddTransient<MigrationPlaceholderViewModel>();
+        services.AddTransient<VaultShellViewModel>();
+        services.AddTransient<AllEntriesViewModel>();
+        services.AddTransient<SettingsViewModel>();
 
         _instance = services.BuildServiceProvider(validateScopes: true);
         return _instance;
     }
 }
+

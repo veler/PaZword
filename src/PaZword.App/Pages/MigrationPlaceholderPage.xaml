@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="PaZword.App.Pages.MigrationPlaceholderPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <Grid Padding="48" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel MaxWidth="520" Spacing="20" HorizontalAlignment="Center">
+            <Border
+                Width="120" Height="120"
+                CornerRadius="60"
+                Background="{ThemeResource BrandSubtleBackgroundBrush}"
+                HorizontalAlignment="Center">
+                <FontIcon Glyph="&#xE74A;" FontSize="56"
+                          Foreground="{ThemeResource BrandPrimaryBrush}" />
+            </Border>
+            <TextBlock
+                Text="Migration wizard arrives later"
+                Style="{ThemeResource TitleLargeTextBlockStyle}"
+                TextAlignment="Center" />
+            <TextBlock
+                Style="{ThemeResource BodyTextBlockStyle}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                TextAlignment="Center"
+                TextWrapping="Wrap">
+                We're building a dedicated wizard that finds your old PaZword vault —
+                in <Run FontFamily="{ThemeResource ContentControlThemeFontFamily}" Text="%LOCALAPPDATA%\PaZword"/>
+                and in your cloud-sync folders (OneDrive, Dropbox, Google Drive, iCloud Drive) —
+                and turns it into a standard KDBX file. It's not ready yet, but your data is safe
+                where it is.
+            </TextBlock>
+            <InfoBar
+                IsOpen="True"
+                IsClosable="False"
+                Severity="Informational"
+                Title="In the meantime"
+                Message="If you already have a .kdbx vault, open it from the Welcome page." />
+            <HyperlinkButton
+                Content="← Back to Welcome"
+                Command="{x:Bind ViewModel.BackToWelcomeCommand}"
+                HorizontalAlignment="Center" />
+        </StackPanel>
+    </Grid>
+</Page>

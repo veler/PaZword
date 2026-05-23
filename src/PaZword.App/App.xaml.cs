@@ -14,6 +14,9 @@ public partial class App : Application
     /// <summary>The top-level window. Available after <see cref="OnLaunched"/>.</summary>
     public Window? MainWindow { get; private set; }
 
+    /// <summary>Strongly-typed handle to the top-level window. Available after <see cref="OnLaunched"/>.</summary>
+    internal MainWindow? MainWindowImpl => MainWindow as MainWindow;
+
     /// <summary>Application-scoped service provider. Built before <see cref="OnLaunched"/> returns.</summary>
     public static IServiceProvider Services => AppServiceProvider.Instance;
 
@@ -34,3 +37,4 @@ public partial class App : Application
         ThemeService.Apply(theme.Current);
     }
 }
+

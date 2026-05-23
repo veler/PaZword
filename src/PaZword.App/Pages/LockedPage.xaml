@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="PaZword.App.Pages.LockedPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <Grid Padding="48" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Spacing="16" MaxWidth="420" HorizontalAlignment="Center" MinWidth="380">
+
+            <!-- Vault identity -->
+            <StackPanel Spacing="6" HorizontalAlignment="Center">
+                <Border
+                    Width="80" Height="80"
+                    CornerRadius="40"
+                    Background="{ThemeResource BrandSubtleBackgroundBrush}"
+                    HorizontalAlignment="Center">
+                    <FontIcon Glyph="&#xE72E;" FontSize="40"
+                              Foreground="{ThemeResource BrandPrimaryBrush}" />
+                </Border>
+                <TextBlock
+                    Text="{x:Bind ViewModel.VaultFileName, Mode=OneWay}"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                    TextAlignment="Center" />
+                <TextBlock
+                    Text="{x:Bind ViewModel.VaultPath, Mode=OneWay}"
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    TextAlignment="Center"
+                    TextWrapping="NoWrap"
+                    TextTrimming="CharacterEllipsis" />
+            </StackPanel>
+
+            <!-- Windows Hello placeholder -->
+            <Button
+                IsEnabled="False"
+                HorizontalAlignment="Stretch"
+                Padding="12"
+                ToolTipService.ToolTip="Available after sprint 7.">
+                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
+                    <FontIcon Glyph="&#xE8FB;" FontSize="16" />
+                    <TextBlock Text="Use Windows Hello" />
+                </StackPanel>
+            </Button>
+
+            <!-- Password field -->
+            <PasswordBox
+                x:Name="PasswordField"
+                PlaceholderText="Master password"
+                HorizontalAlignment="Stretch"
+                IsEnabled="{x:Bind ViewModel.IsInputEnabled, Mode=OneWay}"
+                PasswordRevealMode="{x:Bind PasswordRevealMode(ViewModel.IsPasswordRevealed), Mode=OneWay}"
+                PasswordChanged="OnPasswordChanged"
+                KeyDown="OnPasswordKeyDown" />
+
+            <!-- Inline error -->
+            <InfoBar
+                IsOpen="{x:Bind ViewModel.HasError, Mode=OneWay}"
+                IsClosable="False"
+                Severity="Error"
+                Message="{x:Bind ErrorMessageWithAttempt(ViewModel.ErrorMessage, ViewModel.FailureCount), Mode=OneWay}" />
+
+            <!-- Debounce notice -->
+            <InfoBar
+                IsOpen="{x:Bind ViewModel.IsDebouncing, Mode=OneWay}"
+                IsClosable="False"
+                Severity="Warning"
+                Title="Too many attempts"
+                Message="Slow down for a couple of seconds, then try again." />
+
+            <!-- Key file -->
+            <Expander Header="Use a key file" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <StackPanel Spacing="8">
+                    <TextBlock
+                        Style="{ThemeResource CaptionTextBlockStyle}"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        TextWrapping="Wrap">
+                        Optional. Combine a key file with your password for a stronger composite key.
+                    </TextBlock>
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            TextTrimming="CharacterEllipsis"
+                            Text="{x:Bind KeyFileLabel(ViewModel.KeyFileName, ViewModel.HasKeyFile), Mode=OneWay}"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        <Button Grid.Column="1"
+                                Content="Pick file…"
+                                Command="{x:Bind ViewModel.PickKeyFileCommand}" />
+                        <Button Grid.Column="2"
+                                Content="Clear"
+                                Command="{x:Bind ViewModel.ClearKeyFileCommand}"
+                                Visibility="{x:Bind KeyFileClearVisibility(ViewModel.HasKeyFile), Mode=OneWay}" />
+                    </Grid>
+                </StackPanel>
+            </Expander>
+
+            <!-- Unlocking… -->
+            <StackPanel
+                Orientation="Horizontal"
+                Spacing="8"
+                HorizontalAlignment="Center"
+                Visibility="{x:Bind RingVisibility(ViewModel.IsUnlockingLongRunning), Mode=OneWay}">
+                <ProgressRing IsActive="True" Width="20" Height="20" />
+                <TextBlock Text="Unlocking…"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+
+            <!-- Primary action -->
+            <Button
+                Content="Unlock"
+                Command="{x:Bind ViewModel.UnlockCommand}"
+                Style="{ThemeResource AccentButtonStyle}"
+                HorizontalAlignment="Stretch"
+                Padding="12" />
+
+            <HyperlinkButton
+                Content="Open a different vault"
+                Command="{x:Bind ViewModel.OpenDifferentVaultCommand}"
+                HorizontalAlignment="Center" />
+        </StackPanel>
+    </Grid>
+</Page>

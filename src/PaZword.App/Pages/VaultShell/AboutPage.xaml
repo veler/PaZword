@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="PaZword.App.Pages.VaultShell.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}">
+
+    <ScrollViewer Padding="32">
+        <StackPanel MaxWidth="640" Spacing="16">
+            <Border
+                Width="96" Height="96"
+                CornerRadius="48"
+                Background="{ThemeResource BrandSubtleBackgroundBrush}"
+                HorizontalAlignment="Left">
+                <FontIcon Glyph="&#xE72E;" FontSize="44"
+                          Foreground="{ThemeResource BrandPrimaryBrush}" />
+            </Border>
+            <TextBlock Text="PaZword" Style="{ThemeResource TitleTextBlockStyle}" />
+            <TextBlock
+                Text="{x:Bind VersionLine}"
+                Style="{ThemeResource BodyTextBlockStyle}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+            <TextBlock
+                Style="{ThemeResource BodyTextBlockStyle}"
+                TextWrapping="Wrap">
+                A modern Windows 11 password manager for the standard KeePass KDBX v4 format.
+                Native AOT. Open vault. Your data, your file.
+            </TextBlock>
+            <StackPanel Spacing="4">
+                <HyperlinkButton Content="Source on GitHub"
+                                 NavigateUri="https://github.com/veler/PaZword" />
+                <HyperlinkButton Content="MIT License"
+                                 NavigateUri="https://github.com/veler/PaZword/blob/main/LICENSE.md" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

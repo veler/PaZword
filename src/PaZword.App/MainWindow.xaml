@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:PaZword.App"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="PaZword.App"
+    Title="PaZword"
     mc:Ignorable="d">
     <Window.SystemBackdrop>
         <MicaBackdrop />
@@ -18,17 +18,89 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TitleBar x:Name="AppTitleBar" Title="PaZword.App">
+        <!--
+            Window-level custom title bar (WinAppSDK 1.7+ typed control).
+            Drag regions are auto-managed; interactive children in LeftHeader /
+            Content / RightHeader are passthrough. Slot visibility is driven by
+            IShellChromeService.Mode — see spike doc.
+        -->
+        <TitleBar
+            x:Name="AppTitleBar"
+            Title="PaZword"
+            IsPaneToggleButtonVisible="{x:Bind Chrome.IsFullMode, Mode=OneWay}"
+            PaneToggleRequested="OnPaneToggleRequested">
             <TitleBar.IconSource>
                 <ImageIconSource ImageSource="Assets/AppIcon.ico" />
             </TitleBar.IconSource>
+
+            <!--  Centered always-visible search (full mode only)  -->
+            <TitleBar.Content>
+                <AutoSuggestBox
+                    x:Name="TitleBarSearch"
+                    Width="360"
+                    PlaceholderText="Search…"
+                    QueryIcon="Find"
+                    Visibility="{x:Bind FullModeVisibility(Chrome.IsFullMode), Mode=OneWay}" />
+            </TitleBar.Content>
+
+            <!--  Right-side affordances (full mode only)  -->
+            <TitleBar.RightHeader>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="4"
+                    Visibility="{x:Bind FullModeVisibility(Chrome.IsFullMode), Mode=OneWay}">
+
+                    <DropDownButton Background="Transparent" BorderThickness="0">
+                        <DropDownButton.Content>
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <FontIcon FontSize="14" Glyph="&#xE77B;" />
+                                <TextBlock
+                                    MaxWidth="180"
+                                    Text="{x:Bind Chrome.VaultFileName, Mode=OneWay, FallbackValue=PaZword}"
+                                    TextTrimming="CharacterEllipsis" />
+                            </StackPanel>
+                        </DropDownButton.Content>
+                        <DropDownButton.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Click="OnLockClicked" Text="Lock vault">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE72E;" />
+                                    </MenuFlyoutItem.Icon>
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator
+                                            Key="L"
+                                            IsEnabled="False"
+                                            Modifiers="Control" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Click="OnSwitchClicked" Text="Switch vault…">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE8AB;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem Click="OnAboutClicked" Text="About PaZword">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE946;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+
+                    <Button
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="OnLockClicked"
+                        ToolTipService.ToolTip="Lock vault (Ctrl+L)">
+                        <FontIcon FontSize="14" Glyph="&#xE72E;" />
+                    </Button>
+                </StackPanel>
+            </TitleBar.RightHeader>
         </TitleBar>
 
-        <!--
-            The Frame hosts pages for your application content. Add your UI to
-            MainPage.xaml rather than here so you can use Page features such as
-            navigation events and the Loaded lifecycle.
-        -->
+        <!--  Root navigation Frame  -->
         <Frame x:Name="RootFrame" Grid.Row="1" />
     </Grid>
 </Window>
+

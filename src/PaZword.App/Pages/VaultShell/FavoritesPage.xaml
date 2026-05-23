@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="PaZword.App.Pages.VaultShell.FavoritesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:PaZword.App.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}">
+
+    <controls:EmptyState
+        Glyph="&#xE735;"
+        Title="No favorites yet"
+        Body="Star an entry in the list to pin it here for fast access. Coming with entry editing in the next sprint." />
+</Page>

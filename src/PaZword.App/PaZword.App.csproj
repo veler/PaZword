@@ -80,5 +80,7 @@
   <!-- Project references (added as sprint progresses) -->
   <ItemGroup>
     <ProjectReference Include="..\PaZword.Core\PaZword.Core.csproj" />
+    <!-- Explicit Kdbx ref so trim analysis exercises vault types under AOT (sprint 2 T-2.12). -->
+    <ProjectReference Include="..\PaZword.Kdbx\PaZword.Kdbx.csproj" />
   </ItemGroup>
 </Project>
