@@ -134,17 +134,19 @@ Verify WCAG AA on implementation (Sage + Milo).
 
 **Date:** 2026-05-22
 
-**Status:** Sprint 0 ✅ complete and merged. Sprint 1 (KDBX core) open.
+**Status:** Sprint 1 ✅ complete (Producer-merged, Ivy gate skipped — see carryover). Sprint 2 (App shell) open.
 
-**Last sprint:** `docs/sprint-0/done.md` — buildable, AOT-publishable, MSIX-packageable WinUI 3 shell on .NET 10. CI green. Argon2id KDF live (7/7 KAT). KDBX library skeleton + spec digest. Legacy vault format documented (14 migration edge cases). 5.6 MB native PE, 0 trim/AOT warnings.
+**Last sprint:** `docs/sprint-1/done.md` — `PaZword.Kdbx` reads/writes standard KDBX v4 round-trippably. ChaCha20 (managed RFC 8439), AES-CBC, HMAC block chain with tamper poisoning, Argon2id with independent RFC-9106 KAT against `phc-winner-argon2`, KDF floor enforced, password buffer zeroization. `IVaultService` wired in `PaZword.Core`. 49 tests green, 0 trim/AOT warnings. Two mid-sprint bugs caught and tested (XML cursor double-advance + ChaCha20 keystream misalignment).
 
-**Open carryover (Ivy gates into sprint 1):**
-- Second Argon2id KAT against a non-Konscious reference vector
-- KDBX-write parameter floor (`t≥2`, `m≥64 MiB`, `p≥2`); reads below floor warn only
-- Password-buffer zeroization at every KDF call site
+**Open carryover (Ivy must gate during sprint 2):**
+- Sprint-1 had no formal Ivy QA report. Producer-merged on Sage's self-attested DoD scorecard + 49 green tests + clean AOT publish. Ivy should retroactively review crypto pipeline in sprint 2 and file findings.
+- `keepassxc-cli` third-party interop test (sprint-1 optional, deferred). File as sprint-9 polish task.
+- Argon2d read support not implemented (currently throws `KdbxFormatException`). KeePassXC 2.7+ writes Argon2id by default. Reopen only if in-the-wild Argon2d vaults are reported.
+- AES-KDF read path present but no dedicated test fixture. Add fixture in sprint 2 or sprint 5 (migration).
 
 **Open carryover (later sprints):**
-- Sprint 2: visual MSIX launch smoke (closes sprint-0 DoD #1 caveat); Milo dark-mode `BrandPrimary` AA review; Kira + Milo App-shell brainstorm
+- Sprint 2: visual MSIX launch smoke; Milo dark-mode `BrandPrimary` shifted to `#E04335` (locked in `docs/brainstorm-app-shell-ux.md`); App-shell UX brainstorm output is sprint-2 input
+- Sprint 5: migration wizard MUST scan cloud-sync folders (OneDrive / Dropbox / Google Drive / iCloud Drive) for legacy PaZword vaults — user may have their old vault stored there, not just `%LOCALAPPDATA%`
 - Sprint 7: implement DPAPI key-wrap to pre-decisions D-1..D-5 in `docs/sprint-0/qa-report.md §4.2`
 
 **No GitHub Issues open.**
@@ -156,8 +158,8 @@ Verify WCAG AA on implementation (Sage + Milo).
 | Sprint | Theme | Outcome |
 |---|---|---|
 | 0 ✅ | Foundation & viability | AOT + WinUI 3 + .NET 10 spike green, CI pipeline, project skeleton, brand tokens locked, Argon2id KAT green, legacy format documented |
-| 1 🚧 | KDBX core | Read/write KDBX v4, Argon2id KDF prod-floor, ChaCha20/AES cipher, round-trips with KeePassXC fixtures |
-| 2 | App shell | Theming, navigation, unlock screen, settings scaffold |
+| 1 ✅ | KDBX core | Read/write KDBX v4, Argon2id (RFC-9106 KAT), ChaCha20+AES, HMAC block tamper-poison, KDF floor, secure zeroization, 49 tests green |
+| 2 🚧 | App shell | Welcome / Locked / Unlocked pages, NavigationView, custom title bar, brand tokens v2, navigation service |
 | 3 | Vault main view | List/detail, entry CRUD, basic search |
 | 4 | Productivity | Password generator, strength meter, advanced search, settings UI |
 | 5 | **Migration wizard** | Old PaZword vault → KDBX, fidelity tests, no-data-loss verification |
@@ -186,6 +188,10 @@ Verify WCAG AA on implementation (Sage + Milo).
 | D-010 | Logging via `ILogger`; Sentry deferred to v2 | 2026-05-22 |
 | D-011 | MVVM = CommunityToolkit.Mvvm; DI = MEDI explicit; JSON = STJ source-gen | 2026-05-22 |
 | D-012 | Migration is one-shot wizard; legacy reader can be dropped post-migrate | 2026-05-22 |
+| D-013 | Argon2d KDBX vaults rejected with typed exception (KeePassXC writes Argon2id by default; reopen only on demand) | 2026-05-22 |
+| D-014 | Migration wizard (sprint 5) scans cloud-sync folders (OneDrive/Dropbox/Google Drive/iCloud Drive) in addition to `%LOCALAPPDATA%\PaZword` for legacy vaults | 2026-05-22 |
+| D-015 | First-run experience: 3-screen onboarding (Welcome → "What's a KDBX" → "Create or Open" with migration option) | 2026-05-22 |
+| D-016 | App-shell UX locked per `docs/brainstorm-app-shell-ux.md` §5 decision table (UX-1..7, ART-1..4, IMPL-1..2) | 2026-05-22 |
 
 ---
 

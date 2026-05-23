@@ -177,47 +177,51 @@ Inline = modern (1Password, Bitwarden). Page nav = simpler state. **Compromise l
 
 ## 5. Decisions to lock for sprint 2
 
-Etienne: skim, strike anything you disagree with, reply. Anything left un-struck becomes locked.
+**STATUS: ALL LOCKED 2026-05-22 by Etienne.** Nothing struck.
 
-| # | Decision |
-|---|---|
-| UX-1 | Three top-level states: Welcome, Locked, Unlocked. Transitions = page navigation, not modals |
-| UX-2 | Unlock screen: password default-focus, key file collapsed under Expander, Hello button placeholder |
-| UX-3 | 2-pane main shell with `NavigationView` (LeftCompact) + middle list + right detail |
-| UX-4 | Custom title bar with integrated always-visible search |
-| UX-5 | Keyboard shortcut table (§2.4) frozen |
-| UX-6 | Recent-vaults list on Welcome; FilePicker for "Open existing" |
-| UX-7 | "Migrate from PaZword" tile auto-detected from `%LOCALAPPDATA%\PaZword` |
-| ART-1 | Dark `BrandPrimary` shifted to `#E04335` (Option A) to recover AA normal |
-| ART-2 | Brand red for fills; destructive = Fluent `SystemFillColorCritical`; links = Fluent default |
-| ART-3 | Mica background, Acrylic-Layer cards, 2px red strip on selected row |
-| ART-4 | Motion: 150 ms crossfade; Drill-In/Entrance nav; 400 ms threshold before progress ring |
-| IMPL-1 | TreeView (groups) + ListView (entries) — no hybrid |
-| IMPL-2 | Inline edit in right pane (sprint 3); revisit at sprint-4 retro |
+| # | Decision | Status |
+|---|---|---|
+| UX-1 | Three top-level states: Welcome, Locked, Unlocked. Transitions = page navigation, not modals | ✅ Locked |
+| UX-2 | Unlock screen: password default-focus, key file collapsed under Expander, Hello button placeholder | ✅ Locked |
+| UX-3 | 2-pane main shell with `NavigationView` (LeftCompact) + middle list + right detail | ✅ Locked |
+| UX-4 | Custom title bar with integrated always-visible search | ✅ Locked |
+| UX-5 | Keyboard shortcut table (§2.4) frozen | ✅ Locked |
+| UX-6 | Recent-vaults list on Welcome (5 entries); FilePicker for "Open existing" | ✅ Locked |
+| UX-7 | "Migrate from PaZword" tile auto-detected from `%LOCALAPPDATA%\PaZword` **AND scans cloud-sync folders** (D-014) | ✅ Locked (extended) |
+| UX-8 | First-run: 3-screen onboarding (Welcome → "What is a KDBX" → "Create / Open / Migrate") | ✅ Locked (D-015) |
+| ART-1 | Dark `BrandPrimary` shifted to `#E04335` (Option A) to recover AA normal | ✅ Locked |
+| ART-2 | Brand red for fills; destructive = Fluent `SystemFillColorCritical`; links = Fluent default | ✅ Locked |
+| ART-3 | Mica background, Acrylic-Layer cards, 2px red strip on selected row | ✅ Locked |
+| ART-4 | Motion: 150 ms crossfade; Drill-In/Entrance nav; 400 ms threshold before progress ring | ✅ Locked |
+| ART-5 | App-wide `AccentFillColor` overridden to brand red regardless of user's Win11 accent (except OS focus ring) | ✅ Locked |
+| ART-6 | Logo: keep existing flat lock; refresh deferred to sprint 9 | ✅ Locked |
+| IMPL-1 | TreeView (groups) + ListView (entries) — no hybrid | ✅ Locked |
+| IMPL-2 | Inline edit in right pane (sprint 3); revisit at sprint-4 retro | ✅ Locked |
+| IMPL-3 | Title bar account chevron: vault filename, Lock vault, Switch vault, About | ✅ Locked |
 
 ---
 
-## 6. Sprint-2 inputs this brainstorm produces
+## 8. Sprint-2 inputs this brainstorm produces
 
-Sprint-2 plan will translate the table above into:
+When sprint 2 opens, its plan will translate the table above into concrete tasks. **Decisions below are LOCKED as of 2026-05-22 by Etienne.**
 
+**Locked answers to §7 open questions:**
+1. Logo on Welcome: **keep current flat lock**. Refresh deferred to sprint 9.
+2. Title bar account chevron contents: **approved** (vault filename, Lock vault, Switch vault, About).
+3. Recents list size: **5**.
+4. App-wide accent override: **yes — brand red wins over user's Win11 accent**, except OS-level focus ring.
+5. First-run experience: **3-screen onboarding**. *Critical Etienne add:* the onboarding must offer migration not just from `%LOCALAPPDATA%\PaZword` but also from **cloud-sync folders** (OneDrive / Dropbox / Google Drive / iCloud Drive) where the user may have stashed their old vault. This is sprint-5 (migration wizard) work; locked as D-014 in `PROJECT_BRIEF.md §9`. Sprint 2's onboarding screen 3 wires a stub button "Migrate from existing PaZword" that routes to a placeholder migration page until sprint 5 builds the real scanner.
+
+Sprint 2 will produce:
+- 3-screen onboarding (Welcome → "What is a KDBX vault" → "Create / Open / Migrate")
 - Welcome page (3 tiles + recents)
-- Locked page (password + key file + Hello placeholder)
-- Unlocked shell (NavigationView + title bar + 2-pane)
+- Locked page (password + key file Expander + Hello placeholder)
+- Unlocked shell (NavigationView LeftCompact + custom title bar with integrated search + 2-pane)
 - Page navigation graph + `INavigationService` concrete impl
 - Brand-token update (dark `BrandPrimary` → `#E04335`)
-- Page-transition animations
+- Page-transition animations (DrillIn / Entrance)
 - Keyboard accelerator registrations
-- Empty-state component (placeholder illustration)
+- Empty-state placeholder component
+- Migration-placeholder page (real implementation sprint 5)
 
-Sprint 2 will **not** include: actual vault decrypt wiring (waits on sprint-1 `IVaultService` — should be ready by then), inline edit (sprint 3), TOTP/attachments (sprint 6), Hello (sprint 7), favicons (sprint 8).
-
----
-
-## 7. Open questions for Etienne
-
-1. **Logo on Welcome screen:** keep existing flat lock for sprint 2, or commission a subtle-depth pass for sprint 9 polish? Proposal: keep current.
-2. **Title bar account chevron contents:** proposal — vault filename, "Lock vault", "Switch vault", "About". OK?
-3. **Recents list size:** proposal — show last 5.
-4. **App-wide accent override:** if a user has Win11 accent set to non-red, do we force PaZword red on `AccentFillColor`? Proposal: yes (brand wins) except OS-level focus ring.
-5. **First-run experience:** 3-screen onboarding ("welcome → what's a kdbx → create or open") or drop straight into Welcome? Proposal: drop into Welcome. Add onboarding only if user testing shows confusion.
+Sprint 2 will **not** include: actual vault decrypt wiring beyond stubbing `IVaultService` consumption (Sage's sprint-1 service is ready); inline edit (sprint 3); TOTP/attachments (sprint 6); Hello (sprint 7); favicons + real cloud-folder scan (sprint 8/5).
