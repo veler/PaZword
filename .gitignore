@@ -342,3 +342,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+# AI agent scratch artifacts (edit-tool intermediate files)
+*.new

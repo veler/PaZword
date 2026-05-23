@@ -134,9 +134,20 @@ Verify WCAG AA on implementation (Sage + Milo).
 
 **Date:** 2026-05-22
 
-**Status:** Pre-sprint-0. Repo is empty (`Assets/`, `LICENSE.md`, `README.md` from old project). Decisions locked, brief drafted. Next: sprint-0 viability spike.
+**Status:** Sprint 0 ✅ complete and merged. Sprint 1 (KDBX core) open.
 
-**No code yet. No PRs yet. No issues yet.**
+**Last sprint:** `docs/sprint-0/done.md` — buildable, AOT-publishable, MSIX-packageable WinUI 3 shell on .NET 10. CI green. Argon2id KDF live (7/7 KAT). KDBX library skeleton + spec digest. Legacy vault format documented (14 migration edge cases). 5.6 MB native PE, 0 trim/AOT warnings.
+
+**Open carryover (Ivy gates into sprint 1):**
+- Second Argon2id KAT against a non-Konscious reference vector
+- KDBX-write parameter floor (`t≥2`, `m≥64 MiB`, `p≥2`); reads below floor warn only
+- Password-buffer zeroization at every KDF call site
+
+**Open carryover (later sprints):**
+- Sprint 2: visual MSIX launch smoke (closes sprint-0 DoD #1 caveat); Milo dark-mode `BrandPrimary` AA review; Kira + Milo App-shell brainstorm
+- Sprint 7: implement DPAPI key-wrap to pre-decisions D-1..D-5 in `docs/sprint-0/qa-report.md §4.2`
+
+**No GitHub Issues open.**
 
 ---
 
@@ -144,8 +155,8 @@ Verify WCAG AA on implementation (Sage + Milo).
 
 | Sprint | Theme | Outcome |
 |---|---|---|
-| 0 | Foundation & viability | AOT + WinUI 3 + .NET 10 spike green, CI pipeline, project skeleton, brand tokens locked |
-| 1 | KDBX core | Read/write KDBX v4, Argon2id KDF, ChaCha20/AES cipher, round-trips with KeePassXC fixtures |
+| 0 ✅ | Foundation & viability | AOT + WinUI 3 + .NET 10 spike green, CI pipeline, project skeleton, brand tokens locked, Argon2id KAT green, legacy format documented |
+| 1 🚧 | KDBX core | Read/write KDBX v4, Argon2id KDF prod-floor, ChaCha20/AES cipher, round-trips with KeePassXC fixtures |
 | 2 | App shell | Theming, navigation, unlock screen, settings scaffold |
 | 3 | Vault main view | List/detail, entry CRUD, basic search |
 | 4 | Productivity | Password generator, strength meter, advanced search, settings UI |
