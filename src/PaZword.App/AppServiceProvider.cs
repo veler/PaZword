@@ -1,6 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PaZword.App.Services;
+using PaZword.App.ViewModels;
 using PaZword.Core.Services;
+using PaZword.Core.Theming;
 
 namespace PaZword.App;
 
@@ -26,12 +29,18 @@ internal static class AppServiceProvider
         // Logging
         services.AddLogging(static builder =>
         {
-            builder.AddDebug();
-            // File sink will be wired in sprint 2+
+            // Concrete sinks wired in sprint 2 (file logger).
+            // Default behaviour: emits to attached debugger via the framework.
         });
 
         // Core services
         services.AddSingleton<DiagnosticsService>();
+
+        // Theming (Light/Dark/System persistence stub — T-0.4)
+        services.AddSingleton<IThemeService, ThemeService>();
+
+        // View-models (transient — pages are short-lived in Frame navigation)
+        services.AddTransient<MainPageViewModel>();
 
         // Navigation (concrete implementation registered by PaZword.App in sprint 2)
         // services.AddSingleton<INavigationService, NavigationService>();

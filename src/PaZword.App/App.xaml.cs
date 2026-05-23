@@ -1,44 +1,36 @@
-﻿using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Shapes;
+using PaZword.App.Services;
+using PaZword.Core.Theming;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
-namespace PaZword_App;
+namespace PaZword.App;
 
 /// <summary>
-/// Provides application-specific behavior to supplement the default Application class.
+/// Application bootstrap. Owns the DI container (built once before any UI is created)
+/// and the single top-level <see cref="MainWindow"/>.
 /// </summary>
 public partial class App : Application
 {
-    private Window? _window;
-    
-    /// <summary>
-    /// Initializes the singleton application object.  This is the first line of authored code
-    /// executed, and as such is the logical equivalent of main() or WinMain().
-    /// </summary>
+    /// <summary>The top-level window. Available after <see cref="OnLaunched"/>.</summary>
+    public Window? MainWindow { get; private set; }
+
+    /// <summary>Application-scoped service provider. Built before <see cref="OnLaunched"/> returns.</summary>
+    public static IServiceProvider Services => AppServiceProvider.Instance;
+
     public App()
     {
         InitializeComponent();
+        AppServiceProvider.Build();
     }
 
-    /// <summary>
-    /// Invoked when the application is launched.
-    /// </summary>
-    /// <param name="args">Details about the launch request and process.</param>
-    protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+    protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        _window = new MainWindow();
-        _window.Activate();
+        // Resolve so MEDI scope is validated (catches missing registrations at startup).
+        var theme = Services.GetRequiredService<IThemeService>();
+
+        MainWindow = new MainWindow();
+        MainWindow.Activate();
+
+        ThemeService.Apply(theme.Current);
     }
 }

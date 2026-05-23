@@ -1,20 +1,23 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
+using PaZword.App.ViewModels;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
-namespace PaZword_App;
+namespace PaZword.App;
 
 /// <summary>
-/// The main content page displayed inside the application window.
-/// Add your UI logic, event handlers, and data binding here.
+/// The main content page. Resolves its view-model from DI in a parameterless
+/// constructor so it remains compatible with WinUI <see cref="Frame"/> navigation
+/// (which instantiates pages via parameterless <c>Activator</c> calls — but for AOT
+/// we rely on the page type being statically referenced from <c>RootFrame.Navigate</c>,
+/// which keeps the constructor reachable without reflection).
 /// </summary>
 public sealed partial class MainPage : Page
 {
+    public MainPageViewModel ViewModel { get; }
+
     public MainPage()
     {
+        ViewModel = App.Services.GetRequiredService<MainPageViewModel>();
         InitializeComponent();
-
-        // TODO: Add your initialization logic here.
     }
 }

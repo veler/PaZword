@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace PaZword_App;
+namespace PaZword.App;
 
 /// <summary>
 /// The application window. This hosts a Frame that displays pages. Add your

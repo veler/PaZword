@@ -20,6 +20,8 @@
     <IsTrimmable>false</IsTrimmable>
   </PropertyGroup>
 
+    <!-- Theme XAML is auto-discovered by the WinAppSDK XAML build system. -->
+
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
