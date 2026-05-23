@@ -1,0 +1,153 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  # ────────────────────────────────────────────────────────────────────────────
+  # Job 1: Build (Debug + Release) — confirms the solution compiles
+  # ────────────────────────────────────────────────────────────────────────────
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore PaZword.slnx
+
+      - name: Build Debug
+        run: >
+          dotnet build PaZword.slnx
+          --configuration Debug
+          --no-restore
+          -warnaserror
+
+      - name: Build Release
+        run: >
+          dotnet build PaZword.slnx
+          --configuration Release
+          --no-restore
+          -warnaserror
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # Job 2: Test — runs all test projects (xUnit)
+  # ────────────────────────────────────────────────────────────────────────────
+  test:
+    name: Test
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore PaZword.slnx
+
+      - name: Test
+        run: >
+          dotnet test PaZword.slnx
+          --configuration Release
+          --no-restore
+          --logger "trx;LogFileName=test-results.trx"
+          --results-directory TestResults
+          -- xunit.parallelizeAssembly=true
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: TestResults/
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # Job 3: AOT Publish — proves NativeAOT compiles with zero trim/AOT warnings.
+  # This job is the AOT gate: any trim/AOT warning → build fails.
+  # ────────────────────────────────────────────────────────────────────────────
+  aot-publish:
+    name: AOT Publish
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install WinAppSDK workload
+        run: dotnet workload install windows
+
+      - name: Restore
+        run: dotnet restore src/PaZword.App/PaZword.App.csproj -r win-x64
+
+      - name: Publish AOT (win-x64)
+        # TreatWarningsAsErrors is set in Directory.Build.props; any trim/AOT warning → non-zero exit.
+        run: >
+          dotnet publish src/PaZword.App/PaZword.App.csproj
+          --configuration Release
+          --runtime win-x64
+          --self-contained true
+          -p:PublishAot=true
+          -p:TreatWarningsAsErrors=true
+          -warnaserror
+
+      - name: Upload AOT publish output
+        uses: actions/upload-artifact@v4
+        with:
+          name: aot-publish-win-x64
+          path: src/PaZword.App/bin/Release/net10.0-windows10.0.22621.0/win-x64/publish/
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # Job 4: MSIX package artifact
+  # ────────────────────────────────────────────────────────────────────────────
+  msix:
+    name: MSIX Package
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install WinAppSDK workload
+        run: dotnet workload install windows
+
+      - name: Restore
+        run: dotnet restore src/PaZword.App/PaZword.App.csproj
+
+      - name: Build MSIX (Release x64)
+        run: >
+          dotnet build src/PaZword.App/PaZword.App.csproj
+          --configuration Release
+          --runtime win-x64
+          -p:Platform=x64
+          -p:AppxPackageDir=../../../artifacts/msix/
+          -p:GenerateAppxPackageOnBuild=true
+          -warnaserror
+
+      - name: Upload MSIX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: msix-package
+          path: artifacts/msix/

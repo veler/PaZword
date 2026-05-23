@@ -1,0 +1,27 @@
+<Project>
+  <!--
+    Global MSBuild properties applied to every project in the repo.
+    AOT discipline: TreatWarningsAsErrors ensures trim/AOT warnings fail the build.
+  -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- Enable ILLink / trim analysis on every library -->
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <!-- Enable AOT-compatibility analyzer -->
+    <EnableAotAnalyzer>true</EnableAotAnalyzer>
+    <!-- Default: libraries are trimmable; PaZword.App overrides this to false -->
+    <IsTrimmable>true</IsTrimmable>
+  </PropertyGroup>
+
+  <!--
+    Suppress benign informational warnings that would otherwise trip TreatWarningsAsErrors.
+    Add suppressions here only when the team has reviewed and accepted the risk.
+  -->
+  <PropertyGroup>
+    <!-- CS1591: missing XML doc comment — suppress until we add docs in later sprints -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+</Project>
