@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PaZword.App (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "PaZword.App (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
